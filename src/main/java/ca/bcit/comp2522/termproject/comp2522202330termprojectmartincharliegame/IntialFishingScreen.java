@@ -1,11 +1,14 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 /**
@@ -30,6 +33,20 @@ public class IntialFishingScreen extends Application {
         // ...and immediately wrap it in a view
         ImageView imageView = new ImageView(image);
 
+        // Instantiate a button object
+        Button push = new Button("Cast");
+
+        push.setPrefWidth(150); // Set your desired width
+        push.setPrefHeight(75
+        ); // Set your desired height
+
+        push.setOpacity(0.5);
+
+        push.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightblue; -fx-border-radius: 10px");
+
+        // Determine what happens when we press the button
+        push.setOnAction(this::processButtonPress);
+
         // Declare and initialize locals when we need them
         // Make sure they are final
         final int viewX = 0;
@@ -40,8 +57,8 @@ public class IntialFishingScreen extends Application {
         // Set the size of the ImageView using a Rectangle2D
         imageView.setViewport(new Rectangle2D(viewX, viewY, viewWidth, viewHeight));
 
-        // Add the ImageView to a Group
-        Group root = new Group(imageView);
+        StackPane root = new StackPane();
+        root.getChildren().addAll(imageView, push);
 
         // Add the Group to a Scene
         final int appWidth = 1200;
@@ -54,12 +71,7 @@ public class IntialFishingScreen extends Application {
         primaryStage.show();
     }
 
-    /**
-     * Launches the JavaFX application.
-     *
-     * @param args command line arguments
-     */
-    public static void main(final String[] args) {
-        launch(args);
+    public void processButtonPress(final ActionEvent event) {
+        System.out.println("Hello World!");
     }
 }
