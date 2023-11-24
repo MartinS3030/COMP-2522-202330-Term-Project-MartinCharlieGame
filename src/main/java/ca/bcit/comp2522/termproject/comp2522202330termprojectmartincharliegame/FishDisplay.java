@@ -50,7 +50,25 @@ public class FishDisplay extends Application {
         primaryStage.show();
     }
 
-
+    public void generateFish() {
+        int fishKey = 0;
+        int count = 0;
+        while (count < 5) {
+            int rarity = random.nextInt(100) + 1;
+            if (rarity <= 50) {
+                fishKey = random.nextInt(13) + 1;
+            } else if (rarity > 50) {
+                fishKey = random.nextInt(8) + 14;
+            }
+//            } else if (rarity <= 90) {
+//                fishKey = random.nextInt(5) + 22;
+//            }
+            count++;
+            FishSpecies fishSpecies = new FishSpecies();
+            Fish generatedFish = fishSpecies.getFish(fishKey);
+            fishList.add(generatedFish);
+        }
+    }
 
     public static void main(String[] args) {
         launch(args);
