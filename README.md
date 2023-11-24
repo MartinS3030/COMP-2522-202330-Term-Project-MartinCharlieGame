@@ -21,3 +21,5 @@ Learn about how IntelliJ works with Maven here: [Helpful tutorial](https://www.j
 ## References
 Fish Sprites:
 reddit.com/r/PixelArt/comments/913b0l/pixel_fish/ 
+Game Logo
+https://www.zilliondesigns.com/drafts/display/contest/37717/draft/d783cb3f1447c5307597f437304f54d6305091
