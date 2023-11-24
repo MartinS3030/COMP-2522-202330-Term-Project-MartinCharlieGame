@@ -19,5 +19,7 @@ public class Player {
         return instance;
     }
 
-
+    public String getName() {
+        return name;
+    }
 }
