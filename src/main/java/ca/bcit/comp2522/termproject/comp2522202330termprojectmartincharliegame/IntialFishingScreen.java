@@ -29,51 +29,36 @@ public class IntialFishingScreen extends Application {
      */
     public void start(final Stage primaryStage) {
 
-        // Instantiate an image...
         Image image = new Image("file:../../resources/Ocean.png");
 
-        // ...and immediately wrap it in a view
         ImageView imageView = new ImageView(image);
 
-        // Instantiate a button object
-        Button push = new Button("Cast");
+        Button cast = ButtonMaker.createButton("Cast", this::castReel);
+        Button viewRod = ButtonMaker.createButton("View Rod", this::viewRod);
+        Button viewInventory = ButtonMaker.createButton("View Inventory", this::viewInventory);
+        Button viewQuests = ButtonMaker.createButton("View Quests", this::viewQuests);
+        Button endDay = ButtonMaker.createButton("End Day", this::endDay);
 
-        push.setPrefWidth(150); // Set your desired width
-        push.setPrefHeight(75
-        ); // Set your desired height
-
-        push.setOpacity(0.5);
-
-        push.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightblue; -fx-border-radius: 10px");
-
-        // Determine what happens when we press the button
-        push.setOnAction(this::processButtonPress);
-
-        // Declare and initialize locals when we need them
-        // Make sure they are final
         final int viewX = 0;
         final int viewY = 0;
         final int viewWidth = 1200;
         final int viewHeight = 648;
 
-        // Set the size of the ImageView using a Rectangle2D
         imageView.setViewport(new Rectangle2D(viewX, viewY, viewWidth, viewHeight));
 
         StackPane root = new StackPane();
-        root.getChildren().addAll(imageView, push);
+        root.getChildren().addAll(imageView, cast);
 
-        // Add the Group to a Scene
         final int appWidth = 1200;
         final int appHeight = 648;
         Scene scene = new Scene(root, appWidth, appHeight);
 
-        // Add the Scene to the Stage and display it.
         primaryStage.setTitle("CastAway");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-    public void processButtonPress(final ActionEvent event) {
+    public void castReel(final ActionEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -90,5 +75,21 @@ public class IntialFishingScreen extends Application {
         });
 
         fadeTransition.play();
+    }
+
+    public void viewRod(final ActionEvent event) {
+        System.out.println("View Rod");
+    }
+
+    public void viewInventory(final ActionEvent event) {
+        System.out.println("View Inventory");
+    }
+
+    public void viewQuests(final ActionEvent event) {
+        System.out.println("View Quests");
+    }
+
+    public void endDay(final ActionEvent event) {
+        System.out.println("End Day");
     }
 }
