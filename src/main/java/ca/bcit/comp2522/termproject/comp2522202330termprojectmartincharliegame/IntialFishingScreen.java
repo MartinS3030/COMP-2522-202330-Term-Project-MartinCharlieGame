@@ -3,13 +3,15 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 /**
  * Demonstrates the use of Image and ImageView objects.
@@ -72,6 +74,21 @@ public class IntialFishingScreen extends Application {
     }
 
     public void processButtonPress(final ActionEvent event) {
-        System.out.println("Hello World!");
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            FishDisplay fishDisplay = new FishDisplay();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            fishDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 }
