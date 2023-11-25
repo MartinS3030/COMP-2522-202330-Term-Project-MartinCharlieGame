@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
@@ -33,11 +34,16 @@ public class IntialFishingScreen extends Application {
 
         ImageView imageView = new ImageView(image);
 
-        Button cast = ButtonMaker.createButton("Cast", this::castReel);
-        Button viewRod = ButtonMaker.createButton("View Rod", this::viewRod);
-        Button viewInventory = ButtonMaker.createButton("View Inventory", this::viewInventory);
-        Button viewQuests = ButtonMaker.createButton("View Quests", this::viewQuests);
-        Button endDay = ButtonMaker.createButton("End Day", this::endDay);
+        Button cast = ButtonMaker.createButton("Cast", this::castReel, 0, 0);
+        Button viewRod = ButtonMaker.createButton("View Rod", this::viewRod, 0, 0);
+        Button viewInventory = ButtonMaker.createButton("View Inventory", this::viewInventory, 0, 0);
+        Button viewQuests = ButtonMaker.createButton("View Quests", this::viewQuests, 0, 0);
+        Button endDay = ButtonMaker.createButton("End Day", this::endDay, 0, 0);
+
+        VBox buttonBox = new VBox(cast, viewRod, viewInventory, viewQuests, endDay);
+        buttonBox.setSpacing(2);
+
+        buttonBox.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;");
 
         final int viewX = 0;
         final int viewY = 0;
@@ -47,7 +53,7 @@ public class IntialFishingScreen extends Application {
         imageView.setViewport(new Rectangle2D(viewX, viewY, viewWidth, viewHeight));
 
         StackPane root = new StackPane();
-        root.getChildren().addAll(imageView, cast);
+        root.getChildren().addAll(imageView, buttonBox);
 
         final int appWidth = 1200;
         final int appHeight = 648;
