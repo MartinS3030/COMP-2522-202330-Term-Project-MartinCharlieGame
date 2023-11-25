@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -30,6 +32,7 @@ public class FishDisplay extends Application {
 
         HBox fishContainer = new HBox();
         fishContainer.setSpacing(70);
+        fishContainer.setAlignment(Pos.CENTER);
 
         for (Fish fish : fishList) {
             VBox fishVBox = createFishVBox(fish);
@@ -38,6 +41,7 @@ public class FishDisplay extends Application {
 
         StackPane root = new StackPane();
         root.getChildren().addAll(oceanImageView, fishContainer);
+        StackPane.setMargin(fishContainer, new Insets(-300, 0, 0, 0));
 
         Scene scene = new Scene(root, 1200, 648);
         primaryStage.setTitle("Fish Display");
@@ -58,9 +62,9 @@ public class FishDisplay extends Application {
         fishImageView.setFitHeight(100);
 
         Label nameLabel = new Label(fish.getName());
-        nameLabel.setStyle("-fx-font-weight: bold;");
+        nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px");
 
-        Label requirementLabel = new Label(fish.getName());
+        Label requirementLabel = new Label(generateRequirement(fish.getRequirementType(), fish.getRequirementValue()));
 
         VBox fishVBox = new VBox(nameLabel, fishImageView, requirementLabel);
         fishVBox.setSpacing(5);
@@ -69,7 +73,23 @@ public class FishDisplay extends Application {
         return fishVBox;
     }
 
-
+    public String generateRequirement(String requirement, int value) {
+        if (requirement.equals("greater")) {
+            return "Greater than " + value;
+        } else if (requirement.equals("less")) {
+            return "Less than " + value;
+        } else if (requirement.equals("equal")) {
+            return "Equal to " + value;
+        } else if (requirement.equals("ofakind")) {
+            return value + " of a kind";
+        } else if (requirement.equals("straight"))  {
+            return "Straight of " + value;
+        } else if (requirement.equals("fullhouse")) {
+            return "Full house";
+        } else {
+            return "Error";
+        }
+    }
 
     public void generateFish() {
         int fishKey;
