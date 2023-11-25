@@ -12,10 +12,17 @@ public class Player {
     private static Player instance;
     private final String name;
     private ArrayList<Reward> inventory = new ArrayList<>();
-//    private Fishing_Rod rod = new Fishing_Rod();
+    private Fishing_Rod rod;
 
     private Player(String name) {
         this.name = name;
+        Rod_Components base = new Rod_Components("Basic Base", basicDie());
+        Rod_Components rodComponent = new Rod_Components("Basic Rod", basicDie());
+        Rod_Components reel = new Rod_Components("Basic Reel", basicDie());
+        Rod_Components line = new Rod_Components("Basic Line", basicDie());
+        Rod_Components hook = new Rod_Components("Basic Hook", basicDie());
+
+        this.rod = new Fishing_Rod(base, rodComponent, reel, line, hook);
     }
 
     /**
@@ -38,5 +45,20 @@ public class Player {
      */
     public String getName() {
         return name;
+    }
+
+    public Fishing_Rod getRod() {
+        return rod;
+    }
+
+    public ArrayList<Integer> basicDie() {
+        ArrayList basicDie = new ArrayList<Integer>();
+        basicDie.add(1);
+        basicDie.add(2);
+        basicDie.add(3);
+        basicDie.add(4);
+        basicDie.add(5);
+        basicDie.add(6);
+        return basicDie;
     }
 }

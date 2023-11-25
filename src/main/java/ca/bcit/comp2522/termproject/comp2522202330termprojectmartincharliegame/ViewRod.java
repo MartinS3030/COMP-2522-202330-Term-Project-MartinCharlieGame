@@ -16,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ViewRod extends Application {
+    Player player = Player.getInstance("Charlie");
+    Fishing_Rod rod = player.getRod();
 
     @Override
     public void start(Stage primaryStage) {

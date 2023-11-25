@@ -6,7 +6,6 @@ import java.util.Random;
 public class Rod_Components implements Dice{
     private static final Random RANDOM_NUMBER_GENERATOR = new Random();
     private final String name;
-
     private final ArrayList<Integer> values;
     private int faceUpValue;
 
@@ -25,7 +24,7 @@ public class Rod_Components implements Dice{
         this.faceUpValue = values.get(RANDOM_NUMBER_GENERATOR.nextInt(values.size()));
     }
 
-    String readName() {
+    public String readName() {
         return name;
     }
     void Draw() {
