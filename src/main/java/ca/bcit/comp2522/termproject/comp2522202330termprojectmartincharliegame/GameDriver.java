@@ -38,6 +38,7 @@ public class GameDriver extends Application {
      * @param primaryStage contains the Scene
      */
     public void start(final Stage primaryStage) {
+        Player player = Player.getInstance("Charlie");
         IntialFishingScreen intialFishingScreen = new IntialFishingScreen();
         intialFishingScreen.start(primaryStage);
     }
