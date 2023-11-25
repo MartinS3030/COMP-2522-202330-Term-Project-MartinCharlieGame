@@ -84,8 +84,24 @@ public class IntialFishingScreen extends Application {
     }
 
     public void viewRod(final ActionEvent event) {
-        System.out.println("View Rod");
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            ViewRod viewRod = new ViewRod();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            viewRod.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
+
 
     public void viewInventory(final ActionEvent event) {
         System.out.println("View Inventory");
