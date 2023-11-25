@@ -1,7 +1,9 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -34,31 +36,7 @@ public class DiceDisplay extends Application {
 
         return stackPane;
     }
-    @Override
-    public void start(Stage primaryStage) throws Exception {
 
-        ImageView[] diceViews = getImageViews();
-
-        for (ImageView diceView : diceViews) {
-            diceView.setPreserveRatio(true); // Preserve the aspect ratio of the image
-            diceView.setFitWidth(100); // Set the desired width
-        }
-
-        HBox hBox = new HBox();
-        for (ImageView diceView : diceViews) {
-            hBox.getChildren().add(createRoundedBorderedImageView(diceView));
-        }
-        hBox.setSpacing(10);
-
-        Scene scene = new Scene(hBox, 400, 300);
-
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Image Display");
-
-        primaryStage.show();
-
-    }
 
     private ImageView[] getImageViews() {
         Image pipOne = new Image("file:../../resources//Dice/dice-six-faces-one.png");
@@ -78,6 +56,44 @@ public class DiceDisplay extends Application {
         ImageView[] diceViews = {diceView1, diceView2, diceView3, diceView4, diceView5};
         return diceViews;
     }
+
+    public void lockDice( final ActionEvent event) {
+        System.out.println("Dice Locked");
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        Fishing_Rod fishingRod = new Fishing_Rod();
+
+
+        ImageView[] diceViews = getImageViews();
+
+        for (ImageView diceView : diceViews) {
+            diceView.setPreserveRatio(true); // Preserve the aspect ratio of the image
+            diceView.setFitWidth(100); // Set the desired width
+        }
+
+        HBox hBox = new HBox();
+        VBox[] vBox = new VBox[]{new VBox(), new VBox(), new VBox(), new VBox(), new VBox()};
+        for (int i = 0; i < diceViews.length; i++) {
+            Button lockUnlock = ButtonMaker.createButton("lockUnlock", this::lockDice, 0, 0);
+            vBox[i].getChildren().addAll(createRoundedBorderedImageView(diceViews[i]), lockUnlock);
+            hBox.getChildren().add(vBox[i]);
+        }
+        hBox.setSpacing(10);
+
+        Scene scene = new Scene(hBox, 400, 300);
+
+        primaryStage.setScene(scene);
+
+        primaryStage.setTitle("Image Display");
+
+        primaryStage.show();
+
+    }
+
 
     public static void main(String[] args) {
         launch(args);
