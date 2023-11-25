@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -9,6 +10,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.scene.layout.HBox;
+import javafx.util.Duration;
 
 public class FishDisplay extends Application {
     private ArrayList<Fish> fishList = new ArrayList<>();
@@ -45,6 +47,11 @@ public class FishDisplay extends Application {
 
         Scene scene = new Scene(root, 1200, 648);
         primaryStage.setTitle("Fish Display");
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
 
         primaryStage.setScene(scene);
         primaryStage.show();
