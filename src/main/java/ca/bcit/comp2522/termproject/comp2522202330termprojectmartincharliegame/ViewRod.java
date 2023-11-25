@@ -1,5 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -12,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 
 public class ViewRod extends Application {
 
@@ -54,6 +56,11 @@ public class ViewRod extends Application {
         primaryStage.setScene(scene);
 
         primaryStage.setTitle("Fishing Rod Components");
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), stackPane);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.play();
 
         primaryStage.show();
     }
