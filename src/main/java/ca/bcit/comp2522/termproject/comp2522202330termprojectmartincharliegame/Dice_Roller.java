@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Dice_Roller {
-    private ArrayList<Dice> diceList;
+    private final ArrayList<Dice> diceList;
     private final ArrayList<Dice> lockedDiceList;
     private final ArrayList<Dice> unlockedDiceList;
 
@@ -22,6 +22,10 @@ public class Dice_Roller {
     public void unlockDice(Dice dice) {
         unlockedDiceList.add(dice);
         lockedDiceList.remove(dice);
+    }
+
+    public boolean isLocked(Dice dice) {
+        return lockedDiceList.contains(dice);
     }
 
     public void rollDice() {
