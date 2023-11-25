@@ -2,11 +2,14 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -51,7 +54,15 @@ public class ViewRod extends Application {
         StackPane innerStackPane = new StackPane(mainBox);
         innerStackPane.setTranslateY(100);
 
-        StackPane stackPane = new StackPane(rectangle, innerStackPane);
+        Image backButton = new Image("file:../../resources/backButton.png");
+        ImageView backButtonView = new ImageView(backButton);
+        backButtonView.setFitWidth(75);
+        backButtonView.setFitHeight(75);
+        backButtonView.setOnMouseClicked(event -> back(event));
+
+        StackPane.setAlignment(backButtonView, Pos.TOP_LEFT);
+
+        StackPane stackPane = new StackPane(rectangle, innerStackPane, backButtonView);
 
         Scene scene = new Scene(stackPane, 1200, 648);
 
@@ -89,5 +100,24 @@ public class ViewRod extends Application {
     private VBox createVBox(Pane component, Label text) {
         VBox vbox = new VBox(component, text);
         return vbox;
+    }
+
+    public void back(final MouseEvent event) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            IntialFishingScreen fishDisplay = new IntialFishingScreen();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            fishDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 }
