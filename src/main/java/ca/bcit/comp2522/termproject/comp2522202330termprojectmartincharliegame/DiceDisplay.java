@@ -75,18 +75,27 @@ public class DiceDisplay extends Application {
         };
     }
 
-        ImageView diceView1 = new ImageView(pipSix);
-        ImageView diceView2 = new ImageView(pipSix);
-        ImageView diceView3 = new ImageView(pipSix);
-        ImageView diceView4 = new ImageView(pipSix);
-        ImageView diceView5 = new ImageView(pipSix);
-
-        ImageView[] diceViews = {diceView1, diceView2, diceView3, diceView4, diceView5};
-        return diceViews;
+    public void lockDice(ImageView clickedDiceView, Fishing_Rod fishingRod) {
+        if (diceRoller.isLocked(fishingRod.getComponents().get(findDiceViewPosition(clickedDiceView)))) {
+            resetBorderColor(clickedDiceView);
+            // Unlock the dice
+            diceRoller.unlockDice(fishingRod.getComponents().get(findDiceViewPosition(clickedDiceView)));
+        } else {
+            // Lock the dice
+            diceRoller.lockDice(fishingRod.getComponents().get(findDiceViewPosition(clickedDiceView)));
+            // Change the border color of the locked ImageView
+            setBorderColor(clickedDiceView, Color.RED);
+        }
     }
 
-    public void lockDice( final ActionEvent event) {
-        System.out.println("Dice Locked");
+    private int findDiceViewPosition(ImageView targetImageView) {
+        for (int i = 0; i < diceViews.length; i++) {
+            if (diceViews[i] == targetImageView) {
+                return i; // Found the target ImageView, return its index
+            }
+        }
+        return -1; // If the target ImageView is not found in the array
+    }
 
     public void rollDice( final ActionEvent event) {
         System.out.println("Dice Roll");
