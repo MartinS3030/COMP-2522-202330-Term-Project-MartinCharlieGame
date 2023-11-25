@@ -11,7 +11,7 @@ public class Dice_Roller {
     public Dice_Roller(ArrayList<Dice> fishingRod) {
         diceList = fishingRod;
         lockedDiceList = new ArrayList<Dice>();
-        unlockedDiceList = new ArrayList<Dice>();
+        unlockedDiceList =  new ArrayList<Dice>(fishingRod);
     }
 
     public void lockDice(Dice dice) {
