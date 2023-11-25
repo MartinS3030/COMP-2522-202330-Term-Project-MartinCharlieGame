@@ -14,16 +14,26 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 
-public class DiceDisplay extends Application {
+public class DiceDisplay {
     private final Color BORDER_COLOR = Color.BLACK;
     private final Color LOCKED_COLOR = Color.RED;
-
     private ImageView[] diceViews;
     private Fishing_Rod fishingRod;
     private Dice_Roller diceRoller;
-
     private HBox hBox;
     private VBox[] vBox;
+    private boolean rollingInProgress = false;
+
+    public DiceDisplay() {
+        fishingRod = new Fishing_Rod();
+        diceRoller = new Dice_Roller(fishingRod.getComponents());
+
+        diceViews = new ImageView[fishingRod.getComponents().size()];
+        updateDiceView();
+
+        hBox = new HBox();
+        vBox = new VBox[]{new VBox(), new VBox(), new VBox(), new VBox(), new VBox(), new VBox()};
+    }
 
 
     private StackPane createRoundedBorderedImageView(ImageView imageView, Color color) {
@@ -86,6 +96,9 @@ public class DiceDisplay extends Application {
     }
 
     public void lockDice(ImageView clickedDiceView, Fishing_Rod fishingRod) {
+        if (rollingInProgress) {
+            return;
+        }
         if (diceRoller.isLocked(fishingRod.getComponents().get(findDiceViewPosition(clickedDiceView)))) {
             resetBorderColor(clickedDiceView);
             // Unlock the dice
@@ -108,6 +121,10 @@ public class DiceDisplay extends Application {
     }
 
     public void rollDice(final ActionEvent event) {
+        if (rollingInProgress) {
+            return;
+        }
+        rollingInProgress = true;
         System.out.println("Rolling dice...\n");
 
         // Create a SequentialTransition to play timelines sequentially
@@ -124,7 +141,7 @@ public class DiceDisplay extends Application {
             Duration keyFrameDuration = Duration.millis(20);
 
             // Add keyframes for each number the dice can show
-            for (int i = 1; i <= 15; i++) {
+            for (int i = 1; i <= 13; i++) {
 
                 // Create a keyframe to transition to the next image
                 KeyFrame keyFrame = new KeyFrame(
@@ -135,6 +152,9 @@ public class DiceDisplay extends Application {
                 // Add the keyframe to the timeline
                 timeline.getKeyFrames().add(keyFrame);
             }
+            timeline.setOnFinished(e -> {
+                rollingInProgress = false;
+            });
 
             // Add the timeline to the sequential transition
             sequentialTransition.getChildren().add(timeline);
@@ -177,40 +197,24 @@ public class DiceDisplay extends Application {
             diceView.setFitWidth(100); // Set the desired width
         }
     }
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        fishingRod = new Fishing_Rod();
-        diceRoller = new Dice_Roller(fishingRod.getComponents());
-
-        diceViews = new ImageView[fishingRod.getComponents().size()];
-        updateDiceView();
-
-        hBox = new HBox();
-        vBox = new VBox[]{new VBox(), new VBox(), new VBox(), new VBox(), new VBox(), new VBox()};
+    public HBox getDiceDisplay() {
         for (int i = 0; i < diceViews.length; i++) {
             int diceIndex = i;
             Button lockUnlock = ButtonMaker.createButton("lockUnlock", event -> lockDice(diceViews[diceIndex], fishingRod), 0, 0);
+            lockUnlock.setMaxWidth(130);
             vBox[i].getChildren().addAll(createRoundedBorderedImageView(diceViews[i], BORDER_COLOR), lockUnlock);
             hBox.getChildren().add(vBox[i]);
         }
         Button rollDice = ButtonMaker.createButton("rollDice", this::rollDice, 0, 0);
-        hBox.getChildren().add(rollDice);
+        rollDice.setMaxWidth(130);
+        vBox[diceViews.length].getChildren().add(rollDice);
+        hBox.getChildren().add(vBox[diceViews.length]);
 
-        hBox.setSpacing(10);
+        hBox.setSpacing(25);
 
-        Scene scene = new Scene(hBox, 400, 300);
-
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Image Display");
-
-        primaryStage.show();
+        return hBox;
     }
 
-
-
     public static void main(String[] args) {
-        launch(args);
     }
 }
