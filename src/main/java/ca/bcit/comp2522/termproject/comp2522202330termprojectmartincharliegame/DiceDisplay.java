@@ -234,9 +234,13 @@ public class DiceDisplay {
     };
 
     private void finishDice(final ActionEvent event) {
-        if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
+        if (gameState != GameState.DICE_IN_USE) {
             System.out.println("Finishing dice...\n");
             gameState = GameState.WAITING_FOR_USE_DICE;
+            for (Dice dice : fishingRod.getComponents()) {
+                diceRoller.unlockDice(dice);
+            }
+            updateDiceView();
             rollCounter = 0;
             roundCounter++;
             System.out.println("Round " + roundCounter + " finished.");
