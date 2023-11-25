@@ -7,11 +7,13 @@ public class Dice_Roller {
     private final ArrayList<Dice> diceList;
     private final ArrayList<Dice> lockedDiceList;
     private final ArrayList<Dice> unlockedDiceList;
+    private final ArrayList<Dice> unusedDiceList;
 
     public Dice_Roller(ArrayList<Dice> fishingRod) {
         diceList = fishingRod;
         lockedDiceList = new ArrayList<Dice>();
         unlockedDiceList =  new ArrayList<Dice>(fishingRod);
+        unusedDiceList = new ArrayList<Dice>(fishingRod);
     }
 
     public void lockDice(Dice dice) {
@@ -22,6 +24,16 @@ public class Dice_Roller {
     public void unlockDice(Dice dice) {
         unlockedDiceList.add(dice);
         lockedDiceList.remove(dice);
+    }
+
+    public void useDice(Dice dice) {
+        unusedDiceList.remove(dice);
+    }
+
+    public void unusedDice(Dice dice) {
+        if (!unusedDiceList.contains(dice)) {
+            unusedDiceList.add(dice);
+        }
     }
 
     public boolean isLocked(Dice dice) {
@@ -41,8 +53,6 @@ public class Dice_Roller {
         }
         return result;
     }
-
-
 
     public static void main(String[] args) {
 

@@ -45,7 +45,7 @@ public class FishDisplay extends Application {
         StackPane root = new StackPane();
         root.getChildren().addAll(oceanImageView, fishContainer, diceDisplay);
         StackPane.setMargin(fishContainer, new Insets(-300, 0, 0, 0));
-        StackPane.setMargin(diceDisplay, new Insets(400, 0, 0, 0));
+        StackPane.setMargin(diceDisplay, new Insets(520, 0, 200, 0));
 
         Scene scene = new Scene(root, 1200, 648);
         primaryStage.setTitle("Fish Display");
