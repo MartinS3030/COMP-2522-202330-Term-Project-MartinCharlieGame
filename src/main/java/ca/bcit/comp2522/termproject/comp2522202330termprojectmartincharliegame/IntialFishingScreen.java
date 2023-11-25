@@ -92,11 +92,11 @@ public class IntialFishingScreen extends Application {
         fadeTransition.setToValue(0.0);
 
         fadeTransition.setOnFinished(e -> {
-//            ViewRod viewRod = new ViewRod();
-//
-//            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//
-//            viewRod.start(currentStage);
+            ViewRod viewRod = new ViewRod();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            viewRod.start(currentStage);
         });
 
         fadeTransition.play();
