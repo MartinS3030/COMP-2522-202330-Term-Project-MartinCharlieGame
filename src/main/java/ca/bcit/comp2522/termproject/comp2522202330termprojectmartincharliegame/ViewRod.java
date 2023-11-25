@@ -8,6 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class ViewRod extends Application {
-
-}
+//public class ViewRod extends Application {
+//
+//}
