@@ -1,28 +1,39 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.animation.*;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+
+import java.util.ArrayList;
 
 
 public class DiceDisplay {
     private final Color BORDER_COLOR = Color.BLACK;
     private final Color LOCKED_COLOR = Color.RED;
-    private ImageView[] diceViews;
-    private Fishing_Rod fishingRod;
-    private Dice_Roller diceRoller;
-    private HBox hBox;
-    private VBox[] vBox;
-    private boolean rollingInProgress = false;
+    private final Color USED_COLOR = Color.FORESTGREEN;
+    private final ImageView[] diceViews;
+    private final Fishing_Rod fishingRod;
+    private final Dice_Roller diceRoller;
+    private final HBox hBox;
+    private final VBox[] vBox;
+    private int rollCounter;
+    private int roundCounter;
+
+    private enum GameState {
+        WAITING_FOR_USE_DICE,
+        WAITING_FOR_DICE_SELECTION,
+        DICE_IN_USE
+    }
+    private GameState gameState = GameState.WAITING_FOR_USE_DICE;
+    private int selectedDiceIndex = -1;
+    private int selectedDiceValue = -1;
+    private ArrayList<Dice> selectedDice;
 
     public DiceDisplay() {
         fishingRod = new Fishing_Rod();
@@ -33,6 +44,11 @@ public class DiceDisplay {
 
         hBox = new HBox();
         vBox = new VBox[]{new VBox(), new VBox(), new VBox(), new VBox(), new VBox(), new VBox()};
+
+        rollCounter = 0;
+        roundCounter = 0;
+
+        selectedDice = new ArrayList<Dice>();
     }
 
 
@@ -96,7 +112,7 @@ public class DiceDisplay {
     }
 
     public void lockDice(ImageView clickedDiceView, Fishing_Rod fishingRod) {
-        if (rollingInProgress) {
+        if (gameState != GameState.WAITING_FOR_USE_DICE) {
             return;
         }
         if (diceRoller.isLocked(fishingRod.getComponents().get(findDiceViewPosition(clickedDiceView)))) {
@@ -121,10 +137,11 @@ public class DiceDisplay {
     }
 
     public void rollDice(final ActionEvent event) {
-        if (rollingInProgress) {
+        if (gameState != GameState.WAITING_FOR_USE_DICE || rollCounter >= 3) {
             return;
         }
-        rollingInProgress = true;
+        gameState = GameState.DICE_IN_USE;
+        rollCounter++;
         System.out.println("Rolling dice...\n");
 
         // Create a SequentialTransition to play timelines sequentially
@@ -153,7 +170,7 @@ public class DiceDisplay {
                 timeline.getKeyFrames().add(keyFrame);
             }
             timeline.setOnFinished(e -> {
-                rollingInProgress = false;
+                gameState = GameState.WAITING_FOR_USE_DICE;
             });
 
             // Add the timeline to the sequential transition
@@ -197,17 +214,52 @@ public class DiceDisplay {
             diceView.setFitWidth(100); // Set the desired width
         }
     }
+    public void useDice(final ActionEvent event) {
+        if (gameState == GameState.WAITING_FOR_USE_DICE) {
+            gameState = GameState.WAITING_FOR_DICE_SELECTION;
+            System.out.println("Using dice...\n");
+        }
+    }
+
+    private void selectDice(int diceIndex) {
+        if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
+            if (selectedDice.contains(fishingRod.getComponents().get(diceIndex))) {
+                selectedDice.remove(fishingRod.getComponents().get(diceIndex));
+                resetBorderColor(diceViews[diceIndex]);
+            } else {
+                selectedDice.add(fishingRod.getComponents().get(diceIndex));
+                setBorderColor(diceViews[diceIndex], USED_COLOR);
+            };
+        }
+    };
+
+    private void finishDice(final ActionEvent event) {
+        if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
+            System.out.println("Finishing dice...\n");
+            gameState = GameState.WAITING_FOR_USE_DICE;
+            rollCounter = 0;
+            roundCounter++;
+            System.out.println("Round " + roundCounter + " finished.");
+        }
+    }
+    
     public HBox getDiceDisplay() {
         for (int i = 0; i < diceViews.length; i++) {
             int diceIndex = i;
             Button lockUnlock = ButtonMaker.createButton("lockUnlock", event -> lockDice(diceViews[diceIndex], fishingRod), 0, 0);
             lockUnlock.setMaxWidth(130);
-            vBox[i].getChildren().addAll(createRoundedBorderedImageView(diceViews[i], BORDER_COLOR), lockUnlock);
+            StackPane diceBox = createRoundedBorderedImageView(diceViews[i], BORDER_COLOR);
+            diceBox.setOnMouseClicked(event -> selectDice(diceIndex));
+            vBox[i].getChildren().addAll(diceBox, lockUnlock);
             hBox.getChildren().add(vBox[i]);
         }
         Button rollDice = ButtonMaker.createButton("rollDice", this::rollDice, 0, 0);
+        Button useDice = ButtonMaker.createButton("useDice", this::useDice, 0, 0);
+        Button finishDice = ButtonMaker.createButton("finishRound", this::finishDice, 0, 0);
         rollDice.setMaxWidth(130);
-        vBox[diceViews.length].getChildren().add(rollDice);
+        useDice.setMaxWidth(130);
+        finishDice.setMaxWidth(130);
+        vBox[diceViews.length].getChildren().addAll(rollDice, useDice, finishDice);
         hBox.getChildren().add(vBox[diceViews.length]);
 
         hBox.setSpacing(25);
