@@ -1,16 +1,18 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
-import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import javafx.util.Duration;
 import java.util.ArrayList;
 import java.util.Random;
-import javafx.scene.layout.HBox;
-import javafx.util.Duration;
+import javafx.animation.FadeTransition;
 
 public class FishDisplay extends Application {
     private ArrayList<Fish> fishList = new ArrayList<>();
@@ -30,16 +32,8 @@ public class FishDisplay extends Application {
         fishContainer.setSpacing(70);
 
         for (Fish fish : fishList) {
-            Image fishImage = new Image("file:../../resources/Fish/" + fish.getName() + ".png");
-            ImageView fishImageView = new ImageView(fishImage);
-
-            fishImageView.setFitWidth(100);
-            fishImageView.setFitHeight(100);
-
-            fishImageView.setTranslateY(50);
-            fishImageView.setTranslateX(200);
-
-            fishContainer.getChildren().add(fishImageView);
+            VBox fishVBox = createFishVBox(fish);
+            fishContainer.getChildren().add(fishVBox);
         }
 
         StackPane root = new StackPane();
@@ -57,19 +51,36 @@ public class FishDisplay extends Application {
         primaryStage.show();
     }
 
+    private VBox createFishVBox(Fish fish) {
+        Image fishImage = new Image("file:../../resources/Fish/" + fish.getName() + ".png");
+        ImageView fishImageView = new ImageView(fishImage);
+        fishImageView.setFitWidth(100);
+        fishImageView.setFitHeight(100);
+
+        Label nameLabel = new Label(fish.getName());
+        nameLabel.setStyle("-fx-font-weight: bold;");
+
+        Label requirementLabel = new Label(fish.getName());
+
+        VBox fishVBox = new VBox(nameLabel, fishImageView, requirementLabel);
+        fishVBox.setSpacing(5);
+        fishVBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+        return fishVBox;
+    }
+
+
+
     public void generateFish() {
-        int fishKey = 0;
+        int fishKey;
         int count = 0;
         while (count < 5) {
             int rarity = random.nextInt(100) + 1;
             if (rarity <= 50) {
                 fishKey = random.nextInt(13) + 1;
-            } else if (rarity > 50) {
+            } else {
                 fishKey = random.nextInt(8) + 14;
             }
-//            } else if (rarity <= 90) {
-//                fishKey = random.nextInt(5) + 22;
-//            }
             count++;
             FishSpecies fishSpecies = new FishSpecies();
             Fish generatedFish = fishSpecies.getFish(fishKey);
