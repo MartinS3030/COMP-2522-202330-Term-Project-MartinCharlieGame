@@ -58,4 +58,27 @@ public class ViewRod extends Application {
         primaryStage.show();
     }
 
+    private StackPane createComponentBox(String componentName) {
+        Image image = new Image("file:../../resources/Box.png");
+        ImageView imageView = new ImageView(image);
+        Text text = new Text(componentName);
+        text.setFont(new Font(20));
+        text.wrappingWidthProperty().bind(imageView.fitWidthProperty());
+        StackPane stackPane = new StackPane(imageView, text);
+        StackPane.setAlignment(text, Pos.CENTER);
+        return stackPane;
+    }
+
+    private Label createParagraph(String description) {
+        Label paragraphLabel = new Label(description);
+        paragraphLabel.setWrapText(true);
+        paragraphLabel.setStyle("-fx-font-size: 20px");
+        paragraphLabel.setMaxWidth(170);
+        return paragraphLabel;
+    }
+
+    private VBox createVBox(Pane component, Label text) {
+        VBox vbox = new VBox(component, text);
+        return vbox;
+    }
 }
