@@ -39,9 +39,13 @@ public class FishDisplay extends Application {
             fishContainer.getChildren().add(fishVBox);
         }
 
+        HBox diceDisplay = new DiceDisplay().getDiceDisplay();
+        diceDisplay.setAlignment(Pos.CENTER);
+
         StackPane root = new StackPane();
-        root.getChildren().addAll(oceanImageView, fishContainer);
+        root.getChildren().addAll(oceanImageView, fishContainer, diceDisplay);
         StackPane.setMargin(fishContainer, new Insets(-300, 0, 0, 0));
+        StackPane.setMargin(diceDisplay, new Insets(400, 0, 0, 0));
 
         Scene scene = new Scene(root, 1200, 648);
         primaryStage.setTitle("Fish Display");
