@@ -52,4 +52,56 @@ public class BulletinBoard implements Board{
                 generateDifficulty(fish), objectiveAmount, giver + " wants you to help them catch " + objectiveAmount + " " + fish.getName() + ". They would really appreciate your help with this ASAP!");
     }
 
+    public Fish getRequirement(String rarity) {
+        int fishKey;
+        FishSpecies fishSpecies = new FishSpecies();
+
+        if (rarity.equals("common")) {
+            fishKey = random.nextInt(13) + 1;
+        } else if (rarity.equals("rare")) {
+            fishKey = random.nextInt(5) + 14;
+        } else if (rarity.equals("legendary")) {
+            fishKey = random.nextInt(3) + 19;
+        } else {
+            fishKey = random.nextInt(13) + 1;
+        }
+
+        return fishSpecies.getFish(fishKey);
+    }
+
+
+    /**
+     * Gets the quests on the bulletin board.
+     *
+     * @return the quests on the bulletin board
+     */
+    @Override
+    public ArrayList<Quest> getQuests() {
+        return quests;
+    }
+
+    public void newQuests() {
+        System.out.println("working on it");
+    }
+
+    public int generateReward(double value, int objectiveAmount) {
+        return (int) Math.floor(value * (1.5 + random.nextDouble() * 0.5 * objectiveAmount));
+    }
+
+    public String generateGiver() {
+        String[] givers = {"Bob", "Joe", "Steve", "Bill", "John", "Jack", "J"};
+        return givers[(int) (Math.random() * givers.length)];
+    }
+
+    public int generateDifficulty(Fish objective) {
+        int difficulty = 0;
+        if (objective.getRarity().equals("common")) {
+            difficulty = 1;
+        } else if (objective.getRarity().equals("rare")) {
+            difficulty = 2;
+        } else if (objective.getRarity().equals("legendary")) {
+            difficulty = 3;
+        }
+        return difficulty;
+    }
 }
