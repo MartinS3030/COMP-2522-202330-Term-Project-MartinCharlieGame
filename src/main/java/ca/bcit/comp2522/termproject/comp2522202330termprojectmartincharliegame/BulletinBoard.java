@@ -25,4 +25,31 @@ public class BulletinBoard implements Board{
         return instance;
     }
 
+    /**
+     * Generates the basic 5 quests for the bulletin board.
+     */
+    @Override
+    public void generateQuests() {
+        for (int i = 0; i < 5; i++) {
+            quests.add(generateCommonQuest());
+        }
+        for (Quest quest : quests) {
+            System.out.println(quest.getTitle());
+            System.out.println(quest.getDescription());
+            System.out.println(quest.getReward());
+            System.out.println(quest.getObjective().getName());
+            System.out.println(quest.getObjectiveAmount());
+            System.out.println();
+        }
+    }
+
+    public Quest generateCommonQuest() {
+        int objectiveAmount = random.nextInt(4) + 3;
+        Fish fish = getRequirement("common");
+        String giver = generateGiver();
+        return new Quest("Catch " + objectiveAmount + " " + fish.getName(),
+                giver, generateReward(fish.getValue(), objectiveAmount), fish,
+                generateDifficulty(fish), objectiveAmount, giver + " wants you to help them catch " + objectiveAmount + " " + fish.getName() + ". They would really appreciate your help with this ASAP!");
+    }
+
 }
