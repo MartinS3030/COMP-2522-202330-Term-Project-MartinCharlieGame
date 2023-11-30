@@ -13,6 +13,7 @@ public class Player {
     private final String name;
     private ArrayList<Reward> inventory = new ArrayList<>();
     private Fishing_Rod rod;
+    private int date = 1;
 
     private Player(String name) {
         this.name = name;
@@ -49,6 +50,14 @@ public class Player {
 
     public Fishing_Rod getRod() {
         return rod;
+    }
+
+    public void setDate(int date) {
+        this.date = date + 1;
+    }
+
+    public int getDate() {
+        return date;
     }
 
     public ArrayList<Integer> basicDie() {
