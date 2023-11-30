@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.animation.Timeline;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class DiceDisplay {
     private final VBox[] vBox;
     private int rollCounter;
     private int roundCounter;
+    private Stage primaryStage;
 
     private enum GameState {
         WAITING_FOR_USE_DICE,
@@ -35,7 +37,8 @@ public class DiceDisplay {
     private int selectedDiceValue = -1;
     private ArrayList<Dice> selectedDice;
 
-    public DiceDisplay() {
+    public DiceDisplay(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         fishingRod = new Fishing_Rod();
         diceRoller = new Dice_Roller(fishingRod.getComponents());
 
@@ -260,15 +263,22 @@ public class DiceDisplay {
         Button rollDice = ButtonMaker.createButton("rollDice", this::rollDice, 0, 0);
         Button useDice = ButtonMaker.createButton("useDice", this::useDice, 0, 0);
         Button finishDice = ButtonMaker.createButton("finishRound", this::finishDice, 0, 0);
+        Button activeQuests = ButtonMaker.createButton("activeQuests", this::activeQuests, 0, 0);
         rollDice.setMaxWidth(130);
         useDice.setMaxWidth(130);
         finishDice.setMaxWidth(130);
-        vBox[diceViews.length].getChildren().addAll(rollDice, useDice, finishDice);
+        activeQuests.setMaxWidth(130);
+        vBox[diceViews.length].getChildren().addAll(rollDice, useDice, finishDice, activeQuests);
         hBox.getChildren().add(vBox[diceViews.length]);
 
         hBox.setSpacing(25);
 
         return hBox;
+    }
+
+    private void activeQuests(ActionEvent actionEvent) {
+        ModalPopUp modalPopUp = new ModalPopUp();
+        modalPopUp.openInGamePopup(primaryStage);
     }
 
     public static void main(String[] args) {
