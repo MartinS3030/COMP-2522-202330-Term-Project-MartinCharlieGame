@@ -39,7 +39,7 @@ public class FishDisplay extends Application {
             fishContainer.getChildren().add(fishVBox);
         }
 
-        HBox diceDisplay = new DiceDisplay().getDiceDisplay();
+        HBox diceDisplay = new DiceDisplay(primaryStage).getDiceDisplay();
         diceDisplay.setAlignment(Pos.CENTER);
 
         StackPane root = new StackPane();
