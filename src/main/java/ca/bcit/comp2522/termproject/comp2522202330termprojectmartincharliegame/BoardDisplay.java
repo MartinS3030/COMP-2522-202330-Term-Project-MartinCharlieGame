@@ -22,10 +22,10 @@ public class BoardDisplay extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-//        StackPane questStack = generateQuestDetails(questList.get(0));
+        StackPane questStack = generateQuestDetails(questList.get(0));
         StackPane bulletinBoardStack = getStackPane(questStack);
 
-//        HBox root = new HBox(bulletinBoardStack, questStack);
+        HBox root = new HBox(bulletinBoardStack, questStack);
 
         Scene scene = new Scene(root, 1200, 648);
         primaryStage.setTitle("Quest Display");
@@ -90,6 +90,44 @@ public class BoardDisplay extends Application {
     }
 
 
+    public Label generateLabel(String text, int height) {
+        Font font = Font.loadFont("file:resources/Fonts/CinzelDecorative-Regular.ttf", 20);
+        Label label = new Label(text);
+        label.setFont(font);
+        label.setPrefHeight(height);
+        label.setPrefWidth(430);
+        label.setWrapText(true);
+//        label.setStyle("-fx-border-width: 2px; -fx-border-color: black; -fx-border-style: solid");
+        return label;
+    }
+
+    public StackPane generateQuestDetails(Quest quest) {
+        Label questTitle = generateLabel(quest.getTitle(), 80);
+        Label questGiver = generateLabel("Requester: " + quest.getGiver(), 50);
+        Label questDifficulty = generateLabel("Difficulty: " + String.valueOf(quest.getDifficulty()), 50);
+        Label questDescription = generateLabel("Description:\n" + quest.getDescription(), 200);
+        Label questReward = generateLabel("Reward: " + String.valueOf(quest.getReward()), 100);
+
+        VBox questDetails = new VBox(questTitle, questGiver, questDifficulty, questDescription, questReward);
+        questDetails.setSpacing(0);
+        questDetails.setMaxWidth(430);
+        questDetails.setMaxHeight(520);
+
+        Image questBox = new Image("file:../../resources/QuestBox.png");
+        ImageView questBoxView = new ImageView(questBox);
+        questBoxView.setFitHeight(648);
+
+        StackPane questStack = new StackPane();
+        StackPane.setAlignment(questDetails, Pos.TOP_CENTER);
+        questStack.setMaxWidth(501);
+//        questStack.setStyle("-fx-border-style: solid; -fx-border-width: 5px; -fx-border-color: navy");
+//        questStack.setTranslateX(350);
+        StackPane.setMargin(questDetails, new Insets(12, 0, 0, 0));
+
+        questStack.getChildren().addAll(questBoxView, questDetails);
+
+        return questStack;
+    }
 
     public static void main(String[] args) {
         launch(args);
