@@ -12,6 +12,7 @@ public class Player {
     private static Player instance;
     private final String name;
     private ArrayList<Reward> inventory = new ArrayList<>();
+    private ActiveQuests activeQuests = ActiveQuests.getInstance();
     private Fishing_Rod rod;
     private int date = 1;
 
