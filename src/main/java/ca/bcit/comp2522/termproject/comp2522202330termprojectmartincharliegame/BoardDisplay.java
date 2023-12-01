@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -13,6 +14,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
 
 import java.util.ArrayList;
 
@@ -108,7 +110,16 @@ public class BoardDisplay extends Application {
         Label questDescription = generateLabel("Description:\n" + quest.getDescription(), 200);
         Label questReward = generateLabel("Reward: " + String.valueOf(quest.getReward()), 100);
 
-        VBox questDetails = new VBox(questTitle, questGiver, questDifficulty, questDescription, questReward);
+        Button acceptButton = new Button("Accept");
+        acceptButton.setPrefWidth(200);
+        acceptButton.setPrefHeight(80);
+        acceptButton.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-background-color: #74b359; -fx-border-width: 5px; -fx-border-style: solid; -fx-border-color: black; -fx-border-radius: 10px");
+
+        acceptButton.setOnAction(event -> {
+            acceptQuest(quest);
+        });
+
+        VBox questDetails = new VBox(questTitle, questGiver, questDifficulty, questDescription, questReward, acceptButton);
         questDetails.setSpacing(0);
         questDetails.setMaxWidth(430);
         questDetails.setMaxHeight(520);
@@ -131,5 +142,26 @@ public class BoardDisplay extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void acceptQuest(Quest quest) {
+        Player player = Player.getInstance("Charlie");
+        try {
+            player.addQuests(quest);
+            displayAlert("Quest Accepted", "Quest successfully accepted!");
+        } catch (IllegalArgumentException e) {
+            displayAlert("Error", e.getMessage());
+        }
+        for (Quest activeQuest : player.getQuests()) {
+            System.out.println(activeQuest.getTitle());
+        }
+    }
+
+    private void displayAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
