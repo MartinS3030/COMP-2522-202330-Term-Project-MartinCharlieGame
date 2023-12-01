@@ -12,17 +12,52 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class ActiveQuestModal implements ModalPopUp{
+
     public ActiveQuestModal() {
     }
+
     public void openInGamePopup(Stage primaryStage) {
         ActiveQuests activeQuests = ActiveQuests.getInstance();
         activeQuests.generateQuests();
 
         Popup popup = new Popup();
 
+        VBox vbox = getMainVBox(activeQuests, popup);
+
+        StackPane stackPane = createStackPane();
+        stackPane.getChildren().add(vbox);
+
+        popup.getContent().add(stackPane);
+
+        // Set autoFix property to true
+        popup.setAutoFix(true);
+
+        // Add a listener to recalculate the position when the scene is resized
+        primaryStage.getScene().widthProperty().addListener((obs, oldVal, newVal) -> centerPopup(primaryStage, popup));
+        primaryStage.getScene().heightProperty().addListener((obs, oldVal, newVal) -> centerPopup(primaryStage, popup));
+
+        // Show the popup
+        popup.show(primaryStage);
+    }
+
+    private void centerPopup(Stage primaryStage, Popup popup) {
+        // Calculate the center position of the primary stage
+        double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - popup.getWidth() / 2;
+        double centerY = primaryStage.getY() + primaryStage.getHeight() / 2 - popup.getHeight() / 2;
+
+        // Set the position of the popup to the center of the primary stage
+        popup.setX(centerX);
+        popup.setY(centerY);
+    }
+
+    private VBox getMainVBox(ActiveQuests activeQuests, Popup popup) {
         // Create VBox
         VBox vbox = new VBox(10); // Set spacing between children
-        vbox.setStyle("-fx-padding: 10px;");
+        vbox.setStyle("-fx-padding: 8px;");
+
+        HBox labelHBox = getLabelHBox();
+
+        vbox.getChildren().add(labelHBox);
 
         for (Quest quest : activeQuests.getActiveQuests()) {
             HBox questHBox;
@@ -34,24 +69,39 @@ public class ActiveQuestModal implements ModalPopUp{
             vbox.getChildren().addAll(questHBox);
         }
 
+        HBox closeHBox = getButtonHBox(popup);
 
+        vbox.getChildren().addAll(closeHBox);
+        vbox.setAlignment(Pos.CENTER);
+        return vbox;
+    }
+
+    private HBox getButtonHBox(Popup popup) {
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> popup.hide());
+        closeButton.setStyle("-fx-background-color: rgb(28, 55, 201);" +
+                             "-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700;" +
+                             "-fx-padding: 5px;-fx-text-fill: rgb(29, 41, 41);-fx-border-width: 2px" +
+                             ";-fx-border-color: black;");
+        HBox closeHBox = new HBox(closeButton);
+        closeHBox.setAlignment(Pos.CENTER);
+        closeHBox.setStyle("-fx-padding: 10px;");
+        return closeHBox;
+    }
 
-        vbox.getChildren().addAll(closeButton);
-        vbox.setAlignment(Pos.CENTER);
-
-        StackPane stackPane = createStackPane();
-        stackPane.getChildren().add(vbox);
-
-        popup.getContent().add(stackPane);
-
-        // Calculate the center position of the primary stage
-        double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - stackPane.getWidth() / 2;
-        double centerY = primaryStage.getY() + primaryStage.getHeight() / 2 - stackPane.getHeight() / 2;
-
-        // Set the position of the popup to the center of the primary stage
-        popup.show(primaryStage, centerX, centerY);
+    private HBox getLabelHBox() {
+        Label label = new Label("Active Quests");
+        label.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
+                       "-fx-font-weight: 900;-fx-font-style: italic;" +
+                       "-fx-text-fill: rgb(29, 41, 41);");
+        HBox labelHBox = new HBox(label);
+        labelHBox.setMaxWidth(384);
+        labelHBox.setPrefHeight(100);
+        labelHBox.setStyle(
+                "-fx-background-color: rgb(28, 55, 201);" + // Background color
+                "-fx-padding: 20px;"               // Padding inside the card
+        );
+        return labelHBox;
     }
 
     private StackPane createStackPane() {
@@ -86,48 +136,62 @@ public class ActiveQuestModal implements ModalPopUp{
     private HBox createEmptyQuestHBox() {
         // Create an HBox
         HBox hBox = createQuestHBox();
+        hBox.setStyle(
+                "-fx-background-color: rgb(123, 160, 165);" + // Background color
+                        "-fx-background-radius: 10px;" + // Rounded corners
+                        "-fx-padding: 20px;"               // Padding inside the card
+        );
 
         // Add some content to the HBox (you can customize this part)
         Label label = new Label("Empty");
+        label.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;-fx-font-weight: 900;-fx-text-fill: rgb(84, 97, 100);");
         hBox.getChildren().add(label);
+        hBox.setAlignment(Pos.CENTER);
 
         return hBox;
     }
-
-
+    
+    
     private HBox createFilledQuestHBox(Quest quest) {
         // Create an HBox
         HBox hBox = createQuestHBox();
 
+        VBox questLeftVBox = getQuestObjectiveVBox(quest);
+
+        ImageView MoneyView = getImageView("file:../../resources/Items/Money.png", 50, 50);
+        Label reward = new Label(Integer.toString(quest.getReward()));
+        reward.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 15px;-fx-font-weight: 700;");
+        hBox.getChildren().addAll(questLeftVBox, MoneyView, reward);
+        hBox.setAlignment(Pos.CENTER);
+
+        return hBox;
+    }
+
+    private VBox getQuestObjectiveVBox(Quest quest) {
         VBox questLeftVBox = new VBox();
         questLeftVBox.setPrefWidth(350);
 
         Label questNameLabel = new Label(quest.getTitle());
-        questNameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700; -fx-text-transform: uppercase;");
+        questNameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700; -fx-text-transform: uppercase;");
 
         Fish fish = quest.getObjective();
+        ImageView fishImageView = getImageView("file:../../resources/Fish/" + fish.getName() + ".png", 50, 50);
 
-        Image fishImage = new Image("file:../../resources/Fish/" + fish.getName() + ".png");
-        ImageView fishImageView = new ImageView(fishImage);
-        fishImageView.setFitWidth(50);
-        fishImageView.setFitHeight(50);
-
-        Label outOf = new Label(" / " + quest.getObjectiveAmount());
+        Label outOf = new Label(" /" + quest.getObjectiveAmount());
         outOf.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
 
         HBox requirementHBox = new HBox(fishImageView, outOf);
-
+        requirementHBox.setAlignment(Pos.CENTER_LEFT);
 
         questLeftVBox.getChildren().addAll(questNameLabel, requirementHBox);
+        return questLeftVBox;
+    }
 
-        Image MoneyImage = new Image("file:../../resources/Items/Money.png");
-        ImageView MoneyView = new ImageView(MoneyImage);
-        MoneyView.setFitWidth(50);
-        MoneyView.setFitHeight(50);
-
-        hBox.getChildren().addAll(questLeftVBox, MoneyView, new Label(Integer.toString(quest.getReward())));
-        hBox.setAlignment(Pos.CENTER);
-
-        return hBox;
+    private ImageView getImageView(String filepath, int height, int width) {
+        Image image = new Image(filepath);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        return imageView;
     }
 }
