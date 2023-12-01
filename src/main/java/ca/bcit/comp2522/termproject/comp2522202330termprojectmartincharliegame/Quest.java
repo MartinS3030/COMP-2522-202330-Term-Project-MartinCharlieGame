@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 public class Quest {
+    private int id;
     private final String title;
     private final String giver;
     private final int reward;
@@ -10,6 +11,7 @@ public class Quest {
     private final String description;
 
     public Quest(String title, String giver, int reward, Fish objective, int difficulty, int objectiveAmount, String description) {
+        this.id = generateID();
         this.title = title;
         this.giver = giver;
         this.reward = reward;
@@ -45,5 +47,13 @@ public class Quest {
 
     public int getDifficulty() {
         return difficulty;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public int generateID() {
+        return (int) (Math.random() * 1000000);
     }
 }
