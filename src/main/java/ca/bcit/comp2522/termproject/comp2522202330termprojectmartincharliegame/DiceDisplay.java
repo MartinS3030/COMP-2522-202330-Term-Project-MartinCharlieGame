@@ -277,7 +277,7 @@ public class DiceDisplay {
     }
 
     private void activeQuests(ActionEvent actionEvent) {
-        ModalPopUp modalPopUp = new ModalPopUp();
+        ModalPopUp modalPopUp = new ActiveQuestModal();
         modalPopUp.openInGamePopup(primaryStage);
     }
 
