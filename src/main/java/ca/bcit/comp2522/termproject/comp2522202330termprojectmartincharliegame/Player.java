@@ -12,7 +12,7 @@ public class Player {
     private static Player instance;
     private final String name;
     private ArrayList<Reward> inventory = new ArrayList<>();
-    private ActiveQuests activeQuests = ActiveQuests.getInstance();
+    private ArrayList<Quest> activeQuests = new ArrayList<>();
     private Fishing_Rod rod;
     private int date = 1;
 
@@ -70,5 +70,31 @@ public class Player {
         basicDie.add(5);
         basicDie.add(6);
         return basicDie;
+    }
+
+    public void addQuests (Quest quest) {
+        for (Quest activeQuest : activeQuests) {
+            if (activeQuest.getID() == (quest.getID())) {
+                throw new IllegalArgumentException("Quest already accepted");
+            }
+        }
+        if (activeQuests.size() < 5) {
+            activeQuests.add(quest);
+        } else {
+            throw new IllegalArgumentException("Quest limit reached");
+        }
+    }
+
+    public void removeQuest(Quest quest) {
+        for (int i = 0; i < activeQuests.size(); i++) {
+            if (activeQuests.get(i).getID() == quest.getID()) {
+                activeQuests.remove(i);
+                break;
+            }
+        }
+    }
+
+    public ArrayList<Quest> getQuests() {
+        return activeQuests;
     }
 }
