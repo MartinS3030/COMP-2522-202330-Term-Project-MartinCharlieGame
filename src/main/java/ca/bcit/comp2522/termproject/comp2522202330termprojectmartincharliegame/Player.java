@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A class that represents a player.
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class Player {
     private static Player instance;
     private final String name;
-    private ArrayList<Reward> inventory = new ArrayList<>();
+    private final HashMap<Item, Integer> inventory = new HashMap<>();
     private ArrayList<Quest> activeQuests = new ArrayList<>();
     private Fishing_Rod rod;
     private int date = 1;
@@ -96,5 +97,17 @@ public class Player {
 
     public ArrayList<Quest> getQuests() {
         return activeQuests;
+    }
+
+    public void addInventory(Item item) {
+        if (inventory.containsKey(item)) {
+            inventory.put(item, inventory.get(item) + 1);
+        } else {
+            inventory.put(item, 1);
+        }
+    }
+
+    public HashMap<Item, Integer> getInventory() {
+        return inventory;
     }
 }
