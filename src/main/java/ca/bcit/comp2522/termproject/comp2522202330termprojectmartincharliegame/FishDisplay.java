@@ -18,6 +18,7 @@ import javafx.animation.FadeTransition;
 
 public class FishDisplay extends Application {
     private ArrayList<Fish> fishList = new ArrayList<>();
+    private DiceDisplay diceDisplay;
     private Random random = new Random();
 
     @Override
@@ -39,13 +40,14 @@ public class FishDisplay extends Application {
             fishContainer.getChildren().add(fishVBox);
         }
 
-        HBox diceDisplay = new DiceDisplay(primaryStage).getDiceDisplay();
-        diceDisplay.setAlignment(Pos.CENTER);
+        diceDisplay = new DiceDisplay(primaryStage);
+        HBox diceDisplayHBox = diceDisplay.getDiceDisplay();
+        diceDisplayHBox.setAlignment(Pos.CENTER);
 
         StackPane root = new StackPane();
-        root.getChildren().addAll(oceanImageView, fishContainer, diceDisplay);
+        root.getChildren().addAll(oceanImageView, fishContainer, diceDisplayHBox);
         StackPane.setMargin(fishContainer, new Insets(-300, 0, 0, 0));
-        StackPane.setMargin(diceDisplay, new Insets(520, 0, 200, 0));
+        StackPane.setMargin(diceDisplayHBox, new Insets(520, 0, 200, 0));
 
         Scene scene = new Scene(root, 1200, 648);
         primaryStage.setTitle("Fish Display");
@@ -71,10 +73,29 @@ public class FishDisplay extends Application {
         Label requirementLabel = new Label(generateRequirement(fish.getRequirementType(), fish.getRequirementValue()));
 
         VBox fishVBox = new VBox(nameLabel, fishImageView, requirementLabel);
+        fishImageView.setOnMouseClicked(event -> {
+            selectedFish(fish, nameLabel);
+        });
         fishVBox.setSpacing(5);
         fishVBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         return fishVBox;
+    }
+
+    private void selectedFish(Fish fish, Label nameLabel) {
+        ArrayList<Dice> diceList = diceDisplay.getSelectedDice();
+        for (Dice dice : diceList) {
+            System.out.println(dice.getFaceUpValue());
+        }
+        if (CheckRequirements.checkAgainstFish(diceList, fish)) {
+            System.out.println("You caught a " + fish.getName());
+            nameLabel.setText("CAUGHT!");
+            nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: green");
+        } else {
+            System.out.println("You did not catch a " + fish.getName());
+
+        }
+
     }
 
     public String generateRequirement(String requirement, int value) {
@@ -88,7 +109,7 @@ public class FishDisplay extends Application {
             return value + " of a kind";
         } else if (requirement.equals("straight"))  {
             return "Straight of " + value;
-        } else if (requirement.equals("fullhouse")) {
+        } else if (requirement.equals("fullHouse")) {
             return "Full house";
         } else {
             return "Error";
