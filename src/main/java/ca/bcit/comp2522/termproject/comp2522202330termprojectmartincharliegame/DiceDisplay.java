@@ -197,10 +197,8 @@ public class DiceDisplay {
 
     private void readyDiceForSelection() {
         gameState = GameState.WAITING_FOR_DICE_SELECTION;
-        for (int i = 0; i < diceViews.length; i++) {
-            if (diceRoller.isLocked(fishingRod.getComponents().get(i))) {
-                setBorderColor(diceViews[i], BORDER_COLOR);
-            }
+        for (ImageView diceView : diceViews) {
+            setBorderColor(diceView, BORDER_COLOR);
         }
 
     }
@@ -218,6 +216,8 @@ public class DiceDisplay {
             } else {
                 stackPane = createRoundedBorderedImageView(newImageView, BORDER_COLOR);
             }
+            int finalI = i;
+            stackPane.setOnMouseClicked(event -> selectDice(finalI));
 
             vBox[i].getChildren().set(0, stackPane);
 
@@ -239,7 +239,7 @@ public class DiceDisplay {
         }
     }
     public void useDice(final ActionEvent event) {
-        if (gameState == GameState.WAITING_FOR_USE_DICE) {
+        if (rollCounter != 0 && gameState == GameState.WAITING_FOR_USE_DICE) {
             readyDiceForSelection();
             System.out.println("Using dice...\n");
         }
@@ -266,8 +266,10 @@ public class DiceDisplay {
         if (gameState != GameState.DICE_IN_USE) {
             System.out.println("Finishing dice...\n");
             gameState = GameState.WAITING_FOR_USE_DICE;
-            for (Dice dice : fishingRod.getComponents()) {
-                diceRoller.unlockDice(dice);
+            diceRoller.resetDice();
+            selectedDice.clear();
+            for (ImageView diceView : diceViews) {
+                setBorderColor(diceView, BORDER_COLOR);
             }
             rollCounter = 0;
             roundCounter++;
