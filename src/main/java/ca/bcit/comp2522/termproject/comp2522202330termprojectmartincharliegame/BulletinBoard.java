@@ -104,4 +104,8 @@ public class BulletinBoard implements Board{
         }
         return difficulty;
     }
+
+    public void removeQuest(Quest quest) {
+        quests.remove(quest);
+    }
 }

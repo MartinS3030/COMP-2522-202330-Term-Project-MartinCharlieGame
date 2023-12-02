@@ -19,20 +19,41 @@ import javafx.scene.control.Button;
 import java.util.ArrayList;
 
 public class BoardDisplay extends Application {
+    private Stage primaryStage;
     BulletinBoard bulletinBoard = BulletinBoard.getInstance();
     ArrayList<Quest> questList = bulletinBoard.getQuests();
 
     @Override
     public void start(Stage primaryStage) {
-        StackPane questStack = generateQuestDetails(questList.get(0));
+        this.primaryStage = primaryStage;
+//        StackPane questStack = generateQuestDetails(questList.get(0));
+//        StackPane bulletinBoardStack = getStackPane(questStack);
+//
+//        HBox root = new HBox(bulletinBoardStack, questStack);
+//
+//        Scene scene = new Scene(root, 1200, 648);
+//        this.primaryStage.setTitle("Quest Display");
+//        this.primaryStage.setScene(scene);
+//        this.primaryStage.show();
+        displayUI();
+    }
+
+    public void displayUI() {
+        StackPane questStack;
+        if (!questList.isEmpty()) {
+            questStack = generateQuestDetails(questList.get(0));
+        } else {
+            questStack = generateQuestDetails(new Quest("No Quests Available", "No One", 0, new Fish("No Fish", "common", "none", 0, 0), 0, 0, "There are no quests available at this time. Please check back later."));
+        }
+
         StackPane bulletinBoardStack = getStackPane(questStack);
 
         HBox root = new HBox(bulletinBoardStack, questStack);
 
         Scene scene = new Scene(root, 1200, 648);
-        primaryStage.setTitle("Quest Display");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        this.primaryStage.setTitle("Quest Display");
+        this.primaryStage.setScene(scene);
+        this.primaryStage.show();
     }
 
     private StackPane getStackPane(StackPane questStack) {
@@ -148,6 +169,8 @@ public class BoardDisplay extends Application {
         Player player = Player.getInstance("Charlie");
         try {
             player.addQuests(quest);
+            bulletinBoard.removeQuest(quest);
+            updateDisplay();
             displayAlert("Quest Accepted", "Quest successfully accepted!");
         } catch (IllegalArgumentException e) {
             displayAlert("Error", e.getMessage());
@@ -155,6 +178,10 @@ public class BoardDisplay extends Application {
         for (Quest activeQuest : player.getQuests()) {
             System.out.println(activeQuest.getTitle());
         }
+    }
+
+    public void updateDisplay() {
+        displayUI();
     }
 
     private void displayAlert(String title, String content) {
