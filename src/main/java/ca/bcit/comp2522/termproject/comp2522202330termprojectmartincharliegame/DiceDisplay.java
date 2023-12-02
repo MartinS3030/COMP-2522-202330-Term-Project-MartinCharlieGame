@@ -25,13 +25,17 @@ public class DiceDisplay {
     private final VBox[] vBox;
     private int rollCounter;
     private int roundCounter;
-    private Stage primaryStage;
+    private final Stage primaryStage;
 
     private enum GameState {
         WAITING_FOR_USE_DICE,
         WAITING_FOR_DICE_SELECTION,
         DICE_IN_USE
     }
+
+    private boolean isActiveQuestOpen = false;
+
+    private boolean isDiceViewOpen = false;
     private GameState gameState = GameState.WAITING_FOR_USE_DICE;
     private int selectedDiceIndex = -1;
     private int selectedDiceValue = -1;
@@ -173,7 +177,13 @@ public class DiceDisplay {
                 timeline.getKeyFrames().add(keyFrame);
             }
             timeline.setOnFinished(e -> {
-                gameState = GameState.WAITING_FOR_USE_DICE;
+                if (rollCounter == 3) {
+                    gameState = GameState.WAITING_FOR_DICE_SELECTION;
+                    readyDiceForSelection();
+                } else {
+                    gameState = GameState.WAITING_FOR_USE_DICE;
+                }
+
             });
 
             // Add the timeline to the sequential transition
@@ -182,6 +192,15 @@ public class DiceDisplay {
 
         // Play the sequential transition
         sequentialTransition.play();
+    }
+
+    private void readyDiceForSelection() {
+        for (int i = 0; i < diceViews.length; i++) {
+            if (diceRoller.isLocked(fishingRod.getComponents().get(i))) {
+                setBorderColor(diceViews[i], BORDER_COLOR);
+            }
+        }
+
     }
 
     private void updateDiceFaceViews() {
@@ -225,6 +244,7 @@ public class DiceDisplay {
     }
 
     private void selectDice(int diceIndex) {
+        System.out.println("Selecting dice...\n");
         if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
             if (selectedDice.contains(fishingRod.getComponents().get(diceIndex))) {
                 selectedDice.remove(fishingRod.getComponents().get(diceIndex));
