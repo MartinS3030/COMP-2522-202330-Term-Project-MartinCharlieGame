@@ -61,6 +61,9 @@ public class DiceDisplay {
         usedDice = new ArrayList<Dice>();
     }
 
+    public ArrayList<Dice> getSelectedDice() {
+        return selectedDice;
+    }
 
     private StackPane createRoundedBorderedImageView(ImageView imageView, Color color) {
         // Create a StackPane to hold the ImageView
@@ -157,40 +160,36 @@ public class DiceDisplay {
         // Create a SequentialTransition to play timelines sequentially
         SequentialTransition sequentialTransition = new SequentialTransition();
 
-        // Number of rolls
-        int numberOfRolls = 1;  // Adjust as needed
+        // Create a Timeline for each roll
+        Timeline timeline = new Timeline();
 
-        for (int rollNumber = 0; rollNumber < numberOfRolls; rollNumber++) {
-            // Create a Timeline for each roll
-            Timeline timeline = new Timeline();
+        // Define the duration for each keyframe (adjust as needed)
+        Duration keyFrameDuration = Duration.millis(20);
 
-            // Define the duration for each keyframe (adjust as needed)
-            Duration keyFrameDuration = Duration.millis(20);
+        // Add keyframes for each number the dice can show
+        for (int i = 1; i <= 13; i++) {
 
-            // Add keyframes for each number the dice can show
-            for (int i = 1; i <= 13; i++) {
+            // Create a keyframe to transition to the next image
+            KeyFrame keyFrame = new KeyFrame(
+                    keyFrameDuration.multiply(i * i),  // Adjust timing
+                    (ActionEvent e) -> updateDiceFaceViews()
+            );
 
-                // Create a keyframe to transition to the next image
-                KeyFrame keyFrame = new KeyFrame(
-                        keyFrameDuration.multiply(i * i),  // Adjust timing
-                        (ActionEvent e) -> updateDiceFaceViews()
-                );
-
-                // Add the keyframe to the timeline
-                timeline.getKeyFrames().add(keyFrame);
-            }
-            timeline.setOnFinished(e -> {
-                if (rollCounter == 3) {
-                    readyDiceForSelection();
-                } else {
-                    gameState = GameState.WAITING_FOR_USE_DICE;
-                }
-
-            });
-
-            // Add the timeline to the sequential transition
-            sequentialTransition.getChildren().add(timeline);
+            // Add the keyframe to the timeline
+            timeline.getKeyFrames().add(keyFrame);
         }
+        timeline.setOnFinished(e -> {
+            if (rollCounter == 3) {
+                readyDiceForSelection();
+            } else {
+                gameState = GameState.WAITING_FOR_USE_DICE;
+            }
+
+        });
+
+        // Add the timeline to the sequential transition
+        sequentialTransition.getChildren().add(timeline);
+
 
         // Play the sequential transition
         sequentialTransition.play();
