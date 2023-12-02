@@ -4,7 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckRequirements {
-    public boolean greaterThan(ArrayList<Dice> diceList, int value) {
+
+    public static boolean checkAgainstFish(ArrayList<Dice> diceList, Fish fish) {
+        return switch (fish.getRequirementType()) {
+            case "ofakind" -> ofAKind(diceList, fish.getRequirementValue());
+            case "straight" -> straight(diceList, fish.getRequirementValue());
+            case "fullHouse" -> fullHouse(diceList);
+            case "oddsOnly" -> oddsOnly(diceList);
+            case "evensOnly" -> evensOnly(diceList);
+            case "greater" -> greaterThan(diceList, fish.getRequirementValue());
+            case "less" -> lessThan(diceList, fish.getRequirementValue());
+            case "equalTo" -> equalTo(diceList, fish.getRequirementValue());
+            case "twoPair" -> twoPair(diceList);
+            default -> false;
+        };
+    }
+    public static boolean greaterThan(ArrayList<Dice> diceList, int value) {
         int sum = 0;
         for (Dice dice : diceList) {
             sum += dice.getFaceUpValue();
@@ -12,7 +27,7 @@ public class CheckRequirements {
         return sum > value;
     }
 
-    public boolean lessThan(ArrayList<Dice> diceList, int value) {
+    public static boolean lessThan(ArrayList<Dice> diceList, int value) {
         int sum = 0;
         for (Dice dice : diceList) {
             sum += dice.getFaceUpValue();
@@ -20,7 +35,7 @@ public class CheckRequirements {
         return sum < value;
     }
 
-    public boolean equalTo(ArrayList<Dice> diceList, int value) {
+    public static boolean equalTo(ArrayList<Dice> diceList, int value) {
         int sum = 0;
         for (Dice dice : diceList) {
             sum += dice.getFaceUpValue();
@@ -28,7 +43,7 @@ public class CheckRequirements {
         return sum == value;
     }
 
-    public boolean ofAKind(ArrayList<Dice> diceList, int value) {
+    public static boolean ofAKind(ArrayList<Dice> diceList, int value) {
         int[] faceUpValues = new int[6];
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
@@ -41,7 +56,7 @@ public class CheckRequirements {
         return false;
     }
 
-    public boolean straight(ArrayList<Dice> diceList, int value) {
+    public static boolean straight(ArrayList<Dice> diceList, int value) {
         int[] faceUpValues = new int[6];
 
         for (Dice dice : diceList) {
@@ -66,7 +81,7 @@ public class CheckRequirements {
 
 
 
-    public boolean fullHouse(ArrayList<Dice> diceList) {
+    public static boolean fullHouse(ArrayList<Dice> diceList) {
         int[] faceUpValues = new int[6];
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
@@ -84,7 +99,7 @@ public class CheckRequirements {
         return threeOfAKind && twoOfAKind;
     }
 
-    public boolean oddsOnly(ArrayList<Dice> diceList) {
+    public static boolean oddsOnly(ArrayList<Dice> diceList) {
         for (Dice dice : diceList) {
             if (dice.getFaceUpValue() % 2 == 0) {
                 return false;
@@ -93,7 +108,7 @@ public class CheckRequirements {
         return true;
     }
 
-    public boolean evensOnly(ArrayList<Dice> diceList) {
+    public static boolean evensOnly(ArrayList<Dice> diceList) {
         for (Dice dice : diceList) {
             if (dice.getFaceUpValue() % 2 != 0) {
                 return false;
@@ -102,7 +117,7 @@ public class CheckRequirements {
         return true;
     }
 
-    public boolean twoPair(ArrayList<Dice> diceList) {
+    public static boolean twoPair(ArrayList<Dice> diceList) {
         int[] faceUpValues = new int[6];
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
