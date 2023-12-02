@@ -12,7 +12,6 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class ActiveQuestModal implements ModalPopUp{
-
     public ActiveQuestModal() {
     }
 
@@ -150,8 +149,8 @@ public class ActiveQuestModal implements ModalPopUp{
 
         return hBox;
     }
-    
-    
+
+
     private HBox createFilledQuestHBox(Quest quest) {
         // Create an HBox
         HBox hBox = createQuestHBox();
@@ -171,6 +170,16 @@ public class ActiveQuestModal implements ModalPopUp{
         VBox questLeftVBox = new VBox();
         questLeftVBox.setPrefWidth(350);
 
+        Image acceptImage = new Image("file:../../resources/Accept.png");
+        ImageView acceptImageView = new ImageView(acceptImage);
+        acceptImageView.setFitWidth(50);
+        acceptImageView.setFitHeight(50);
+
+        Image cancelImage = new Image("file:../../resources/Cancel.png");
+        ImageView cancelImageView = new ImageView(cancelImage);
+        cancelImageView.setFitWidth(50);
+        cancelImageView.setFitHeight(50);
+
         Label questNameLabel = new Label(quest.getTitle());
         questNameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700; -fx-text-transform: uppercase;");
 
@@ -180,8 +189,8 @@ public class ActiveQuestModal implements ModalPopUp{
         Label outOf = new Label(" /" + quest.getObjectiveAmount());
         outOf.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
 
-        HBox requirementHBox = new HBox(fishImageView, outOf);
-        requirementHBox.setAlignment(Pos.CENTER_LEFT);
+        HBox requirementHBox = new HBox(fishImageView, outOf, acceptImageView, cancelImageView);
+
 
         questLeftVBox.getChildren().addAll(questNameLabel, requirementHBox);
         return questLeftVBox;

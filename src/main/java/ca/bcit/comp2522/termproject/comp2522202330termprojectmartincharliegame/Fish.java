@@ -1,6 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
-public class Fish {
+public class Fish extends Item {
     private String name;
     private String rarity;
     private String requirementType;
