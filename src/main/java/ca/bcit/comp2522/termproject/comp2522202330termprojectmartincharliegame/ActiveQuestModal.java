@@ -157,7 +157,7 @@ public class ActiveQuestModal implements ModalPopUp{
 
         VBox questLeftVBox = getQuestObjectiveVBox(quest);
 
-        ImageView MoneyView = getImageView("file:../../resources/Items/Money.png", 50, 50);
+        ImageView MoneyView = getImageView("file:../../resources/Items/Money.png", 60, 60);
         Label reward = new Label(Integer.toString(quest.getReward()));
         reward.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 15px;-fx-font-weight: 700;");
         hBox.getChildren().addAll(questLeftVBox, MoneyView, reward);
