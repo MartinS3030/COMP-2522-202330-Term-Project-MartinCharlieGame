@@ -244,7 +244,8 @@ public class DiceDisplay {
     }
 
     private void selectDice(int diceIndex) {
-        System.out.println("Selecting dice...\n");
+        System.out.printf("Selecting dice %d\n", diceIndex);
+
         if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
             if (selectedDice.contains(fishingRod.getComponents().get(diceIndex))) {
                 selectedDice.remove(fishingRod.getComponents().get(diceIndex));
@@ -253,6 +254,9 @@ public class DiceDisplay {
                 selectedDice.add(fishingRod.getComponents().get(diceIndex));
                 setBorderColor(diceViews[diceIndex], USED_COLOR);
             }
+        } else if (gameState == GameState.WAITING_FOR_USE_DICE) {
+            DiceFaceModal diceFaceModal = new DiceFaceModal(diceIndex);
+            diceFaceModal.openInGamePopup(primaryStage);
         }
     }
 
