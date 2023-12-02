@@ -11,6 +11,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.util.HashMap;
+
 public class ActiveQuestModal implements ModalPopUp{
     public ActiveQuestModal() {
     }
@@ -195,5 +197,15 @@ public class ActiveQuestModal implements ModalPopUp{
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
         return imageView;
+    }
+
+    public boolean checkQuestRequirements(Quest quest) {
+        Player player = Player.getInstance("Charlie");
+        HashMap<Item, Integer> inventory = player.getInventory();
+        if (inventory.get(quest.getObjective().getName()) >= quest.getObjectiveAmount()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
