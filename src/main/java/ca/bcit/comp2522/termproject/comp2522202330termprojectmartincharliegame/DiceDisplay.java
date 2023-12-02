@@ -252,9 +252,9 @@ public class DiceDisplay {
             } else {
                 selectedDice.add(fishingRod.getComponents().get(diceIndex));
                 setBorderColor(diceViews[diceIndex], USED_COLOR);
-            };
+            }
         }
-    };
+    }
 
     private void finishDice(final ActionEvent event) {
         if (gameState != GameState.DICE_IN_USE) {
