@@ -17,7 +17,8 @@ import java.util.ArrayList;
 public class DiceDisplay {
     private final Color BORDER_COLOR = Color.BLACK;
     private final Color LOCKED_COLOR = Color.RED;
-    private final Color USED_COLOR = Color.FORESTGREEN;
+    private final Color SELECTED_COLOR = Color.FORESTGREEN;
+    private final Color USED_COLOR = Color.GREY;
     private final ImageView[] diceViews;
     private final Fishing_Rod fishingRod;
     private final Dice_Roller diceRoller;
@@ -37,9 +38,9 @@ public class DiceDisplay {
 
     private boolean isDiceViewOpen = false;
     private GameState gameState = GameState.WAITING_FOR_USE_DICE;
-    private int selectedDiceIndex = -1;
-    private int selectedDiceValue = -1;
-    private ArrayList<Dice> selectedDice;
+
+    private final ArrayList<Dice> selectedDice;
+    private final ArrayList<Dice> usedDice;
 
     public DiceDisplay(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -56,6 +57,7 @@ public class DiceDisplay {
         roundCounter = 0;
 
         selectedDice = new ArrayList<Dice>();
+        usedDice = new ArrayList<Dice>();
     }
 
 
@@ -178,7 +180,6 @@ public class DiceDisplay {
             }
             timeline.setOnFinished(e -> {
                 if (rollCounter == 3) {
-                    gameState = GameState.WAITING_FOR_DICE_SELECTION;
                     readyDiceForSelection();
                 } else {
                     gameState = GameState.WAITING_FOR_USE_DICE;
@@ -195,6 +196,7 @@ public class DiceDisplay {
     }
 
     private void readyDiceForSelection() {
+        gameState = GameState.WAITING_FOR_DICE_SELECTION;
         for (int i = 0; i < diceViews.length; i++) {
             if (diceRoller.isLocked(fishingRod.getComponents().get(i))) {
                 setBorderColor(diceViews[i], BORDER_COLOR);
@@ -238,21 +240,21 @@ public class DiceDisplay {
     }
     public void useDice(final ActionEvent event) {
         if (gameState == GameState.WAITING_FOR_USE_DICE) {
-            gameState = GameState.WAITING_FOR_DICE_SELECTION;
+            readyDiceForSelection();
             System.out.println("Using dice...\n");
         }
     }
 
     private void selectDice(int diceIndex) {
         System.out.printf("Selecting dice %d\n", diceIndex);
-
         if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
-            if (selectedDice.contains(fishingRod.getComponents().get(diceIndex))) {
-                selectedDice.remove(fishingRod.getComponents().get(diceIndex));
+            Dice dice = fishingRod.getComponents().get(diceIndex);
+            if (selectedDice.contains(dice)) {
                 resetBorderColor(diceViews[diceIndex]);
-            } else {
-                selectedDice.add(fishingRod.getComponents().get(diceIndex));
-                setBorderColor(diceViews[diceIndex], USED_COLOR);
+                selectedDice.remove(dice);
+            } else if (!usedDice.contains(dice)){
+                selectedDice.add(dice);
+                setBorderColor(diceViews[diceIndex], SELECTED_COLOR);
             }
         } else if (gameState == GameState.WAITING_FOR_USE_DICE) {
             DiceFaceModal diceFaceModal = new DiceFaceModal(diceIndex);
