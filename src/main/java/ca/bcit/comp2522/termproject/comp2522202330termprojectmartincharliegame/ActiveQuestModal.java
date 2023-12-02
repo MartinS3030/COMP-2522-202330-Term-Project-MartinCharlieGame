@@ -10,6 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import java.util.HashMap;
 
 public class ActiveQuestModal implements ModalPopUp{
     public ActiveQuestModal() {
@@ -139,5 +140,11 @@ public class ActiveQuestModal implements ModalPopUp{
         hBox.setAlignment(Pos.CENTER);
 
         return hBox;
+    }
+
+    public boolean checkQuestRequirements(Quest quest) {
+        Player player = Player.getInstance("Player");
+        HashMap<Item, Integer> inventory = player.getInventory();
+        return quest.getObjectiveAmount() <= inventory.get(quest.getObjective());
     }
 }
