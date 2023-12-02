@@ -26,6 +26,7 @@ public class DiceDisplay {
     private final VBox[] vBox;
     private int rollCounter;
     private int roundCounter;
+    private final int MAX_ROUNDS = 5;
     private final Stage primaryStage;
 
     private enum GameState {
@@ -269,10 +270,13 @@ public class DiceDisplay {
             for (Dice dice : fishingRod.getComponents()) {
                 diceRoller.unlockDice(dice);
             }
-            updateDiceView();
             rollCounter = 0;
             roundCounter++;
             System.out.println("Round " + roundCounter + " finished.");
+        }
+        if (roundCounter == MAX_ROUNDS) {
+            System.out.println("Day finished.");
+            System.exit(0);
         }
     }
     
