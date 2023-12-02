@@ -6,18 +6,17 @@ import java.util.Scanner;
 public class Dice_Roller {
     private final ArrayList<Dice> diceList;
     private final ArrayList<Dice> lockedDiceList;
-    private final ArrayList<Dice> unusedDiceList;
+    private final ArrayList<Dice> usedDiceList;
 
     public Dice_Roller(ArrayList<Dice> fishingRod) {
         diceList = fishingRod;
         lockedDiceList = new ArrayList<Dice>();
-        unusedDiceList = new ArrayList<Dice>(fishingRod);
+        usedDiceList = new ArrayList<Dice>();
     }
 
     public void resetDice() {
         lockedDiceList.clear();
-        unusedDiceList.clear();
-        unusedDiceList.addAll(diceList);
+        usedDiceList.clear();
     }
 
     public void lockDice(Dice dice) {
@@ -29,14 +28,9 @@ public class Dice_Roller {
     }
 
     public void useDice(Dice dice) {
-        unusedDiceList.remove(dice);
+        usedDiceList.add(dice);
     }
 
-    public void unusedDice(Dice dice) {
-        if (!unusedDiceList.contains(dice)) {
-            unusedDiceList.add(dice);
-        }
-    }
 
     public boolean isLocked(Dice dice) {
         return lockedDiceList.contains(dice);
@@ -44,7 +38,7 @@ public class Dice_Roller {
 
     public void rollDice() {
         for (Dice dice : diceList) {
-            if (!isLocked(dice)) {
+            if (!isLocked(dice) && !usedDiceList.contains(dice)) {
                 dice.roll();
             }
         }

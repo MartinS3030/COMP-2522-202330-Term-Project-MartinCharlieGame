@@ -268,6 +268,7 @@ public class DiceDisplay {
             gameState = GameState.WAITING_FOR_USE_DICE;
             diceRoller.resetDice();
             selectedDice.clear();
+            usedDice.clear();
             for (ImageView diceView : diceViews) {
                 setBorderColor(diceView, BORDER_COLOR);
             }
@@ -310,6 +311,11 @@ public class DiceDisplay {
     private void activeQuests(ActionEvent actionEvent) {
         ModalPopUp modalPopUp = new ActiveQuestModal();
         modalPopUp.openInGamePopup(primaryStage);
+    }
+
+    public void addDiceToUsedDice(Dice dice) {
+        usedDice.add(dice);
+        setBorderColor(diceViews[fishingRod.getComponents().indexOf(dice)], USED_COLOR);
     }
 
     public static void main(String[] args) {

@@ -4,11 +4,16 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
@@ -66,15 +71,16 @@ public class FishDisplay extends Application {
         ImageView fishImageView = new ImageView(fishImage);
         fishImageView.setFitWidth(100);
         fishImageView.setFitHeight(100);
+        StackPane fishStackPane = new StackPane(fishImageView);
 
         Label nameLabel = new Label(fish.getName());
         nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px");
 
         Label requirementLabel = new Label(generateRequirement(fish.getRequirementType(), fish.getRequirementValue()));
 
-        VBox fishVBox = new VBox(nameLabel, fishImageView, requirementLabel);
+        VBox fishVBox = new VBox(nameLabel, fishStackPane, requirementLabel);
         fishImageView.setOnMouseClicked(event -> {
-            selectedFish(fish, nameLabel);
+            selectedFish(fish, fishStackPane);
         });
         fishVBox.setSpacing(5);
         fishVBox.setAlignment(javafx.geometry.Pos.CENTER);
@@ -82,15 +88,34 @@ public class FishDisplay extends Application {
         return fishVBox;
     }
 
-    private void selectedFish(Fish fish, Label nameLabel) {
+    private void selectedFish(Fish fish, StackPane fishStackPane) {
         ArrayList<Dice> diceList = diceDisplay.getSelectedDice();
-        for (Dice dice : diceList) {
-            System.out.println(dice.getFaceUpValue());
-        }
+
         if (CheckRequirements.checkAgainstFish(diceList, fish)) {
             System.out.println("You caught a " + fish.getName());
-            nameLabel.setText("CAUGHT!");
-            nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-text-fill: green");
+            Image fishImage = new Image("file:../../resources/Fish/" + fish.getName() + ".png");
+            ImageView fishImageView = new ImageView(fishImage);
+            fishImageView.setFitWidth(100);
+            fishImageView.setFitHeight(100);
+
+            // Create the main text
+            Text mainText = new Text("CAUGHT!");
+            mainText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
+            mainText.setFill(Color.rgb(231, 54, 70));
+
+            // Create a copy of the text with a different color and a shadow effect
+            Text outlineText = new Text("CAUGHT!");
+            outlineText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
+            outlineText.setFill(Color.BLACK);
+            outlineText.setEffect(new DropShadow(15, Color.BLACK));
+
+            fishStackPane.getChildren().clear();
+            fishStackPane.getChildren().addAll(fishImageView, outlineText, mainText);
+
+            for (Dice dice : diceList) {
+                diceDisplay.addDiceToUsedDice(dice);
+            }
+
         } else {
             System.out.println("You did not catch a " + fish.getName());
 
