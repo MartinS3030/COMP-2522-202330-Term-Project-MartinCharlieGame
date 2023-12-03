@@ -115,6 +115,8 @@ public class FishDisplay extends Application {
             for (Dice dice : diceList) {
                 diceDisplay.addDiceToUsedDice(dice);
             }
+            diceList.clear();
+
 
         } else {
             System.out.println("You did not catch a " + fish.getName());
