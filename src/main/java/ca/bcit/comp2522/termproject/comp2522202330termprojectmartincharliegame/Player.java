@@ -15,7 +15,9 @@ public class Player {
     private final HashMap<Item, Integer> inventory = new HashMap<>();
     private ArrayList<Quest> activeQuests = new ArrayList<>();
     private Fishing_Rod rod;
+    private int money = 0;
     private int date = 1;
+    private int castOfTheDay = 0;
 
     private Player(String name) {
         this.name = name;
@@ -60,6 +62,14 @@ public class Player {
 
     public int getDate() {
         return date;
+    }
+
+    public void resetCastOfTheDay() {
+        this.castOfTheDay = 0;
+    }
+
+    public int getCastOfTheDay() {
+        return castOfTheDay;
     }
 
     public ArrayList<Integer> basicDie() {
@@ -109,5 +119,13 @@ public class Player {
 
     public HashMap<Item, Integer> getInventory() {
         return inventory;
+    }
+
+    public void addMoney(int money) {
+        this.money += money;
+    }
+
+    public int getMoney() {
+        return money;
     }
 }
