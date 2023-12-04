@@ -1,10 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -24,6 +20,9 @@ import javafx.stage.Stage;
  */
 public class GameDriver extends Application {
 
+    private static final int TIME_LIMIT = 30;
+    private static final int MONEY_GOAL = 1000;
+
     /**
      * Creates and displays two Text objects in a JavFX Window.
      *
@@ -39,8 +38,21 @@ public class GameDriver extends Application {
      */
     public void start(final Stage primaryStage) {
         Player player = Player.getInstance("Charlie");
-        IntialFishingScreen intialFishingScreen = new IntialFishingScreen();
-        intialFishingScreen.start(primaryStage);
+
+        InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
+        initialFishingScreen.start(primaryStage);
+    }
+
+    public void endGame(final Stage primaryStage) {
+        Player player = Player.getInstance("Charlie");
+        if (player.getMoney() >= MONEY_GOAL) {
+            EndScreen winScreen = new WinScreen();
+            winScreen.start(primaryStage);
+        } else {
+            EndScreen loseScreen = new EndScreen();
+            loseScreen.start(primaryStage);
+        }
+
     }
 
     /**
@@ -53,5 +65,13 @@ public class GameDriver extends Application {
      */
     public static void main(final String[] args) {
         launch(args);
+    }
+
+    public static int getTimeLimit() {
+        return TIME_LIMIT;
+    }
+
+    public static int getMoneyGoal() {
+        return MONEY_GOAL;
     }
 }
