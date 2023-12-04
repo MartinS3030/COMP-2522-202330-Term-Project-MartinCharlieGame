@@ -2,7 +2,6 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -111,7 +110,7 @@ public class ViewRod extends Application {
         fadeTransition.setToValue(0.0);
 
         fadeTransition.setOnFinished(e -> {
-            IntialFishingScreen fishDisplay = new IntialFishingScreen();
+            InitialFishingScreen fishDisplay = new InitialFishingScreen();
 
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
