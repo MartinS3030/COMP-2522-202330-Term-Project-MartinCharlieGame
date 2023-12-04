@@ -6,10 +6,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
@@ -21,7 +24,7 @@ import javafx.util.Duration;
  * @author BCIT
  * @version 2022
  */
-public class IntialFishingScreen extends Application {
+public class InitialFishingScreen extends Application {
 
     /**
      * Displays an image centered in a window.
@@ -46,6 +49,8 @@ public class IntialFishingScreen extends Application {
 
         buttonBox.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;");
 
+        VBox infoBox = getInfoBox();
+
         final int viewX = 0;
         final int viewY = 0;
         final int viewWidth = 1200;
@@ -54,7 +59,7 @@ public class IntialFishingScreen extends Application {
         imageView.setViewport(new Rectangle2D(viewX, viewY, viewWidth, viewHeight));
 
         StackPane root = new StackPane();
-        root.getChildren().addAll(imageView, buttonBox);
+        root.getChildren().addAll(imageView, infoBox, buttonBox);
 
         final int appWidth = 1200;
         final int appHeight = 648;
@@ -63,6 +68,39 @@ public class IntialFishingScreen extends Application {
         primaryStage.setTitle("CastAway");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        primaryStage.getScene().widthProperty().addListener((obs, oldVal, newVal) -> centerInfoBox(infoBox, primaryStage, buttonBox));
+        primaryStage.getScene().heightProperty().addListener((obs, oldVal, newVal) -> centerInfoBox(infoBox, primaryStage, buttonBox));
+    }
+
+    private VBox getInfoBox() {
+        VBox infoBox = new VBox();
+        Player player = Player.getInstance("Charlie");
+        int daysLeft = GameDriver.getTimeLimit() - player.getDate();
+
+        Label label = new Label(String.format("Days Left: %d", daysLeft));
+        label.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
+                "-fx-font-weight: 900;-fx-font-style: italic;" +
+                "-fx-text-fill: rgb(231, 54, 70);");
+
+        Label labelOutline = new Label(String.format("Days Left: %d", daysLeft));
+        labelOutline.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
+                "-fx-font-weight: 900;-fx-font-style: italic;" +
+                "-fx-text-fill: black;");
+        labelOutline.setEffect(new DropShadow(15, Color.BLACK));
+
+        StackPane labelStackPane = new StackPane(labelOutline, label);
+        infoBox.getChildren().addAll(labelStackPane);
+
+        return infoBox;
+    }
+
+    private void centerInfoBox(VBox infoBox, Stage primaryStage, VBox buttonBox) {
+        double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - infoBox.getWidth() / 2 + buttonBox.getWidth();
+        double centerY = primaryStage.getY() + primaryStage.getHeight() / 2 - infoBox.getHeight() / 2;
+
+        infoBox.setLayoutX(centerX);
+        infoBox.setLayoutY(centerY);
     }
 
     private void saveGame(ActionEvent actionEvent) {
