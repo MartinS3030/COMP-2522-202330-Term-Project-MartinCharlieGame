@@ -4,7 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class WinScreen extends EndScreen    {
+public class WinScreen extends EndScreen {
     @Override
     protected ImageView getImageView() {
         Image image = new Image("file:../../resources/WinScreen.png");

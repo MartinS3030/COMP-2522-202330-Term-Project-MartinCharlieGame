@@ -18,6 +18,7 @@ public class Player {
     private int money = 0;
     private int date = 1;
     private int castOfTheDay = 0;
+    private final int MAX_CAST = 5;
 
     private Player(String name) {
         this.name = name;
@@ -64,12 +65,16 @@ public class Player {
         return date;
     }
 
-    public void resetCastOfTheDay() {
-        this.castOfTheDay = 0;
+    public void setCastOfTheDay(int castOfTheDay) {
+        this.castOfTheDay = castOfTheDay;
     }
 
     public int getCastOfTheDay() {
         return castOfTheDay;
+    }
+
+    public int getCastLeft() {
+        return MAX_CAST - castOfTheDay;
     }
 
     public ArrayList<Integer> basicDie() {
