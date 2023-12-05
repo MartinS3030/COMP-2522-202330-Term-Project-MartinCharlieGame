@@ -20,7 +20,8 @@ public class DiceFaceModal implements ModalPopUp{
         this.diceIndex = diceIndex;
     }
     public void openInGamePopup(Stage primaryStage) {
-        Fishing_Rod fishingRod = new Fishing_Rod();
+        Player player = Player.getInstance("Charlie");
+        Fishing_Rod fishingRod = player.getRod();
 
         Popup popup = new Popup();
 
