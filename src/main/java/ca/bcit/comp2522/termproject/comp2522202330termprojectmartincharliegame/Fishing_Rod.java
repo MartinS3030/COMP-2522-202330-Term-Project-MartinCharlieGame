@@ -1,8 +1,9 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Fishing_Rod {
+public class Fishing_Rod implements Serializable {
     private final ArrayList<Dice> Components = new ArrayList<>();
 
     public Fishing_Rod(Rod_Components rodComponent1, Rod_Components rodComponent2, Rod_Components rodComponent3,

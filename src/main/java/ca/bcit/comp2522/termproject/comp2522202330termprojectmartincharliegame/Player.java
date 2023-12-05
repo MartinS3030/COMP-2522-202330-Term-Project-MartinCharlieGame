@@ -1,7 +1,13 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 /**
  * A class that represents a player.
@@ -9,7 +15,7 @@ import java.util.HashMap;
  * @author Charlie Martin
  * @version 2023
  */
-public class Player {
+public class Player implements Serializable {
     private static Player instance;
     private final String name;
     private final HashMap<Item, Integer> inventory = new HashMap<>();
@@ -127,5 +133,25 @@ public class Player {
 
     public int getMoney() {
         return money;
+    }
+
+    public void serialize(String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(this);
+            System.out.println("Serialization completed. Player data saved to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Player deserialize(String filename) {
+        Player player = null;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            player = (Player) in.readObject();
+            System.out.println("Deserialization completed. Player data loaded from " + filename);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return player;
     }
 }
