@@ -55,6 +55,9 @@ public class FishDisplay extends Application {
         StackPane.setMargin(diceDisplayHBox, new Insets(520, 0, 200, 0));
 
         Scene scene = new Scene(root, 1200, 648);
+
+        oceanImageView.setPreserveRatio(true);
+        oceanImageView.fitHeightProperty().bind(scene.heightProperty());
         primaryStage.setTitle("Fish Display");
 
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1), root);

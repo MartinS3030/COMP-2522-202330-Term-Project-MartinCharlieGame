@@ -26,8 +26,9 @@ public class DiceDisplay {
     private final VBox[] vBox;
     private int rollCounter;
     private int roundCounter;
-    private final int MAX_ROUNDS = 5;
+    public final int MAX_ROUNDS = 5;
     private final Stage primaryStage;
+    private final Player player;
 
     private enum GameState {
         WAITING_FOR_USE_DICE,
@@ -45,8 +46,14 @@ public class DiceDisplay {
 
     public DiceDisplay(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        fishingRod = new Fishing_Rod();
+
+
+        player = Player.getInstance("Charlie");
+
+
+        fishingRod = player.getRod();
         diceRoller = new Dice_Roller(fishingRod.getComponents());
+        diceRoller.rollDice();
 
         diceViews = new ImageView[fishingRod.getComponents().size()];
         updateDiceView();
@@ -55,7 +62,7 @@ public class DiceDisplay {
         vBox = new VBox[]{new VBox(), new VBox(), new VBox(), new VBox(), new VBox(), new VBox()};
 
         rollCounter = 0;
-        roundCounter = 0;
+        roundCounter = player.getCastOfTheDay();
 
         selectedDice = new ArrayList<Dice>();
         usedDice = new ArrayList<Dice>();
@@ -273,12 +280,9 @@ public class DiceDisplay {
                 setBorderColor(diceView, BORDER_COLOR);
             }
             rollCounter = 0;
-            roundCounter++;
+            player.setCastOfTheDay(roundCounter + 1);
             System.out.println("Round " + roundCounter + " finished.");
-        }
-        if (roundCounter == MAX_ROUNDS) {
-            System.out.println("Day finished.");
-            System.exit(0);
+            new InitialFishingScreen().start(primaryStage);
         }
     }
     
@@ -292,10 +296,10 @@ public class DiceDisplay {
             vBox[i].getChildren().addAll(diceBox, lockUnlock);
             hBox.getChildren().add(vBox[i]);
         }
+        Button activeQuests = ButtonMaker.createButton("activeQuests", this::activeQuests, 0, 0);
         Button rollDice = ButtonMaker.createButton("rollDice", this::rollDice, 0, 0);
         Button useDice = ButtonMaker.createButton("useDice", this::useDice, 0, 0);
-        Button finishDice = ButtonMaker.createButton("finishRound", this::finishDice, 0, 0);
-        Button activeQuests = ButtonMaker.createButton("activeQuests", this::activeQuests, 0, 0);
+        Button finishDice = ButtonMaker.createButton("finishCast", this::finishDice, 0, 0);
         rollDice.setMaxWidth(130);
         useDice.setMaxWidth(130);
         finishDice.setMaxWidth(130);
