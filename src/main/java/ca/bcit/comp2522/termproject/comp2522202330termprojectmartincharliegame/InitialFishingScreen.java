@@ -2,6 +2,7 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -45,6 +46,7 @@ public class InitialFishingScreen extends Application {
         Button saveGame = ButtonMaker.createButton("Save Game", this::saveGame, 0, 0);
 
         VBox buttonBox = new VBox(cast, viewRod, viewInventory, viewQuests, endDay, saveGame);
+        buttonBox.setAlignment(Pos.CENTER_LEFT);
         buttonBox.setSpacing(2);
 
         buttonBox.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-padding: 10px;");
@@ -65,6 +67,9 @@ public class InitialFishingScreen extends Application {
         final int appHeight = 648;
         Scene scene = new Scene(root, appWidth, appHeight);
 
+        imageView.setPreserveRatio(true);
+        imageView.fitHeightProperty().bind(scene.heightProperty());
+
         primaryStage.setTitle("CastAway");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -78,19 +83,21 @@ public class InitialFishingScreen extends Application {
         Player player = Player.getInstance("Charlie");
         int daysLeft = GameDriver.getTimeLimit() - player.getDate();
 
-        Label label = new Label(String.format("Days Left: %d", daysLeft));
-        label.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
+        Label daysLeftLabel = new Label(String.format("Days Left: %d", daysLeft));
+        daysLeftLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
                 "-fx-font-weight: 900;-fx-font-style: italic;" +
                 "-fx-text-fill: rgb(231, 54, 70);");
+        daysLeftLabel.setEffect(new DropShadow(15, Color.BLACK));
 
-        Label labelOutline = new Label(String.format("Days Left: %d", daysLeft));
-        labelOutline.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
+        Label castsLeftLabel = new Label(String.format("Casts Left: %d", player.getCastLeft()));
+        castsLeftLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
                 "-fx-font-weight: 900;-fx-font-style: italic;" +
-                "-fx-text-fill: black;");
-        labelOutline.setEffect(new DropShadow(15, Color.BLACK));
+                "-fx-text-fill: rgb(231, 54, 70);");
+        castsLeftLabel.setEffect(new DropShadow(15, Color.BLACK));
 
-        StackPane labelStackPane = new StackPane(labelOutline, label);
-        infoBox.getChildren().addAll(labelStackPane);
+        infoBox.getChildren().addAll(daysLeftLabel, castsLeftLabel);
+        infoBox.setSpacing(10);
+        infoBox.setAlignment(Pos.TOP_CENTER);
 
         return infoBox;
     }
@@ -108,6 +115,9 @@ public class InitialFishingScreen extends Application {
     }
 
     public void castReel(final ActionEvent event) {
+        if (Player.getInstance("Charlie").getCastOfTheDay() >= 5) {
+            return;
+        }
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -172,7 +182,7 @@ public class InitialFishingScreen extends Application {
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 gameDriver.endGame(currentStage);
             } else {
-                player.resetCastOfTheDay();
+                player.setCastOfTheDay(0);
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
                 initialFishingScreen.start(currentStage);

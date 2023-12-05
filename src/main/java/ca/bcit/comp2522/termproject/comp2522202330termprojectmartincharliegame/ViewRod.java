@@ -29,6 +29,27 @@ public class ViewRod extends Application {
         StackPane lineBox = createComponentBox("Line");
         StackPane hookBox = createComponentBox("Hook");
 
+        baseBox.setOnMouseClicked(event -> {
+            ModalPopUp baseModal = new DiceFaceModal(0);
+            baseModal.openInGamePopup(primaryStage);
+        });
+        rodBox.setOnMouseClicked(event -> {
+            ModalPopUp rodModal = new DiceFaceModal(1);
+            rodModal.openInGamePopup(primaryStage);
+        });
+        reelBox.setOnMouseClicked(event -> {
+            ModalPopUp reelModal = new DiceFaceModal(2);
+            reelModal.openInGamePopup(primaryStage);
+        });
+        lineBox.setOnMouseClicked(event -> {
+            ModalPopUp lineModal = new DiceFaceModal(3);
+            lineModal.openInGamePopup(primaryStage);
+        });
+        hookBox.setOnMouseClicked(event -> {
+            ModalPopUp hookModal = new DiceFaceModal(4);
+            hookModal.openInGamePopup(primaryStage);
+        });
+
         Label baseText = createParagraph("This base is used to create a great base experience.");
         Label rodText = createParagraph("This rod is used to create a great rod experience.");
         Label reelText = createParagraph("This reel is used to create a great reel experience.");
