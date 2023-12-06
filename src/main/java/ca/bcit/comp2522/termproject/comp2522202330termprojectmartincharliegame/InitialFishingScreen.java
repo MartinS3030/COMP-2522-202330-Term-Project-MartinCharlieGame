@@ -43,9 +43,8 @@ public class InitialFishingScreen extends Application {
         Button viewInventory = ButtonMaker.createButton("View Inventory", this::viewInventory, 0, 0);
         Button viewQuests = ButtonMaker.createButton("View Quests", this::viewQuests, 0, 0);
         Button endDay = ButtonMaker.createButton("End Day", this::endDay, 0, 0);
-        Button saveGame = ButtonMaker.createButton("Save Game", this::saveGame, 0, 0);
 
-        VBox buttonBox = new VBox(cast, viewRod, viewInventory, viewQuests, endDay, saveGame);
+        VBox buttonBox = new VBox(cast, viewRod, viewInventory, viewQuests, endDay);
         buttonBox.setAlignment(Pos.CENTER_LEFT);
         buttonBox.setSpacing(2);
 
@@ -108,10 +107,6 @@ public class InitialFishingScreen extends Application {
 
         infoBox.setLayoutX(centerX);
         infoBox.setLayoutY(centerY);
-    }
-
-    private void saveGame(ActionEvent actionEvent) {
-        System.out.println("Save Game");
     }
 
     public void castReel(final ActionEvent event) {
