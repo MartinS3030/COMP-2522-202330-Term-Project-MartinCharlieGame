@@ -58,7 +58,7 @@ public class Rod_Components implements Dice, Serializable, Item {
     }
 
     @Override
-    public double getValue() {
+    public int getValue() {
         return 0;
     }
 }
