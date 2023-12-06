@@ -37,10 +37,25 @@ public class GameDriver extends Application {
      * @param primaryStage contains the Scene
      */
     public void start(final Stage primaryStage) {
-        Player player = Player.getInstance("Charlie");
+//        Player player = Player.getInstance("Charlie");
+
+//        for (Quest quest : player.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
+//        player.addQuests(new Quest("Catch 5 Common Fish", "Charlie", 5, new Fish("Common Fish", "common", "none", 0, 0), 0, 0, "Catch 5 Common Fish"));
+//        player.addQuests(new Quest("Catch 5 Rare Fish", "Charlie", 5, new Fish("Rare Fish", "rare", "none", 0, 0), 0, 0, "Catch 5 Rare Fish"));
+//        for (Quest quest : player.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
+//        player.serialize("file:../../resources/playerSave.txt");
 
         InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
         initialFishingScreen.start(primaryStage);
+
+//        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
+//        for (Quest quest : loadedPlayer.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
     }
 
     public void endGame(final Stage primaryStage) {

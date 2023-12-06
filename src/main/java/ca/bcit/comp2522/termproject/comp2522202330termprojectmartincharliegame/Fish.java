@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
-public class Fish extends Item {
+import java.io.Serializable;
+
+public class Fish extends Item implements Serializable {
     private String name;
     private String rarity;
     private String requirementType;

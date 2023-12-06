@@ -1,6 +1,8 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
-public class Quest {
+import java.io.Serializable;
+
+public class Quest implements Serializable {
     private int id;
     private final String title;
     private final String giver;
