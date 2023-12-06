@@ -48,6 +48,18 @@ public class GameDriver extends Application {
 //            System.out.println(quest.getTitle());
 //        }
 //        player.serialize("file:../../resources/playerSave.txt");
+//        BulletinBoard bulletinBoard = BulletinBoard.getInstance();
+//
+//        for (Quest quest : bulletinBoard.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
+//
+//        bulletinBoard.serialize("file:../../resources/bulletinBoardSave.txt");
+
+//        BulletinBoard loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
+//        for (Quest quest : loadedBulletinBoard.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
 
         InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
         initialFishingScreen.start(primaryStage);

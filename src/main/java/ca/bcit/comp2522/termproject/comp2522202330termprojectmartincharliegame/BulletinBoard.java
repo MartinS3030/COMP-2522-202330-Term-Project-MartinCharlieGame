@@ -1,9 +1,15 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
-public class BulletinBoard implements Board{
+public class BulletinBoard implements Board, Serializable {
     private static BulletinBoard instance;
     private final ArrayList<Quest> quests = new ArrayList<>();
     private final Player player = Player.getInstance("Charlie");
@@ -107,5 +113,26 @@ public class BulletinBoard implements Board{
 
     public void removeQuest(Quest quest) {
         quests.remove(quest);
+    }
+
+    public void serialize(String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(this);
+            System.out.println("Serialization completed. BulletinBoard data saved to " + filename);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Deserialization method
+    public static BulletinBoard deserialize(String filename) {
+        BulletinBoard bulletinBoard = null;
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            bulletinBoard = (BulletinBoard) in.readObject();
+            System.out.println("Deserialization completed. BulletinBoard data loaded from " + filename);
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return bulletinBoard;
     }
 }
