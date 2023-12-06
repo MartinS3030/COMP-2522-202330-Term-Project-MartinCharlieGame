@@ -7,9 +7,9 @@ public class Fish implements Serializable, Item {
     private String rarity;
     private String requirementType;
     private int requirementValue;
-    private double value;
+    private int value;
 
-    public Fish(final String name, final String rarity, final String requirementType, final int requirementValue, final double value) {
+    public Fish(final String name, final String rarity, final String requirementType, final int requirementValue, final int value) {
         this.name = name;
         this.rarity = rarity;
         this.requirementType = requirementType;
@@ -34,7 +34,7 @@ public class Fish implements Serializable, Item {
     }
 
     @Override
-    public double getValue() {
+    public int getValue() {
         return value;
     }
 }
