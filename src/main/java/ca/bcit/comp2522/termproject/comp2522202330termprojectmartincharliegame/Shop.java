@@ -9,4 +9,12 @@ public class Shop {
 
     }
 
+    public ArrayList<Item> getItems() {
+        return this.items;
+    }
+
+    public void purchaseItem(Item item) {
+        Player player = Player.getInstance("Charlie");
+        player.setMoney(player.getMoney() - item.getValue());
+    }
 }
