@@ -132,8 +132,8 @@ public class Player implements Serializable {
         return inventory;
     }
 
-    public void addMoney(int money) {
-        this.money += money;
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     public int getMoney() {
