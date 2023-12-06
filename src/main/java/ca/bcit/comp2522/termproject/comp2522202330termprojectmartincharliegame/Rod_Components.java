@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Rod_Components extends Item implements Dice, Serializable {
+public class Rod_Components implements Dice, Serializable, Item {
     private static final Random RANDOM_NUMBER_GENERATOR = new Random();
     private final String name;
     private final ArrayList<Integer> values;
@@ -55,5 +55,10 @@ public class Rod_Components extends Item implements Dice, Serializable {
     @Override
     public Integer getFaceUpValue() {
         return faceUpValue;
+    }
+
+    @Override
+    public double getValue() {
+        return 0;
     }
 }

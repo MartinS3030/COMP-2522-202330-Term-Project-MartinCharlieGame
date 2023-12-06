@@ -2,7 +2,7 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import java.io.Serializable;
 
-public class Fish extends Item implements Serializable {
+public class Fish implements Serializable, Item {
     private String name;
     private String rarity;
     private String requirementType;
@@ -33,6 +33,7 @@ public class Fish extends Item implements Serializable {
         return requirementValue;
     }
 
+    @Override
     public double getValue() {
         return value;
     }
