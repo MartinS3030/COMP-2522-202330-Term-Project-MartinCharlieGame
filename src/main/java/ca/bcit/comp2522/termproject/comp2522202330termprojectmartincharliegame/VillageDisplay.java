@@ -28,7 +28,7 @@ public class VillageDisplay extends Application {
         Button viewInventory = ButtonMaker.createButton("View Inventory", this::showBulletinBoard, 0, 0);
         Button sleep = ButtonMaker.createButton("Sleep", this::showSleep, 0, 0);
         Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBulletinBoard, 0, 0);
-        Button save = ButtonMaker.createButton("Save", this::showSave, 0, 0);
+        Button save = ButtonMaker.createButton("Save", this::save, 0, 0);
 
         VBox buttonBox = new VBox(bulletinBoard, shop, viewQuests, viewInventory, sleep, buyBoat, save);
         buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
@@ -68,7 +68,11 @@ public class VillageDisplay extends Application {
         System.out.println("Sleep");
     }
 
-    public void showSave(ActionEvent event) {
-        System.out.println("Save");
+    public void save(ActionEvent event) {
+        Player player = Player.getInstance("Charlie");
+        BulletinBoard bulletinBoard = BulletinBoard.getInstance();
+
+        player.serialize("file:../../resources/playerSave.txt");
+        bulletinBoard.serialize("file:../../resources/bulletinBoardSave.txt");
     }
 }
