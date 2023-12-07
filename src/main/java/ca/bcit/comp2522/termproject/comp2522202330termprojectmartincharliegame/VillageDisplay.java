@@ -15,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
 public class VillageDisplay extends Application {
+    Player player = Player.getInstance("Charlie");
     @Override
     public void start(Stage primaryStage) {
         Image village = new Image("file:../../resources/village.png");
@@ -26,7 +27,7 @@ public class VillageDisplay extends Application {
         Button shop = ButtonMaker.createButton("Shop", this::showShop, 0, 0);
         Button viewQuests = ButtonMaker.createButton("View Quests", this::showBulletinBoard, 0, 0);
         Button viewInventory = ButtonMaker.createButton("View Inventory", this::showBulletinBoard, 0, 0);
-        Button sleep = ButtonMaker.createButton("Sleep", this::showSleep, 0, 0);
+        Button sleep = ButtonMaker.createButton("Sleep", this::sleep, 0, 0);
         Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBulletinBoard, 0, 0);
         Button save = ButtonMaker.createButton("Save", this::save, 0, 0);
 
@@ -64,12 +65,27 @@ public class VillageDisplay extends Application {
         System.out.println("Shop");
     }
 
-    public void showSleep(ActionEvent event) {
-        System.out.println("Sleep");
+    public void sleep(ActionEvent event) {
+        player.setDate(player.getDate() + 1);
+        player.setCastOfTheDay(0);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
+            initialFishingScreen.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 
     public void save(ActionEvent event) {
-        Player player = Player.getInstance("Charlie");
         BulletinBoard bulletinBoard = BulletinBoard.getInstance();
 
         player.serialize("file:../../resources/playerSave.txt");
