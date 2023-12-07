@@ -1,18 +1,21 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class StartScreen extends Application {
 
@@ -32,7 +35,7 @@ public class StartScreen extends Application {
         Label loadGame = generateLabel("Load Game", 30);
         Label exitGame = generateLabel("Exit Game", 30);
 
-        startGame.setOnMouseClicked(event -> showGameStartDisplay());
+        startGame.setOnMouseClicked(this::showGameStartDisplay);
         exitGame.setOnMouseClicked(event -> Platform.exit());
 
         VBox menu = new VBox( startGame, loadGame, exitGame);
@@ -53,7 +56,23 @@ public class StartScreen extends Application {
         primaryStage.show();
     }
 
+    private void showGameStartDisplay(MouseEvent event) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            GameStartDisplay gameStartDisplay = new GameStartDisplay();
+
+            gameStartDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
+    }
 
     public Label generateLabel(String text, int fontSize) {
         Font font = Font.loadFont("file:resources/Fonts/PressStart2P-Regular.ttf", fontSize);
