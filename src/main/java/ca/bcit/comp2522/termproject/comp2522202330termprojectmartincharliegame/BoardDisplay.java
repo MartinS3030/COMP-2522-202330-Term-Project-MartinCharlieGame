@@ -27,6 +27,7 @@ public class BoardDisplay extends Application {
     private Stage primaryStage;
     BulletinBoard bulletinBoard = BulletinBoard.getInstance();
     ArrayList<Quest> questList = bulletinBoard.getQuests();
+    private int startIndex = 0;
 
     @Override
     public void start(Stage primaryStage) {
@@ -68,6 +69,8 @@ public class BoardDisplay extends Application {
     }
 
     private StackPane generateBoardUI(StackPane questStack) {
+        int endIndex = Math.min(startIndex + 4, questList.size());
+
         Image bulletinBoard = new Image("file:../../resources/BulletinBoard.png");
         ImageView bulletinBoardView = new ImageView(bulletinBoard);
 
@@ -76,12 +79,24 @@ public class BoardDisplay extends Application {
         requestTitle.setFont(font);
         requestTitle.setTranslateX(200);
 
+        Button nextButton = ButtonMaker.createButton("Next", this::nextQuests, 0, 0);
+        Button previousButton = ButtonMaker.createButton("Previous", this::previousQuests, 0, 0);
+
+        nextButton.setPrefHeight(50);
+        nextButton.setPrefWidth(100);
+        previousButton.setPrefHeight(50);
+        previousButton.setPrefWidth(100);
+
+        HBox nextPreviousButtons = new HBox(previousButton, nextButton);
+
         VBox allQuestView = new VBox(requestTitle);
 
-        for (int i = 0; i < questList.size(); i++) {
+        for (int i = startIndex; i < endIndex; i++) {
             HBox questDetailsView = boardHBox(questList.get(i), questStack);
             allQuestView.getChildren().add(questDetailsView);
         }
+
+        allQuestView.getChildren().add(nextPreviousButtons);
 
         allQuestView.setSpacing(0);
 
@@ -221,5 +236,19 @@ public class BoardDisplay extends Application {
         });
 
         fadeTransition.play();
+    }
+
+    private void nextQuests(ActionEvent event) {
+        if (startIndex + 4 < questList.size()) {
+            startIndex = Math.min(startIndex + 4, questList.size());
+            updateDisplay();
+        }
+    }
+
+    private void previousQuests(ActionEvent event) {
+        if (startIndex - 4 >= 0) {
+            startIndex = Math.max(startIndex - 4, 0);
+            updateDisplay();
+        }
     }
 }
