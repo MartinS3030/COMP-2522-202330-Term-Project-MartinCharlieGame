@@ -1,13 +1,16 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -15,6 +18,8 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 
@@ -26,15 +31,6 @@ public class BoardDisplay extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-//        StackPane questStack = generateQuestDetails(questList.get(0));
-//        StackPane bulletinBoardStack = getStackPane(questStack);
-//
-//        HBox root = new HBox(bulletinBoardStack, questStack);
-//
-//        Scene scene = new Scene(root, 1200, 648);
-//        this.primaryStage.setTitle("Quest Display");
-//        this.primaryStage.setScene(scene);
-//        this.primaryStage.show();
         displayUI();
     }
 
@@ -46,9 +42,10 @@ public class BoardDisplay extends Application {
             questStack = generateQuestDetails(new Quest("No Quests Available", "No One", 0, new Fish("No Fish", "common", "none", 0, 0), 0, 0, "There are no quests available at this time. Please check back later."));
         }
 
-        StackPane bulletinBoardStack = getStackPane(questStack);
+        StackPane bulletinBoardStack = generateBoardUI(questStack);
+        VBox left = generateLeft(bulletinBoardStack);
 
-        HBox root = new HBox(bulletinBoardStack, questStack);
+        HBox root = new HBox(left, questStack);
 
         Scene scene = new Scene(root, 1200, 648);
         this.primaryStage.setTitle("Quest Display");
@@ -56,7 +53,21 @@ public class BoardDisplay extends Application {
         this.primaryStage.show();
     }
 
-    private StackPane getStackPane(StackPane questStack) {
+    private VBox generateLeft(StackPane bulletinBoard) {
+        Image backButton = new Image("file:../../resources/backButton.png");
+        ImageView backButtonView = new ImageView(backButton);
+        backButtonView.setFitHeight(80);
+        backButtonView.setFitWidth(80);
+        backButtonView.setOnMouseClicked(event -> back(event));
+
+        Button viewQuests = ButtonMaker.createButton("View Quests", this::displayActiveQuests, 0, 0);
+        HBox buttons = new HBox(backButtonView, viewQuests);
+        buttons.setSpacing(418);
+
+        return new VBox(bulletinBoard, buttons);
+    }
+
+    private StackPane generateBoardUI(StackPane questStack) {
         Image bulletinBoard = new Image("file:../../resources/BulletinBoard.png");
         ImageView bulletinBoardView = new ImageView(bulletinBoard);
 
@@ -68,7 +79,7 @@ public class BoardDisplay extends Application {
         VBox allQuestView = new VBox(requestTitle);
 
         for (int i = 0; i < questList.size(); i++) {
-            HBox questDetailsView = getHBox(questList.get(i), questStack);
+            HBox questDetailsView = boardHBox(questList.get(i), questStack);
             allQuestView.getChildren().add(questDetailsView);
         }
 
@@ -81,7 +92,7 @@ public class BoardDisplay extends Application {
         return bulletinBoardStack;
     }
 
-    private HBox getHBox(Quest quest, StackPane questStack) {
+    private HBox boardHBox(Quest quest, StackPane questStack) {
         Image fishImage = new Image("file:../../resources/Fish/" + quest.getObjective().getName() + ".png");
         ImageView fishImageView = new ImageView(fishImage);
 
@@ -161,10 +172,6 @@ public class BoardDisplay extends Application {
         return questStack;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
     public void acceptQuest(Quest quest) {
         Player player = Player.getInstance("Charlie");
         try {
@@ -190,5 +197,29 @@ public class BoardDisplay extends Application {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    public void displayActiveQuests(ActionEvent event) {
+        ModalPopUp modalPopUp = new ActiveQuestModal();
+        modalPopUp.openInGamePopup(primaryStage);
+    }
+
+    public void back(final MouseEvent event) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            VillageDisplay villageDisplay = new VillageDisplay();
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            villageDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 }
