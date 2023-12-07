@@ -12,11 +12,13 @@ public class ButtonMaker {
 
         button.setPrefWidth(200);
         button.setPrefHeight(75);
-        button.setOpacity(0.7);
+        button.setOpacity(0.8);
         Font font = Font.loadFont("file:resources/Fonts/PressStart2P-Regular.ttf", 10);
         button.setFont(font);
         button.setWrapText(true);
-        button.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightblue; -fx-border-radius: 10px;");
+        button.setStyle("-fx-border-color: black; -fx-border-width: 2px; -fx-background-color: lightblue; -fx-border-radius: 10px; -fx-background-radius: 10px;");
+
+        button.setAlignment(javafx.geometry.Pos.CENTER);
 
         button.setLayoutX(xPosition);
         button.setLayoutY(yPosition);
