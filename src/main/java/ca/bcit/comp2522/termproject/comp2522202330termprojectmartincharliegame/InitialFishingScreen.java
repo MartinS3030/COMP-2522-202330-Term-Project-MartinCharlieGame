@@ -156,7 +156,9 @@ public class InitialFishingScreen extends Application {
     }
 
     public void viewQuests(final ActionEvent event) {
-        System.out.println("View Quests");
+        ModalPopUp modalPopUp = new ActiveQuestModal();
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        modalPopUp.openInGamePopup(currentStage);
     }
 
     public void endDay(final ActionEvent event) {
