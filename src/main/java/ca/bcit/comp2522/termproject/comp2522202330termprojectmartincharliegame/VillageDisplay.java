@@ -43,7 +43,21 @@ public class VillageDisplay extends Application {
 
 
     public void showBulletinBoard(ActionEvent event) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            BoardDisplay boardDisplay = new BoardDisplay();
+            boardDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 
     public void showShop(ActionEvent event) {
