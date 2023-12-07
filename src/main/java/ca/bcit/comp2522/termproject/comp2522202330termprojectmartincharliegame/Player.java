@@ -21,8 +21,8 @@ public class Player implements Serializable {
     private final HashMap<Item, Integer> inventory = new HashMap<>();
     private ArrayList<Quest> activeQuests = new ArrayList<>();
     private Fishing_Rod rod;
-    private int money = 0;
-    private int date = 1;
+    private static int money;
+    private static int date;
     private int castOfTheDay = 0;
     private final int MAX_CAST = 5;
 
@@ -46,6 +46,8 @@ public class Player implements Serializable {
     public static Player getInstance(String name) {
         if (instance == null) {
             instance = new Player(name);
+            money = 1000;
+            date = 1;
         }
         return instance;
     }
