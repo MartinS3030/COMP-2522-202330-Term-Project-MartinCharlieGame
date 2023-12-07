@@ -37,37 +37,8 @@ public class GameDriver extends Application {
      * @param primaryStage contains the Scene
      */
     public void start(final Stage primaryStage) {
-//        Player player = Player.getInstance("Charlie");
-
-//        for (Quest quest : player.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
-//        player.addQuests(new Quest("Catch 5 Common Fish", "Charlie", 5, new Fish("Common Fish", "common", "none", 0, 0), 0, 0, "Catch 5 Common Fish"));
-//        player.addQuests(new Quest("Catch 5 Rare Fish", "Charlie", 5, new Fish("Rare Fish", "rare", "none", 0, 0), 0, 0, "Catch 5 Rare Fish"));
-//        for (Quest quest : player.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
-//        player.serialize("file:../../resources/playerSave.txt");
-//        BulletinBoard bulletinBoard = BulletinBoard.getInstance();
-//
-//        for (Quest quest : bulletinBoard.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
-//
-//        bulletinBoard.serialize("file:../../resources/bulletinBoardSave.txt");
-
-//        BulletinBoard loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
-//        for (Quest quest : loadedBulletinBoard.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
-
-        InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
-        initialFishingScreen.start(primaryStage);
-
-//        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
-//        for (Quest quest : loadedPlayer.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
+        StartScreen startScreen = new StartScreen();
+        startScreen.start(primaryStage);
     }
 
     public void endGame(final Stage primaryStage) {
@@ -100,5 +71,37 @@ public class GameDriver extends Application {
 
     public static int getMoneyGoal() {
         return MONEY_GOAL;
+    }
+
+    public void serializePlayer() {
+        Player player = Player.getInstance("Charlie");
+
+        for (Quest quest : player.getQuests()) {
+            System.out.println(quest.getTitle());
+        }
+        player.addQuests(new Quest("Catch 5 Common Fish", "Charlie", 5, new Fish("Common Fish", "common", "none", 0, 0), 0, 0, "Catch 5 Common Fish"));
+        player.addQuests(new Quest("Catch 5 Rare Fish", "Charlie", 5, new Fish("Rare Fish", "rare", "none", 0, 0), 0, 0, "Catch 5 Rare Fish"));
+        for (Quest quest : player.getQuests()) {
+            System.out.println(quest.getTitle());
+        }
+        player.serialize("file:../../resources/playerSave.txt");
+        //        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
+//        for (Quest quest : loadedPlayer.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
+    }
+
+    public void serializeBoard() {
+        BulletinBoard bulletinBoard = BulletinBoard.getInstance();
+
+        for (Quest quest : bulletinBoard.getQuests()) {
+            System.out.println(quest.getTitle());
+        }
+
+        bulletinBoard.serialize("file:../../resources/bulletinBoardSave.txt");
+        //        BulletinBoard loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
+//        for (Quest quest : loadedBulletinBoard.getQuests()) {
+//            System.out.println(quest.getTitle());
+//        }
     }
 }

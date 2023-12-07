@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -16,6 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.Optional;
 
 public class StartScreen extends Application {
 
@@ -78,6 +81,25 @@ public class StartScreen extends Application {
     }
 
     private void startGame(MouseEvent event) {
+        String enteredName = "";
+
+        while (enteredName.isEmpty()) {
+            TextInputDialog inputDialog = new TextInputDialog();
+            inputDialog.setHeaderText(null);
+            inputDialog.setTitle(null);
+            inputDialog.setContentText("Enter your name:");
+            Optional<String> name = inputDialog.showAndWait();
+
+            if (name.isPresent()) {
+                enteredName = name.get();
+            } else {
+                System.out.println("User canceled or closed the dialog.");
+                return;
+            }
+        }
+
+        System.out.println("User entered: " + enteredName);
+        Player player = Player.getInstance(enteredName);
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -87,7 +109,7 @@ public class StartScreen extends Application {
 
         fadeTransition.setOnFinished(e -> {
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            GameStartDisplay gameStartDisplay = new GameStartDisplay();
+            IntroScreen gameStartDisplay = new IntroScreen();
 
             gameStartDisplay.start(currentStage);
         });
