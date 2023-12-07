@@ -69,7 +69,7 @@ public class InitialFishingScreen extends Application {
         imageView.setPreserveRatio(true);
         imageView.fitHeightProperty().bind(scene.heightProperty());
 
-        primaryStage.setTitle("CastAway");
+//        primaryStage.setTitle("CastAway");
         primaryStage.setScene(scene);
         primaryStage.show();
 
@@ -160,8 +160,6 @@ public class InitialFishingScreen extends Application {
     }
 
     public void endDay(final ActionEvent event) {
-
-
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -170,20 +168,36 @@ public class InitialFishingScreen extends Application {
         fadeTransition.setToValue(0.0);
 
         fadeTransition.setOnFinished(e -> {
-            Player player = Player.getInstance("Charlie");
-            player.setDate(player.getDate());
-            if (player.getDate() > GameDriver.getTimeLimit()) {
-                GameDriver gameDriver = new GameDriver();
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                gameDriver.endGame(currentStage);
-            } else {
-                player.setCastOfTheDay(0);
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
-                initialFishingScreen.start(currentStage);
-            }
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            VillageDisplay villageDisplay = new VillageDisplay();
+            villageDisplay.start(currentStage);
         });
 
         fadeTransition.play();
+
+//        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+//
+//        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+//
+//        fadeTransition.setFromValue(1.0);
+//        fadeTransition.setToValue(0.0);
+//
+//        fadeTransition.setOnFinished(e -> {
+//            Player player = Player.getInstance("Charlie");
+//            player.setDate(player.getDate());
+//            if (player.getDate() > GameDriver.getTimeLimit()) {
+//                GameDriver gameDriver = new GameDriver();
+//                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//                gameDriver.endGame(currentStage);
+//            } else {
+//                player.setCastOfTheDay(0);
+//                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+//                InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
+//                initialFishingScreen.start(currentStage);
+//            }
+//        });
+//
+//        fadeTransition.play();
     }
 }

@@ -66,8 +66,17 @@ public class VillageDisplay extends Application {
     }
 
     public void sleep(ActionEvent event) {
-        player.setDate(player.getDate() + 1);
-        player.setCastOfTheDay(0);
+            player.setDate(player.getDate());
+            if (player.getDate() > GameDriver.getTimeLimit()) {
+                GameDriver gameDriver = new GameDriver();
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                gameDriver.endGame(currentStage);
+            } else {
+                player.setCastOfTheDay(0);
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
+                initialFishingScreen.start(currentStage);
+            }
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
