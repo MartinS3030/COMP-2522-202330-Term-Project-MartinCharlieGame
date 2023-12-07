@@ -61,7 +61,24 @@ public class GameStartDisplay extends Application {
         primaryStage.setTitle("Tide's Up, Funds Up!");
         primaryStage.show();
 
+        List<FadeTransition> labelFadeTransitions = new ArrayList<>();
+        for (int i = 0; i < labelList.size(); i++) {
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.5), labelList.get(i));
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+            fadeTransition.setDelay(Duration.seconds(0.5));
+            labelFadeTransitions.add(fadeTransition);
+        }
 
+        FadeTransition buttonFadeTransition = new FadeTransition(Duration.seconds(1), next);
+        buttonFadeTransition.setFromValue(0);
+        buttonFadeTransition.setToValue(1);
+
+        SequentialTransition sequentialTransition = new SequentialTransition();
+        sequentialTransition.getChildren().addAll(labelFadeTransitions);
+        sequentialTransition.getChildren().add(buttonFadeTransition);
+
+        sequentialTransition.play();
     }
 
     private void nextScreen(ActionEvent event) {
