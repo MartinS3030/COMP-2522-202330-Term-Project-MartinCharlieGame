@@ -11,15 +11,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ActiveQuestModal implements ModalPopUp{
+
+    private static final int MAX_QUESTS = 5;
     public ActiveQuestModal() {
     }
 
     public void openInGamePopup(Stage primaryStage) {
-        ActiveQuests activeQuests = ActiveQuests.getInstance();
-        activeQuests.generateQuests();
+        Player player = Player.getInstance("Charlie");
+        ArrayList<Quest> activeQuests =  player.getQuests();
 
         Popup popup = new Popup();
 
@@ -51,7 +54,7 @@ public class ActiveQuestModal implements ModalPopUp{
         popup.setY(centerY);
     }
 
-    private VBox getMainVBox(ActiveQuests activeQuests, Popup popup) {
+    private VBox getMainVBox(ArrayList<Quest> activeQuests, Popup popup) {
         // Create VBox
         VBox vbox = new VBox(10); // Set spacing between children
         vbox.setStyle("-fx-padding: 8px;");
@@ -60,13 +63,15 @@ public class ActiveQuestModal implements ModalPopUp{
 
         vbox.getChildren().add(labelHBox);
 
-        for (Quest quest : activeQuests.getActiveQuests()) {
+        for (Quest quest : activeQuests) {
             HBox questHBox;
-            if (quest != null) {
-                questHBox = createFilledQuestHBox(quest);
-            } else {
-                questHBox = createEmptyQuestHBox();
-            }
+            questHBox = createFilledQuestHBox(quest);
+            vbox.getChildren().addAll(questHBox);
+        }
+
+        for (int i = activeQuests.size(); i < MAX_QUESTS; i++) {
+            HBox questHBox;
+            questHBox = createEmptyQuestHBox();
             vbox.getChildren().addAll(questHBox);
         }
 
