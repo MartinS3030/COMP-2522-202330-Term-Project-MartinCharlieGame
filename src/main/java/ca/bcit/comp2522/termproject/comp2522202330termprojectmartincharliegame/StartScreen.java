@@ -35,7 +35,8 @@ public class StartScreen extends Application {
         Label loadGame = generateLabel("Load Game", 30);
         Label exitGame = generateLabel("Exit Game", 30);
 
-        startGame.setOnMouseClicked(this::showGameStartDisplay);
+        startGame.setOnMouseClicked(this::startGame);
+        loadGame.setOnMouseClicked(this::loadGame);
         exitGame.setOnMouseClicked(event -> Platform.exit());
 
         VBox menu = new VBox( startGame, loadGame, exitGame);
@@ -56,7 +57,27 @@ public class StartScreen extends Application {
         primaryStage.show();
     }
 
-    private void showGameStartDisplay(MouseEvent event) {
+    private void loadGame(MouseEvent mouseEvent) {
+        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
+        BulletinBoard loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) mouseEvent.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            VillageDisplay villageDisplay = new VillageDisplay();
+
+            villageDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
+    }
+
+    private void startGame(MouseEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
