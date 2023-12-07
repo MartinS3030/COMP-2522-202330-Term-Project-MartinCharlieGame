@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -17,17 +18,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.Optional;
 
 public class StartScreen extends Application {
 
-    private Stage primaryStage;
 
     @Override
     public void start(final Stage primaryStage) {
-        this.primaryStage = primaryStage;
-
         Image image = new Image("file:../../resources/StartScreen.jpg");
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
@@ -61,23 +58,36 @@ public class StartScreen extends Application {
     }
 
     private void loadGame(MouseEvent mouseEvent) {
-        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
-        BulletinBoard loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+        Player loadedPlayer = null;
+        BulletinBoard loadedBulletinBoard = null;
 
-        fadeTransition.setNode(((Node) mouseEvent.getSource()).getScene().getRoot());
+        try {
+            loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
+            loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
+        } catch (Exception e) {
+            Platform.runLater(() -> {
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("No save data found.");
+                errorAlert.showAndWait();
+            });
+            return;
+        }
 
-        fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0.0);
+        if (loadedPlayer != null && loadedBulletinBoard != null) {
+            FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+            fadeTransition.setNode(((Node) mouseEvent.getSource()).getScene().getRoot());
+            fadeTransition.setFromValue(1.0);
+            fadeTransition.setToValue(0.0);
 
-        fadeTransition.setOnFinished(e -> {
-            Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-            VillageDisplay villageDisplay = new VillageDisplay();
+            fadeTransition.setOnFinished(e -> {
+                Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+                VillageDisplay villageDisplay = new VillageDisplay();
+                villageDisplay.start(currentStage);
+            });
 
-            villageDisplay.start(currentStage);
-        });
-
-        fadeTransition.play();
+            fadeTransition.play();
+        }
     }
 
     private void startGame(MouseEvent event) {
