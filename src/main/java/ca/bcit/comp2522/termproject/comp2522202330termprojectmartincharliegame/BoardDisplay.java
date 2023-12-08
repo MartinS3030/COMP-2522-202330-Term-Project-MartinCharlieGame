@@ -355,7 +355,7 @@ public class BoardDisplay extends Application {
             for (int i = 0; i < 2; i++) {
                 bulletinBoard.addQuest(bulletinBoard.generateCommonQuest());
             }
-        } else if (player.getDate() > 7 && player.getDate() < 15 && !daysPassed.contains(player.getDate())) {
+        } else if (player.getDate() > 3 && player.getDate() <= 5 && !daysPassed.contains(player.getDate())) {
             for (int i = 0; i < 2; i++) {
                 int questRarity = random.nextInt(2);
                 if (questRarity == 0) {
@@ -364,7 +364,7 @@ public class BoardDisplay extends Application {
                     bulletinBoard.addQuest(bulletinBoard.generateRareQuest());
                 }
             }
-        } else if (player.getDate() > 14 && !daysPassed.contains(player.getDate())) {
+        } else if (player.getDate() > 5 && !daysPassed.contains(player.getDate())) {
             for (int i = 0; i < 2; i++) {
                 int questRarity = random.nextInt(3);
                 if (questRarity == 0) {

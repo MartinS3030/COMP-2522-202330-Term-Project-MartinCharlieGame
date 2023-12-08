@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  */
 public class GameDriver extends Application {
 
-    private static final int TIME_LIMIT = 30;
+    private static final int TIME_LIMIT = 10;
     private static final int MONEY_GOAL = 1000;
 
     /**

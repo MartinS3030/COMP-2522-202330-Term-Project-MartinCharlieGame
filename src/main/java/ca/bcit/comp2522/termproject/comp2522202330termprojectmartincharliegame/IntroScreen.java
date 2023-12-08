@@ -146,7 +146,7 @@ public class IntroScreen extends Application {
 
         paragraphs.add("No! It WAS real! The premonition does not fade, and your conviction has only steeled that it was a future yet to pass. There's no way to convince anyone else of the truth. They will think you have gone MAD! You must save yourself and get off of this island.");
 
-        paragraphs.add("You have 30 days before The Wave comes and takes your small island village. You must sell enough fish to make enough money to buy a boat, to get off of this doom island.");
+        paragraphs.add("You have 10 days before The Wave comes and takes your small island village. You must sell enough fish to make enough money to buy a boat, to get off of this doom island.");
         return paragraphs;
     }
 
