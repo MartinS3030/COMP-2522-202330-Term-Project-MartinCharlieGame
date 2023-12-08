@@ -29,6 +29,7 @@ public class VillageDisplay extends Application {
      */
     public static final int STAGE_HEIGHT = 648;
     private final Player player = Player.getInstance("Charlie");
+    private Stage primaryStage;
 
     /**
      * Launches the stage.
@@ -37,6 +38,7 @@ public class VillageDisplay extends Application {
      */
     @Override
     public void start(final Stage primaryStage) {
+        this.primaryStage = primaryStage;
         Image village = new Image("file:../../resources/village.png");
         ImageView villageView = new ImageView(village);
         villageView.setFitHeight(STAGE_HEIGHT);
@@ -90,7 +92,22 @@ public class VillageDisplay extends Application {
      * @param event the event
      */
     public void showShop(final ActionEvent event) {
-        System.out.println("Shop");
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            ShopDisplay shopDisplay = new ShopDisplay();
+            shopDisplay.start(currentStage);
+
+        });
+
+        fadeTransition.play();
     }
 
     /**

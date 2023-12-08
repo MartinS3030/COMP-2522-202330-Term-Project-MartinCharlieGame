@@ -8,4 +8,6 @@ public interface Dice {
     void addFace(Integer face);
 
     Integer getFaceUpValue();
+
+    void replaceFace(Integer face, Integer replacementFace);
 }

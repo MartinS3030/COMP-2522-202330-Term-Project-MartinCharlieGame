@@ -39,7 +39,7 @@ public class FishingDiceDisplay extends DiceDisplay{
 //    private final ArrayList<Dice> usedDice;
 
     public FishingDiceDisplay(Stage primaryStage) {
-        super(primaryStage);
+        super();
         this.primaryStage = primaryStage;
         diceRoller = new Dice_Roller(getFishingRod().getComponents());
         diceRoller.rollDice();

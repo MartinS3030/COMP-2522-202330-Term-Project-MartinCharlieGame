@@ -20,7 +20,7 @@ public class DiceDisplay {
     private final ArrayList<Dice> selectedDice;
     private final ArrayList<Dice> usedDice;
 
-    public DiceDisplay(Stage primaryStage) {
+    public DiceDisplay() {
         player = Player.getInstance("Charlie");
         fishingRod = generateRod();
 
@@ -142,6 +142,9 @@ public class DiceDisplay {
     protected void selectDice(int diceIndex) {
         System.out.printf("Selecting dice %d\n", diceIndex);
         Dice dice = fishingRod.getComponents().get(diceIndex);
+        if (usedDice.contains(dice)) {
+            return;
+        }
         if (selectedDice.contains(dice)) {
             resetBorderColor(diceViews[diceIndex]);
             selectedDice.remove(dice);
@@ -156,6 +159,9 @@ public class DiceDisplay {
     }
 
     public HBox getDiceDisplay() {
+        if (!hBox.getChildren().isEmpty()) {
+            return hBox;
+        }
         for (int i = 0; i < diceViews.length; i++) {
             int diceIndex = i;
             StackPane diceBox = createRoundedBorderedImageView(diceViews[i], BORDER_COLOR);

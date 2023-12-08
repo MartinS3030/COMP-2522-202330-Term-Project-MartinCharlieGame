@@ -14,11 +14,17 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class DiceFaceModal implements ModalPopUp{
+    private static final ArrayList<DiceFaceModal> openedModal = new ArrayList<>();
     private final int diceIndex;
     public DiceFaceModal(int diceIndex) {
         this.diceIndex = diceIndex;
     }
     public void openInGamePopup(Stage primaryStage) {
+        if (openedModal.isEmpty()) {
+            openedModal.add(this);
+        } else {
+            return;
+        }
         Player player = Player.getInstance("Charlie");
         Fishing_Rod fishingRod = player.getRod();
 
@@ -75,7 +81,9 @@ public class DiceFaceModal implements ModalPopUp{
 
         vbox.getChildren().add(labelHBox);
 
-        VBox diceFaceVBox = createDiceFaceVBox(fishingRod.getComponents().get(diceIndex));
+        ArrayList<ImageView> diceViews = createDiceFaceViews(fishingRod.getComponents().get(diceIndex), popup);
+        VBox diceFaceVBox = createTVbox(diceViews);
+
         diceFaceVBox.setAlignment(Pos.CENTER);
 
         vbox.getChildren().addAll(diceFaceVBox);
@@ -89,7 +97,10 @@ public class DiceFaceModal implements ModalPopUp{
 
     private HBox getButtonHBox(Popup popup) {
         Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> popup.hide());
+        closeButton.setOnAction(e -> {
+            popup.hide();
+            openedModal.clear();
+        });
         closeButton.setStyle("-fx-background-color: rgb(28, 55, 201);" +
                 "-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700;" +
                 "-fx-padding: 5px;-fx-text-fill: rgb(29, 41, 41);-fx-border-width: 2px" +
@@ -115,7 +126,7 @@ public class DiceFaceModal implements ModalPopUp{
         return labelHBox;
     }
 
-    private VBox createDiceFaceVBox(Dice dice) {
+    protected ArrayList<ImageView> createDiceFaceViews(Dice dice, Popup popup) {
         ArrayList<ImageView> diceViews = new ArrayList<>();
         for (Integer face : dice.getFaceList()) {
             ImageView diceView= DiceFace.getDiceFaceImage(face);
@@ -131,8 +142,11 @@ public class DiceFaceModal implements ModalPopUp{
             diceViews.add(diceView);
         }
 
-        VBox diceFaceVBox = new VBox();
+        return diceViews;
+    }
 
+    private VBox createTVbox(ArrayList<ImageView> diceViews) {
+        VBox diceFaceVBox = new VBox();
         for (int i = 0; i < diceViews.size(); i++) {
             if (i == 0) {
                 HBox firstRow = new HBox();
@@ -150,4 +164,7 @@ public class DiceFaceModal implements ModalPopUp{
         return diceFaceVBox;
     }
 
+    public static void clearOpenedModal() {
+        openedModal.clear();
+    }
 }
