@@ -181,10 +181,12 @@ public class FishDisplay extends Application {
         int count = 0;
         while (count < FISH_TO_CATCH) {
             int rarity = random.nextInt(100) + 1;
-            if (rarity <= 50) {
+            if (rarity <= 20) {
                 fishKey = random.nextInt(13) + 1;
-            } else {
+            } else if (rarity <= 25) {
                 fishKey = random.nextInt(8) + 14;
+            } else {
+                fishKey = random.nextInt(5) + 22;
             }
             count++;
             FishSpecies fishSpecies = new FishSpecies();

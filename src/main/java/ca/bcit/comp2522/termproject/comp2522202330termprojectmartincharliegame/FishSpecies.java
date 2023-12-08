@@ -36,15 +36,11 @@ public class FishSpecies {
         fishSpecies.put(22, new Fish("Bruce", "Legendary", "ofakind", 5, 1620));
         fishSpecies.put(23, new Fish("Dory", "Legendary", "straight", 5, 1780));
         fishSpecies.put(24, new Fish("Flounder", "Legendary", "fullHouse", 5, 1560));
-        fishSpecies.put(26, new Fish("Mrs. Puff", "Legendary", "greater", 28, 1800));
-        fishSpecies.put(27, new Fish("Nemo", "Legendary", "less", 7, 1800));
+        fishSpecies.put(25, new Fish("Mrs Puff", "Legendary", "greater", 28, 1800));
+        fishSpecies.put(26, new Fish("Nemo", "Legendary", "less", 7, 1800));
     }
 
     public Fish getFish(int key) {
         return fishSpecies.get(key);
-    }
-
-    public HashMap<Integer, Fish> getFishSpecies() {
-        return fishSpecies;
     }
 }
