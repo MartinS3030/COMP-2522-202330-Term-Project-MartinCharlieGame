@@ -1,14 +1,15 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
-import java.util.ArrayList;
+import javafx.stage.Stage;
 
 public class Shop {
     private static Shop shopInstance = null;
-    ArrayList<Dice> items = new ArrayList<>();
     private static final int ITEM_COST = 200;
 
+    private final DiceDisplay diceDisplay;
+
     private Shop() {
-        generateItems();
+        this.diceDisplay = new DiceDisplay();
     }
 
     public static Shop getInstance() {
@@ -18,24 +19,22 @@ public class Shop {
         return shopInstance;
     }
 
+    public int getItemCost() {
+        return ITEM_COST;
+    }
+
     public static void resetShop() {
         shopInstance = null;
     }
 
-    public ArrayList<Dice> getItems() {
-        return this.items;
+    public DiceDisplay getDiceDisplay() {
+        return diceDisplay;
     }
 
-    public void purchaseItem(Dice item) {
+
+    public void purchaseItem() {
         Player player = Player.getInstance("Charlie");
         player.setMoney(player.getMoney() - ITEM_COST);
     }
 
-    public void generateItems() {
-        Fishing_Rod dice = new Fishing_Rod();
-        for (Dice die : dice.getComponents()) {
-            die.roll();
-            items.add(die);
-        }
-    }
 }
