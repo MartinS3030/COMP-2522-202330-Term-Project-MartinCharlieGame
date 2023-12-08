@@ -119,7 +119,7 @@ public class DiceFaceModal implements ModalPopUp{
     private VBox createDiceFaceVBox(Dice dice) {
         ArrayList<ImageView> diceViews = new ArrayList<>();
         for (Integer face : dice.getFaceList()) {
-            ImageView diceView= getDiceFaceImage(face);
+            ImageView diceView= DiceFace.getDiceFaceImage(face);
             diceView.setFitWidth(50);
             diceView.setFitHeight(50);
 
@@ -149,24 +149,6 @@ public class DiceFaceModal implements ModalPopUp{
             diceFaceVBox.getChildren().add(subsequentRow);
         }
         return diceFaceVBox;
-    }
-
-    private ImageView getDiceFaceImage(Integer diceFace) {
-        Image pipOne = new Image("file:../../resources//Dice/dice-six-faces-one.png");
-        Image pipTwo = new Image("file:../../resources//Dice/dice-six-faces-two.png");
-        Image pipThree = new Image("file:../../resources//Dice/dice-six-faces-three.png");
-        Image pipFour = new Image("file:../../resources//Dice/dice-six-faces-four.png");
-        Image pipFive = new Image("file:../../resources//Dice/dice-six-faces-five.png");
-        Image pipSix = new Image("file:../../resources//Dice/dice-six-faces-six.png");
-
-        return switch (diceFace) {
-            case 1 -> new ImageView(pipOne);
-            case 2 -> new ImageView(pipTwo);
-            case 3 -> new ImageView(pipThree);
-            case 4 -> new ImageView(pipFour);
-            case 5 -> new ImageView(pipFive);
-            default -> new ImageView(pipSix);
-        };
     }
 
 }
