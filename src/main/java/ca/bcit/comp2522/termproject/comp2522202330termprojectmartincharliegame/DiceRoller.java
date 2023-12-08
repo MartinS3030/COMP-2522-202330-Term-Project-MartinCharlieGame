@@ -3,39 +3,76 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Dice_Roller {
+/**
+ * Represents a class that rolls dice.
+ *
+ * @author Martin Siu
+ * @version 2023
+ */
+public class DiceRoller {
     private final ArrayList<Dice> diceList;
     private final ArrayList<Dice> lockedDiceList;
     private final ArrayList<Dice> usedDiceList;
 
-    public Dice_Roller(ArrayList<Dice> fishingRod) {
+    /**
+     * Constructs a DiceRoller.
+     *
+     * @param fishingRod the dice to roll
+     */
+    public DiceRoller(final ArrayList<Dice> fishingRod) {
         diceList = fishingRod;
-        lockedDiceList = new ArrayList<Dice>();
-        usedDiceList = new ArrayList<Dice>();
+        lockedDiceList = new ArrayList<>();
+        usedDiceList = new ArrayList<>();
     }
 
+    /**
+     * Resets the dice.
+     */
     public void resetDice() {
         lockedDiceList.clear();
         usedDiceList.clear();
     }
 
-    public void lockDice(Dice dice) {
+    /**
+     * Locks a dice.
+     *
+     * @param dice the dice to lock
+     */
+    public void lockDice(final Dice dice) {
         lockedDiceList.add(dice);
     }
 
-    public void unlockDice(Dice dice) {
+    /**
+     * Unlocks a dice.
+     *
+     * @param dice the dice to unlock
+     */
+    public void unlockDice(final Dice dice) {
         lockedDiceList.remove(dice);
     }
 
-    public void useDice(Dice dice) {
+    /**
+     * Uses a dice.
+     *
+     * @param dice the dice to use
+     */
+    public void useDice(final Dice dice) {
         usedDiceList.add(dice);
     }
 
-
-    public boolean isLocked(Dice dice) {
+    /**
+     * Checks if a dice is locked.
+     *
+     * @param dice the dice to check
+     * @return true if the dice is locked
+     */
+    public boolean isLocked(final Dice dice) {
         return lockedDiceList.contains(dice);
     }
 
+    /**
+     * Rolls the dice.
+     */
     public void rollDice() {
         for (Dice dice : diceList) {
             if (!isLocked(dice) && !usedDiceList.contains(dice)) {
@@ -44,8 +81,13 @@ public class Dice_Roller {
         }
     }
 
+    /**
+     * Gets the result of the dice roll.
+     *
+     * @return the result of the dice roll
+     */
     public ArrayList<Integer> getResult() {
-        ArrayList<Integer> result = new ArrayList<Integer>();
+        ArrayList<Integer> result = new ArrayList<>();
         for (Dice dice : diceList) {
             result.add(dice.getFaceUpValue());
         }
@@ -62,7 +104,7 @@ public class Dice_Roller {
             diceList.add(new Rod_Components());
         }
 
-        Dice_Roller diceRoller = new Dice_Roller(diceList);
+        DiceRoller diceRoller = new DiceRoller(diceList);
 
         for (Dice dice : diceList) {
             System.out.println(dice.getFaceUpValue());
