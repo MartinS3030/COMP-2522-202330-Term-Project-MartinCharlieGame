@@ -29,6 +29,9 @@ public class CheckRequirements {
 
     public static boolean lessThan(ArrayList<Dice> diceList, int value) {
         int sum = 0;
+        if (diceList.size() != 5) {
+            return false;
+        }
         for (Dice dice : diceList) {
             sum += dice.getFaceUpValue();
         }
