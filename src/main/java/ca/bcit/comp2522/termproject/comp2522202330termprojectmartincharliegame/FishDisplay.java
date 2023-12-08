@@ -137,6 +137,9 @@ public class FishDisplay extends Application {
             mainText.setFill(Color.rgb(231, 54, 70));
             mainText.setEffect(new DropShadow(15, Color.BLACK));
 
+            Player player = Player.getInstance("Charlie");
+            player.addInventory(fish);
+
             fishStackPane.getChildren().clear();
             fishStackPane.getChildren().addAll(fishImageView, mainText);
 

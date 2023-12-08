@@ -47,7 +47,7 @@ public class VillageDisplay extends Application {
         Button bulletinBoard = ButtonMaker.createButton("Bulletin Board", this::showBulletinBoard, 0, 0);
         Button shop = ButtonMaker.createButton("Shop", this::showShop, 0, 0);
         Button viewQuests = ButtonMaker.createButton("View Quests", this::showBulletinBoard, 0, 0);
-        Button viewInventory = ButtonMaker.createButton("View Inventory", this::showBulletinBoard, 0, 0);
+        Button viewInventory = ButtonMaker.createButton("View Inventory", this::showInventory, 0, 0);
         Button sleep = ButtonMaker.createButton("Sleep", this::sleep, 0, 0);
         Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBulletinBoard, 0, 0);
         Button save = ButtonMaker.createButton("Save", this::save, 0, 0);
@@ -61,6 +61,24 @@ public class VillageDisplay extends Application {
         primaryStage.setTitle("Village");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void showInventory(ActionEvent event) {
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            InventoryDisplay inventoryDisplay = new InventoryDisplay();
+            inventoryDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 
     /**

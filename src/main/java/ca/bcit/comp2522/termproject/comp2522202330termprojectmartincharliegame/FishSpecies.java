@@ -44,4 +44,8 @@ public class FishSpecies {
     public Fish getFish(int key) {
         return fishSpecies.get(key);
     }
+
+    public HashMap<Integer, Fish> getFishSpecies() {
+        return fishSpecies;
+    }
 }

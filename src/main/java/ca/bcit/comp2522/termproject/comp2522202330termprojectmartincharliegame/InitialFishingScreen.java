@@ -184,7 +184,21 @@ public class InitialFishingScreen extends Application {
      * @param event the event
      */
     public void viewInventory(final ActionEvent event) {
-        System.out.println("View Inventory");
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+
+        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
+
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            InventoryDisplay inventoryDisplay = new InventoryDisplay();
+            inventoryDisplay.start(currentStage);
+        });
+
+        fadeTransition.play();
     }
 
     /**
@@ -219,29 +233,5 @@ public class InitialFishingScreen extends Application {
         });
 
         fadeTransition.play();
-
-//        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
-//
-//        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
-//
-//        fadeTransition.setFromValue(1.0);
-//        fadeTransition.setToValue(0.0);
-//
-//        fadeTransition.setOnFinished(e -> {
-//            Player player = Player.getInstance("Charlie");
-//            player.setDate(player.getDate());
-//            if (player.getDate() > GameDriver.getTimeLimit()) {
-//                GameDriver gameDriver = new GameDriver();
-//                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//                gameDriver.endGame(currentStage);
-//            } else {
-//                player.setCastOfTheDay(0);
-//                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-//                InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
-//                initialFishingScreen.start(currentStage);
-//            }
-//        });
-//
-//        fadeTransition.play();
     }
 }
