@@ -9,10 +9,31 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
-public class BulletinBoard implements Board, Serializable {
+/**
+ * Represents a bulletin board that holds quests.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
+public final class BulletinBoard implements Board, Serializable {
+    /**
+     * The number of starting quests.
+     */
+    public static final int STARTING_QUESTS = 5;
+    /**
+     * The maximum number of common fish required for a quest.
+     */
+    public static final int COMMON_FISH_MAX = 4;
+    /**
+     * The minimum number of common fish required for a quest.
+     */
+    public static final int COMMON_FISH_MIN = 3;
+    /**
+     * The reward multiplier for a quest.
+     */
+    public static final double REWARD_MULTIPLIER = 1.5;
     private static BulletinBoard instance;
     private final ArrayList<Quest> quests = new ArrayList<>();
-    private final Player player = Player.getInstance("Charlie");
     private final Random random = new Random();
 
     private BulletinBoard() {
@@ -36,7 +57,7 @@ public class BulletinBoard implements Board, Serializable {
      */
     @Override
     public void generateQuests() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < STARTING_QUESTS; i++) {
             quests.add(generateCommonQuest());
         }
         for (Quest quest : quests) {
@@ -49,28 +70,37 @@ public class BulletinBoard implements Board, Serializable {
         }
     }
 
+    /**
+     * Generates a common quest.
+     *
+     * @return a common quest
+     */
     public Quest generateCommonQuest() {
-        int objectiveAmount = random.nextInt(4) + 3;
+        int objectiveAmount = random.nextInt(COMMON_FISH_MAX) + COMMON_FISH_MIN;
         Fish fish = getRequirement("common");
         String giver = generateGiver();
         return new Quest("Catch " + objectiveAmount + " " + fish.getName(),
                 giver, generateReward(fish.getValue(), objectiveAmount), fish,
-                generateDifficulty(fish), objectiveAmount, giver + " wants you to help them catch " + objectiveAmount + " " + fish.getName() + ". They would really appreciate your help with this ASAP!");
+                generateDifficulty(fish), objectiveAmount, giver + " wants you to help them catch "
+                + objectiveAmount + " " + fish.getName() + ". They would really appreciate your help with this ASAP!");
     }
 
-    public Fish getRequirement(String rarity) {
+    /**
+     * Generates a fish requirement for the quest.
+     *
+     * @param rarity the rarity of the fish as a string
+     * @return a fish requirement for the quest
+     */
+    public Fish getRequirement(final String rarity) {
         int fishKey;
         FishSpecies fishSpecies = new FishSpecies();
 
-        if (rarity.equals("common")) {
-            fishKey = random.nextInt(13) + 1;
-        } else if (rarity.equals("rare")) {
-            fishKey = random.nextInt(5) + 14;
-        } else if (rarity.equals("legendary")) {
-            fishKey = random.nextInt(3) + 19;
-        } else {
-            fishKey = random.nextInt(13) + 1;
-        }
+        fishKey = switch (rarity) {
+            case "common" -> random.nextInt(13) + 1;
+            case "rare" -> random.nextInt(5) + 14;
+            case "legendary" -> random.nextInt(3) + 19;
+            default -> random.nextInt(13) + 1;
+        };
 
         return fishSpecies.getFish(fishKey);
     }
@@ -86,40 +116,66 @@ public class BulletinBoard implements Board, Serializable {
         return quests;
     }
 
-    public void newQuests() {
-        System.out.println("working on it");
+    /**
+     * Generates a reward for the quest.
+     *
+     * @param value the value of the fish as a double
+     * @param objectiveAmount the amount of fish required as an int
+     * @return a reward for the quest as an int
+     */
+    public int generateReward(final double value, final int objectiveAmount) {
+        return (int) Math.floor(value * (REWARD_MULTIPLIER + random.nextDouble() * objectiveAmount));
     }
 
-    public int generateReward(double value, int objectiveAmount) {
-        return (int) Math.floor(value * (1.5 + random.nextDouble() * 0.5 * objectiveAmount));
-    }
-
+    /**
+     * Generates a giver for the quest.
+     *
+     * @return a giver for the quest as a string
+     */
     public String generateGiver() {
         String[] givers = {"Bob", "Joe", "Steve", "Bill", "John", "Jack", "J"};
         return givers[(int) (Math.random() * givers.length)];
     }
 
-    public int generateDifficulty(Fish objective) {
-        int difficulty = 0;
-        if (objective.getRarity().equals("common")) {
-            difficulty = 1;
-        } else if (objective.getRarity().equals("rare")) {
-            difficulty = 2;
-        } else if (objective.getRarity().equals("legendary")) {
-            difficulty = 3;
-        }
-        return difficulty;
+    /**
+     * Generates a difficulty for the quest.
+     *
+     * @param objective the objective of the quest as a fish
+     * @return a difficulty for the quest as an int
+     */
+    public int generateDifficulty(final Fish objective) {
+        return switch (objective.getRarity()) {
+            case "common" -> 1;
+            case "rare" -> 2;
+            case "legendary" -> 3;
+            default -> 0;
+        };
     }
 
-    public void addQuest(Quest quest) {
+    /**
+     * Adds a quest to the bulletin board.
+     *
+     * @param quest the quest to be added
+     */
+    public void addQuest(final Quest quest) {
         quests.add(quest);
     }
 
-    public void removeQuest(Quest quest) {
+    /**
+     * Removes a quest from the bulletin board.
+     *
+     * @param quest the quest to be removed
+     */
+    public void removeQuest(final Quest quest) {
         quests.remove(quest);
     }
 
-    public void serialize(String filename) {
+    /**
+     * Serializes the bulletin board object.
+     *
+     * @param filename the name of the file to be serialized to as a string
+     */
+    public void serialize(final String filename) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(this);
             System.out.println("Serialization completed. BulletinBoard data saved to " + filename);
@@ -128,8 +184,13 @@ public class BulletinBoard implements Board, Serializable {
         }
     }
 
-    // Deserialization method
-    public static BulletinBoard deserialize(String filename) {
+    /**
+     * Deserializes the bulletin board object.
+     *
+     * @param filename the name of the file to be deserialized from as a string
+     * @return the deserialized bulletin board object
+     */
+    public static BulletinBoard deserialize(final String filename) {
         BulletinBoard bulletinBoard = null;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
             bulletinBoard = (BulletinBoard) in.readObject();
