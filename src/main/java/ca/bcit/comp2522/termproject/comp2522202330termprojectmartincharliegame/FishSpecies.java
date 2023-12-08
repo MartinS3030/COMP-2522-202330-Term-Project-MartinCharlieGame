@@ -20,7 +20,7 @@ public class FishSpecies {
         fishSpecies.put(8, new Fish("Piranha", "Common", "equalTo", 19, 420));
         fishSpecies.put(9, new Fish("Red Snapper", "Common", "equalTo", 17, 420));
         fishSpecies.put(10, new Fish("Salmon", "Common", "ofakind", 2, 390));
-        fishSpecies.put(11, new Fish("Sweetfish", "Common", "greater", 20, 360));
+        fishSpecies.put(11, new Fish("Sweetfish", "Common", "straight", 3, 360));
         fishSpecies.put(12, new Fish("Turtle", "Common", "less", 13, 380));
         fishSpecies.put(13, new Fish("Yellow Perch", "Common", "ofakind", 2, 350));
 
