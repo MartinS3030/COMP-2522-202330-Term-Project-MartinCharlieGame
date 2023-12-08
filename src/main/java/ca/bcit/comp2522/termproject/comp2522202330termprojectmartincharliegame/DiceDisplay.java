@@ -165,6 +165,10 @@ public class DiceDisplay {
             resetBorderColor(diceViews[diceIndex]);
             selectedDice.remove(dice);
         } else if (!usedDice.contains(dice)){
+            for (Dice diceInSelectedDice : selectedDice) {
+                resetBorderColor(diceViews[fishingRod.getComponents().indexOf(diceInSelectedDice)]);
+            }
+            selectedDice.clear();
             selectedDice.add(dice);
             setBorderColor(diceViews[diceIndex], SELECTED_COLOR);
         }
