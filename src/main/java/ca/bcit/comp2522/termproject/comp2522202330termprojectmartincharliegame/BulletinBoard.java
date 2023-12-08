@@ -23,11 +23,11 @@ public final class BulletinBoard implements Board, Serializable {
     /**
      * The maximum number of common fish required for a quest.
      */
-    public static final int COMMON_FISH_MAX = 4;
+    public static final int COMMON_FISH_MAX = 2;
     /**
      * The minimum number of common fish required for a quest.
      */
-    public static final int COMMON_FISH_MIN = 3;
+    public static final int COMMON_FISH_MIN = 2;
     /**
      * The reward multiplier for a quest.
      */
