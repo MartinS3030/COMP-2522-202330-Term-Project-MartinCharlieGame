@@ -19,18 +19,24 @@ import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 
 /**
- * Demonstrates the use of Image and ImageView objects.
+ * Displays the initial fishing screen.
  *
- * @author Lewis & Loftus 9e
- * @author BCIT
- * @version 2022
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
  */
 public class InitialFishingScreen extends Application {
-
     /**
-     * Displays an image centered in a window.
+     * The width of the stage.
+     */
+    public static final int STAGE_WIDTH = 1200;
+    /**
+     * The height of the stage.
+     */
+    public static final int STAGE_HEIGHT = 648;
+    /**
+     * Starts the initial fishing screen.
      *
-     * @param primaryStage a Stage
+     * @param primaryStage the stage
      */
     public void start(final Stage primaryStage) {
 
@@ -54,10 +60,8 @@ public class InitialFishingScreen extends Application {
 
         final int viewX = 0;
         final int viewY = 0;
-        final int viewWidth = 1200;
-        final int viewHeight = 648;
 
-        imageView.setViewport(new Rectangle2D(viewX, viewY, viewWidth, viewHeight));
+        imageView.setViewport(new Rectangle2D(viewX, viewY, STAGE_WIDTH, STAGE_HEIGHT));
 
         StackPane root = new StackPane();
         root.getChildren().addAll(imageView, infoBox, buttonBox);
@@ -69,29 +73,35 @@ public class InitialFishingScreen extends Application {
         imageView.setPreserveRatio(true);
         imageView.fitHeightProperty().bind(scene.heightProperty());
 
-//        primaryStage.setTitle("CastAway");
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        primaryStage.getScene().widthProperty().addListener((obs, oldVal, newVal) -> centerInfoBox(infoBox, primaryStage, buttonBox));
-        primaryStage.getScene().heightProperty().addListener((obs, oldVal, newVal) -> centerInfoBox(infoBox, primaryStage, buttonBox));
+        primaryStage.getScene().widthProperty().addListener((obs, oldVal, newVal) -> centerInfoBox(infoBox,
+                primaryStage, buttonBox));
+        primaryStage.getScene().heightProperty().addListener((obs, oldVal, newVal) -> centerInfoBox(infoBox,
+                primaryStage, buttonBox));
     }
 
+    /**
+     * Gets the info box.
+     *
+     * @return the info box as a VBox
+     */
     private VBox getInfoBox() {
         VBox infoBox = new VBox();
         Player player = Player.getInstance("Charlie");
         int daysLeft = GameDriver.getTimeLimit() - player.getDate();
 
         Label daysLeftLabel = new Label(String.format("Days Left: %d", daysLeft));
-        daysLeftLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
-                "-fx-font-weight: 900;-fx-font-style: italic;" +
-                "-fx-text-fill: rgb(231, 54, 70);");
+        daysLeftLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;"
+                + "-fx-font-weight: 900;-fx-font-style: italic;"
+                + "-fx-text-fill: rgb(231, 54, 70);");
         daysLeftLabel.setEffect(new DropShadow(15, Color.BLACK));
 
         Label castsLeftLabel = new Label(String.format("Casts Left: %d", player.getCastLeft()));
-        castsLeftLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;" +
-                "-fx-font-weight: 900;-fx-font-style: italic;" +
-                "-fx-text-fill: rgb(231, 54, 70);");
+        castsLeftLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;"
+                + "-fx-font-weight: 900;-fx-font-style: italic;"
+                + "-fx-text-fill: rgb(231, 54, 70);");
         castsLeftLabel.setEffect(new DropShadow(15, Color.BLACK));
 
         infoBox.getChildren().addAll(daysLeftLabel, castsLeftLabel);
@@ -101,14 +111,27 @@ public class InitialFishingScreen extends Application {
         return infoBox;
     }
 
-    private void centerInfoBox(VBox infoBox, Stage primaryStage, VBox buttonBox) {
-        double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - infoBox.getWidth() / 2 + buttonBox.getWidth();
+    /**
+     * Centers the info box.
+     *
+     * @param infoBox     the info box
+     * @param primaryStage the stage
+     * @param buttonBox   the button box
+     */
+    private void centerInfoBox(final VBox infoBox, final Stage primaryStage, final VBox buttonBox) {
+        double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - infoBox.getWidth() / 2
+                + buttonBox.getWidth();
         double centerY = primaryStage.getY() + primaryStage.getHeight() / 2 - infoBox.getHeight() / 2;
 
         infoBox.setLayoutX(centerX);
         infoBox.setLayoutY(centerY);
     }
 
+    /**
+     * Transitions to the fish display.
+     *
+     * @param event the event
+     */
     public void castReel(final ActionEvent event) {
         if (Player.getInstance("Charlie").getCastOfTheDay() >= 5) {
             return;
@@ -131,6 +154,11 @@ public class InitialFishingScreen extends Application {
         fadeTransition.play();
     }
 
+    /**
+     * Transitions to the rod display.
+     *
+     * @param event the event
+     */
     public void viewRod(final ActionEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
@@ -150,17 +178,31 @@ public class InitialFishingScreen extends Application {
         fadeTransition.play();
     }
 
-
+    /**
+     * Transitions to the inventory display.
+     *
+     * @param event the event
+     */
     public void viewInventory(final ActionEvent event) {
         System.out.println("View Inventory");
     }
 
+    /**
+     * Opens the active quests display modal.
+     *
+     * @param event the event
+     */
     public void viewQuests(final ActionEvent event) {
         ModalPopUp modalPopUp = new ActiveQuestModal();
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         modalPopUp.openInGamePopup(currentStage);
     }
 
+    /**
+     * Ends the day.
+     *
+     * @param event the event
+     */
     public void endDay(final ActionEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
