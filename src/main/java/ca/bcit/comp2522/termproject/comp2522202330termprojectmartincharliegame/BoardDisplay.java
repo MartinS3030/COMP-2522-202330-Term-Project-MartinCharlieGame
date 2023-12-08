@@ -21,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Displays the bulletin board.
@@ -44,6 +45,8 @@ public class BoardDisplay extends Application {
     private Stage primaryStage;
     private final BulletinBoard bulletinBoard = BulletinBoard.getInstance();
     private final ArrayList<Quest> questList = bulletinBoard.getQuests();
+    private Player player = Player.getInstance("Charlie");
+    private ArrayList<Integer> daysPassed = new ArrayList<>();
     private int startIndex = 0;
 
     /**
@@ -61,6 +64,7 @@ public class BoardDisplay extends Application {
      * Generates the bulletin board UI.
      */
     public void displayUI() {
+        addQuests();
         StackPane questStack;
         if (!questList.isEmpty()) {
             questStack = generateQuestDetails(questList.get(0));
@@ -343,5 +347,35 @@ public class BoardDisplay extends Application {
             startIndex = Math.max(startIndex - 4, 0);
             displayUI();
         }
+    }
+
+    private void addQuests() {
+        Random random = new Random();
+        if (player.getDate() > 1 && player.getDate() < 8 && !daysPassed.contains(player.getDate())) {
+            for (int i = 0; i < 2; i++) {
+                bulletinBoard.addQuest(bulletinBoard.generateCommonQuest());
+            }
+        } else if (player.getDate() > 7 && player.getDate() < 15 && !daysPassed.contains(player.getDate())) {
+            for (int i = 0; i < 2; i++) {
+                int questRarity = random.nextInt(2);
+                if (questRarity == 0) {
+                    bulletinBoard.addQuest(bulletinBoard.generateCommonQuest());
+                } else {
+                    bulletinBoard.addQuest(bulletinBoard.generateRareQuest());
+                }
+            }
+        } else if (player.getDate() > 14 && !daysPassed.contains(player.getDate())) {
+            for (int i = 0; i < 2; i++) {
+                int questRarity = random.nextInt(3);
+                if (questRarity == 0) {
+                    bulletinBoard.addQuest(bulletinBoard.generateCommonQuest());
+                } else if (questRarity == 1) {
+                    bulletinBoard.addQuest(bulletinBoard.generateRareQuest());
+                } else {
+//                bulletinBoard.addQuest(bulletinBoard.generateLegendaryQuest());
+                }
+            }
+        }
+        daysPassed.add(player.getDate());
     }
 }

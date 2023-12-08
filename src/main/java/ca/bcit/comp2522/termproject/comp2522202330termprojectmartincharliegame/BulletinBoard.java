@@ -32,6 +32,14 @@ public final class BulletinBoard implements Board, Serializable {
      * The reward multiplier for a quest.
      */
     public static final double REWARD_MULTIPLIER = 1.5;
+    /**
+     * The maximum number of rare fish required for a quest.
+     */
+    public static final int RARE_FISH_MAX = 3;
+    /**
+     * The minimum number of rare fish required for a quest.
+     */
+    public static final int RARE_FISH_MIN = 1;
     private static BulletinBoard instance;
     private final ArrayList<Quest> quests = new ArrayList<>();
     private final Random random = new Random();
@@ -85,6 +93,33 @@ public final class BulletinBoard implements Board, Serializable {
                 + objectiveAmount + " " + fish.getName() + ". They would really appreciate your help with this ASAP!");
     }
 
+    public Quest generateRareQuest() {
+        int objectiveAmount = random.nextInt(RARE_FISH_MAX) + RARE_FISH_MIN;
+        String[] questTitles = {"A Grandparent's Memory Lane",
+                                "The Fish Feast",
+                                "The Puzzled Ichthyologist",
+                                "The Healing Waters",
+                                "The Young Angler's Dream",
+                                "The Festival Fish"};
+        String[] questDescriptions = {" is feeling nostalgic and wishes to recreate a cherished memory of catching a particular fish in their youth. Can you capture that special fish to bring back the sparkle of the past?",
+                                        " is hosting a grand fish feast for the entire village. Help make this event unforgettable by catching the finest, most delectable fish for the feast. The reputation of your angling skills is at stake!",
+                                        " is conducting research on fish patterns in the region. Assist them by providing a rare specimen to unravel the mysteries of the aquatic ecosystem.",
+                    "The annual village festival is approaching, and the organizers need a unique fish to be the star attraction in the fishing competition. Catch an extraordinary fish that will make this year's festival unforgettable.",
+        "believes in the therapeutic properties of a specific fish for brewing medicinal potions. Catch this fish to contribute to the village's well-being and health.",
+        "dreams of catching a rare fish to prove their worthiness among the seasoned fishermen. Help them achieve their dream by capturing the elusive fish they desire."};
+        String questTitle = questTitles[random.nextInt(6) + 1];
+        String questDescription = questDescriptions[random.nextInt(6) + 1];
+        Fish fish = getRequirement("rare");
+        String giver = generateGiver();
+        return new Quest(questTitle,
+                giver, generateReward(fish.getValue(), objectiveAmount), fish,
+                generateDifficulty(fish), objectiveAmount, giver + questDescription);
+    }
+
+//    public Quest generateLegendaryQuest() {
+//        System.out.println("Legendary Quest");
+//    }
+
     /**
      * Generates a fish requirement for the quest.
      *
@@ -133,7 +168,7 @@ public final class BulletinBoard implements Board, Serializable {
      * @return a giver for the quest as a string
      */
     public String generateGiver() {
-        String[] givers = {"Bob", "Joe", "Steve", "Bill", "John", "Jack", "J"};
+        String[] givers = {"Victor", "Jake", "Grace", "Nicole", "Cam", "Alex", "Lulu", "Derek", "Corey", "Aaron", "Marco", "Brian", "Kate", "Mika"};
         return givers[(int) (Math.random() * givers.length)];
     }
 

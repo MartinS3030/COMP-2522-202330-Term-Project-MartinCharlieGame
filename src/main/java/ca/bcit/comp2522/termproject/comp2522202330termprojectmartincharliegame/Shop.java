@@ -4,7 +4,7 @@ import javafx.stage.Stage;
 
 public class Shop {
     private static Shop shopInstance = null;
-    private static final int ITEM_COST = 200;
+    private static final int ITEM_COST = 1000;
 
     private final DiceDisplay diceDisplay;
 
