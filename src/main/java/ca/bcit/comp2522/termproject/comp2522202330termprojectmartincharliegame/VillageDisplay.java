@@ -106,6 +106,7 @@ public class VillageDisplay extends Application {
                 gameDriver.endGame(currentStage);
             } else {
                 player.setCastOfTheDay(0);
+                Shop.resetShop();
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
                 initialFishingScreen.start(currentStage);
