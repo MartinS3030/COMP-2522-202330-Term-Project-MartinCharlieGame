@@ -23,49 +23,12 @@ public class ViewRod extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        StackPane baseBox = createComponentBox("Base");
-        StackPane rodBox = createComponentBox("Rod");
-        StackPane reelBox = createComponentBox("Reel");
-        StackPane lineBox = createComponentBox("Line");
-        StackPane hookBox = createComponentBox("Hook");
 
-        baseBox.setOnMouseClicked(event -> {
-            ModalPopUp baseModal = new DiceFaceModal(0);
-            baseModal.openInGamePopup(primaryStage);
-        });
-        rodBox.setOnMouseClicked(event -> {
-            ModalPopUp rodModal = new DiceFaceModal(1);
-            rodModal.openInGamePopup(primaryStage);
-        });
-        reelBox.setOnMouseClicked(event -> {
-            ModalPopUp reelModal = new DiceFaceModal(2);
-            reelModal.openInGamePopup(primaryStage);
-        });
-        lineBox.setOnMouseClicked(event -> {
-            ModalPopUp lineModal = new DiceFaceModal(3);
-            lineModal.openInGamePopup(primaryStage);
-        });
-        hookBox.setOnMouseClicked(event -> {
-            ModalPopUp hookModal = new DiceFaceModal(4);
-            hookModal.openInGamePopup(primaryStage);
-        });
+        RodDisplay rodDisplay = new RodDisplay(primaryStage);
+        HBox mainBox = rodDisplay.getRodDisplayHBox();
 
-        Label baseText = createParagraph("This base is used to create a great base experience.");
-        Label rodText = createParagraph("This rod is used to create a great rod experience.");
-        Label reelText = createParagraph("This reel is used to create a great reel experience.");
-        Label lineText = createParagraph("This line is used to create a great line experience.");
-        Label hookText = createParagraph("This hook is used to create a great hook experience.");
-
-        VBox baseVBox = createVBox(baseBox, baseText);
-        VBox rodVBox = createVBox(rodBox, rodText);
-        VBox reelVBox = createVBox(reelBox, reelText);
-        VBox lineVBox = createVBox(lineBox, lineText);
-        VBox hookVBox = createVBox(hookBox, hookText);
-
-        HBox mainBox = new HBox(baseVBox, rodVBox, reelVBox, lineVBox, hookVBox);
-        mainBox.setAlignment(Pos.CENTER);
-        mainBox.setSpacing(10);
-        mainBox.setPadding(new Insets(10));
+        Image docks = new Image("file:../../resources/Docks.png");
+        ImageView docksView = new ImageView(docks);
 
         Region rectangle = new Region();
         rectangle.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -82,7 +45,7 @@ public class ViewRod extends Application {
 
         StackPane.setAlignment(backButtonView, Pos.TOP_LEFT);
 
-        StackPane stackPane = new StackPane(rectangle, innerStackPane, backButtonView);
+        StackPane stackPane = new StackPane(docksView, innerStackPane, backButtonView);
 
         Scene scene = new Scene(stackPane, 1200, 648);
 
@@ -96,30 +59,6 @@ public class ViewRod extends Application {
         fadeTransition.play();
 
         primaryStage.show();
-    }
-
-    private StackPane createComponentBox(String componentName) {
-        Image image = new Image("file:../../resources/Box.png");
-        ImageView imageView = new ImageView(image);
-        Text text = new Text(componentName);
-        text.setFont(new Font(20));
-        text.wrappingWidthProperty().bind(imageView.fitWidthProperty());
-        StackPane stackPane = new StackPane(imageView, text);
-        StackPane.setAlignment(text, Pos.CENTER);
-        return stackPane;
-    }
-
-    private Label createParagraph(String description) {
-        Label paragraphLabel = new Label(description);
-        paragraphLabel.setWrapText(true);
-        paragraphLabel.setStyle("-fx-font-size: 20px");
-        paragraphLabel.setMaxWidth(170);
-        return paragraphLabel;
-    }
-
-    private VBox createVBox(Pane component, Label text) {
-        VBox vbox = new VBox(component, text);
-        return vbox;
     }
 
     public void back(final MouseEvent event) {
