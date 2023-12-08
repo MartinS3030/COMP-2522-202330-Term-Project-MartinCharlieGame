@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,51 +12,30 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Displays the intro screen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class IntroScreen extends Application {
-    String name = Player.getInstance("Charlie").getName();
+    private final String name = Player.getInstance("Charlie").getName();
+
+    /**
+     * Starts the intro screen.
+     *
+     * @param primaryStage the stage
+     */
     @Override
-    public void start(Stage primaryStage) {
-//        List<String> paragraphs = List.of(String.format(
-//                "Oh, %s! Another day in the thrilling metropolis of Aqua-Laughs, where the sun always shines, and the impending doom just adds that extra dash of excitement. So, you, our clairvoyant protagonist, had this gut feeling that a tidal wave is just itching to crash our little island paradise in a measly 30 days. No biggie, right?",
-//                "Rather than checking with the village's top-notch weather seagull or, you know, consulting literally anyone else, you've decided to embark on the quest of a lifetime: scraping together enough shiny sea-currency to buy a boat. Because, clearly, the solution to every problem is to sail away like a mariner with a one-way ticket to awkward island.",
-//                "Get ready for the adventure of a lifetime, or at least the next 30 days of your life, as you become the go-to lackey for your fellow islanders' bizarre requests. From finding lost treasure (spoiler: it's probably a soggy sandwich) to organizing crab races, your days are now a delightful circus of aquatic absurdity. Just remember, not everyone's convinced about your so-called sixth sense, and some might think you're just riding the wave of delusion.",
-//                "Will you accumulate enough seaweed-covered moolah to buy your grand escape vessel, or will Aqua-Laughs be your forever watery home? Strap in for the sarcastic spectacle of \"Tide's Up, Funds Up!\" Where the laughs are as salty as the ocean, and the quests are as fishy as your plan to outrun a tidal wave. Good luck, oh chosen one of the tides!", name)
-//        );
-
-        List<String> paragraphs = new ArrayList<>();
-
-        paragraphs.add(String.format(
-                "Oh, %s! Another day in the thrilling metropolis of Aqua-Laughs, where the sun always shines, and the impending doom just adds that extra dash of excitement. So, you, our clairvoyant protagonist, had this gut feeling that a tidal wave is just itching to crash our little island paradise in a measly 30 days. No biggie, right?", name));
-
-        paragraphs.add("Rather than checking with the village's top-notch weather seagull or, you know, consulting literally anyone else, you've decided to embark on the quest of a lifetime: scraping together enough shiny sea-currency to buy a boat. Because, clearly, the solution to every problem is to sail away like a mariner with a one-way ticket to awkward island.");
-
-        paragraphs.add("Get ready for the adventure of a lifetime, or at least the next 30 days of your life, as you become the go-to lackey for your fellow islanders' bizarre requests. From finding lost treasure (spoiler: it's probably a soggy sandwich) to organizing crab races, your days are now a delightful circus of aquatic absurdity. Just remember, not everyone's convinced about your so-called sixth sense, and some might think you're just riding the wave of delusion.");
-
-        paragraphs.add("Will you accumulate enough seaweed-covered moolah to buy your grand escape vessel, or will Aqua-Laughs be your forever watery home? Strap in for the sarcastic spectacle of \"Tide's Up, Funds Up!\" Where the laughs are as salty as the ocean, and the quests are as fishy as your plan to outrun a tidal wave. Good luck, oh chosen one of the tides!");
-
-        List<Label> labelList = new ArrayList<>();
-        VBox text = new VBox();
-        text.setSpacing(10);
-
-        for (String paragraph : paragraphs) {
-            Label paragraphLabel = new Label(paragraph);
-            Font font = Font.loadFont("file:resources/Fonts/PressStart2P-Regular.ttf", 16);
-            paragraphLabel.setFont(font);
-            paragraphLabel.setWrapText(true);
-            paragraphLabel.setOpacity(0);
-            labelList.add(paragraphLabel);
-            text.getChildren().add(paragraphLabel);
-        }
+    public void start(final Stage primaryStage) {
+        List<String> paragraphs = getParagraphs();
+        List<Label> labelList = createLabels(paragraphs);
 
         Button next = ButtonMaker.createButton("Begin!", this::nextScreen, 0, 0);
-        text.getChildren().add(next);
-        VBox.setMargin(next, new javafx.geometry.Insets(0, 0, 0, 480));
-
-        text.setPadding(new javafx.geometry.Insets(20, 50, 20, 50));
+        VBox text = setupTextPane(labelList, next);
 
         StackPane root = new StackPane();
         StackPane.setMargin(labelList.get(0), new javafx.geometry.Insets(50, 50, 50, 50));
@@ -72,18 +50,8 @@ public class IntroScreen extends Application {
         primaryStage.setTitle("Tide's Up, Funds Up!");
         primaryStage.show();
 
-        List<FadeTransition> labelFadeTransitions = new ArrayList<>();
-        for (int i = 0; i < labelList.size(); i++) {
-            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.5), labelList.get(i));
-            fadeTransition.setFromValue(0);
-            fadeTransition.setToValue(1);
-            fadeTransition.setDelay(Duration.seconds(0.5));
-            labelFadeTransitions.add(fadeTransition);
-        }
-
-        FadeTransition buttonFadeTransition = new FadeTransition(Duration.seconds(1), next);
-        buttonFadeTransition.setFromValue(0);
-        buttonFadeTransition.setToValue(1);
+        List<FadeTransition> labelFadeTransitions = createLabelFadeTransitions(labelList);
+        FadeTransition buttonFadeTransition = createButtonFadeTransition(next);
 
         SequentialTransition sequentialTransition = new SequentialTransition();
         sequentialTransition.getChildren().addAll(labelFadeTransitions);
@@ -92,7 +60,103 @@ public class IntroScreen extends Application {
         sequentialTransition.play();
     }
 
-    private void nextScreen(ActionEvent event) {
+    /**
+     * Creates a list of labels.
+     *
+     * @param paragraphs the paragraphs as strings
+     * @return the list of labels
+     */
+    private List<Label> createLabels(final List<String> paragraphs) {
+        List<Label> labelList = new ArrayList<>();
+        for (String paragraph : paragraphs) {
+            Label paragraphLabel = new Label(paragraph);
+            Font font = Font.loadFont("file:resources/Fonts/PressStart2P-Regular.ttf", 16);
+            paragraphLabel.setFont(font);
+            paragraphLabel.setWrapText(true);
+            paragraphLabel.setOpacity(0);
+            labelList.add(paragraphLabel);
+        }
+        return labelList;
+    }
+
+    /**
+     * Sets up the text pane.
+     *
+     * @param labelList the list of labels
+     * @param next the next button
+     * @return the text pane as a VBox
+     */
+    private VBox setupTextPane(final List<Label> labelList, final Button next) {
+        VBox text = new VBox();
+        text.setSpacing(10);
+
+        for (Label label : labelList) {
+            text.getChildren().add(label);
+        }
+
+        text.getChildren().add(next);
+        text.setPadding(new javafx.geometry.Insets(20, 50, 20, 50));
+        VBox.setMargin(next, new javafx.geometry.Insets(0, 0, 0, 480));
+
+        return text;
+    }
+
+    /**
+     * Creates a list of fade transitions for the labels.
+     *
+     * @param labelList the list of labels
+     * @return the list of fade transitions
+     */
+    private List<FadeTransition> createLabelFadeTransitions(final List<Label> labelList) {
+        List<FadeTransition> labelFadeTransitions = new ArrayList<>();
+        for (Label label : labelList) {
+            FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.5), label);
+            fadeTransition.setFromValue(0);
+            fadeTransition.setToValue(1);
+            fadeTransition.setDelay(Duration.seconds(0.5));
+            labelFadeTransitions.add(fadeTransition);
+        }
+        return labelFadeTransitions;
+    }
+
+    /**
+     * Creates a fade transition for the button.
+     *
+     * @param next the next button
+     * @return the fade transition
+     */
+    private FadeTransition createButtonFadeTransition(final Button next) {
+        FadeTransition buttonFadeTransition = new FadeTransition(Duration.seconds(1), next);
+        buttonFadeTransition.setFromValue(0);
+        buttonFadeTransition.setToValue(1);
+        return buttonFadeTransition;
+    }
+
+    /**
+     * Gets the paragraphs.
+     *
+     * @return the paragraphs
+     */
+    private List<String> getParagraphs() {
+        List<String> paragraphs = new ArrayList<>();
+
+        paragraphs.add(String.format(
+                "Oh, %s! Another day in the thrilling metropolis of Aqua-Laughs, where the sun always shines, and the impending doom just adds that extra dash of excitement. So, you, our clairvoyant protagonist, had this gut feeling that a tidal wave is just itching to crash our little island paradise in a measly 30 days. No biggie, right?", name));
+
+        paragraphs.add("Rather than checking with the village's top-notch weather seagull or, you know, consulting literally anyone else, you've decided to embark on the quest of a lifetime: scraping together enough shiny sea-currency to buy a boat. Because, clearly, the solution to every problem is to sail away like a mariner with a one-way ticket to awkward island.");
+
+        paragraphs.add("Get ready for the adventure of a lifetime, or at least the next 30 days of your life, as you become the go-to lackey for your fellow islanders' bizarre requests. From finding lost treasure (spoiler: it's probably a soggy sandwich) to organizing crab races, your days are now a delightful circus of aquatic absurdity. Just remember, not everyone's convinced about your so-called sixth sense, and some might think you're just riding the wave of delusion.");
+
+        paragraphs.add("Will you accumulate enough seaweed-covered moolah to buy your grand escape vessel, or will Aqua-Laughs be your forever watery home? Strap in for the sarcastic spectacle of \"Tide's Up, Funds Up!\" Where the laughs are as salty as the ocean, and the quests are as fishy as your plan to outrun a tidal wave. Good luck, oh chosen one of the tides!");
+        return paragraphs;
+    }
+
+    /**
+     * Goes to the next screen.
+     *
+     * @param event the event
+     */
+    private void nextScreen(final ActionEvent event) {
         VillageDisplay.fade(event);
     }
 }
