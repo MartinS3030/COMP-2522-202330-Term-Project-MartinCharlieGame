@@ -10,18 +10,37 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.Button;
-
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
 
+/**
+ * Represents the village that the player can interact with.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class VillageDisplay extends Application {
-    Player player = Player.getInstance("Charlie");
+    /**
+     * The width of the stage.
+     */
+    public static final int STAGE_WIDTH = 1200;
+    /**
+     * The height of the stage.
+     */
+    public static final int STAGE_HEIGHT = 648;
+    private final Player player = Player.getInstance("Charlie");
+
+    /**
+     * Launches the stage.
+     *
+     * @param primaryStage the stage
+     */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         Image village = new Image("file:../../resources/village.png");
         ImageView villageView = new ImageView(village);
-        villageView.setFitHeight(648);
-        villageView.setFitWidth(1200);
+        villageView.setFitHeight(STAGE_HEIGHT);
+        villageView.setFitWidth(STAGE_WIDTH);
 
         Button bulletinBoard = ButtonMaker.createButton("Bulletin Board", this::showBulletinBoard, 0, 0);
         Button shop = ButtonMaker.createButton("Shop", this::showShop, 0, 0);
@@ -36,14 +55,18 @@ public class VillageDisplay extends Application {
         buttonBox.setSpacing(10);
 
         StackPane root = new StackPane(villageView, buttonBox);
-        Scene scene = new Scene(root, 1200, 648);
+        Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         primaryStage.setTitle("Village");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
 
-
-    public void showBulletinBoard(ActionEvent event) {
+    /**
+     * Shows the bulletin board.
+     *
+     * @param event the event
+     */
+    public void showBulletinBoard(final ActionEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -61,11 +84,21 @@ public class VillageDisplay extends Application {
         fadeTransition.play();
     }
 
-    public void showShop(ActionEvent event) {
+    /**
+     * Shows the shop.
+     *
+     * @param event the event
+     */
+    public void showShop(final ActionEvent event) {
         System.out.println("Shop");
     }
 
-    public void sleep(ActionEvent event) {
+    /**
+     * Transitions to the fishing screen of the next day.
+     *
+     * @param event the event
+     */
+    public void sleep(final ActionEvent event) {
             player.setDate(player.getDate());
             if (player.getDate() > GameDriver.getTimeLimit()) {
                 GameDriver gameDriver = new GameDriver();
@@ -77,6 +110,15 @@ public class VillageDisplay extends Application {
                 InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
                 initialFishingScreen.start(currentStage);
             }
+        fade(event);
+    }
+
+    /**
+     * Fades the screen.
+     *
+     * @param event the event
+     */
+    static void fade(final ActionEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -94,7 +136,12 @@ public class VillageDisplay extends Application {
         fadeTransition.play();
     }
 
-    public void save(ActionEvent event) {
+    /**
+     * Saves the game.
+     *
+     * @param event the event
+     */
+    public void save(final ActionEvent event) {
         BulletinBoard bulletinBoard = BulletinBoard.getInstance();
 
         player.serialize("file:../../resources/playerSave.txt");
