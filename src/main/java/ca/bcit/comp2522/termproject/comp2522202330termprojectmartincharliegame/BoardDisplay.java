@@ -20,27 +20,55 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 
+/**
+ * Displays the bulletin board.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class BoardDisplay extends Application {
+    /**
+     * The width of the stage.
+     */
+    public static final int STAGE_WIDTH = 1200;
+    /**
+     * The height of the stage.
+     */
+    public static final int STAGE_HEIGHT = 648;
+    /**
+     * The size of the back button.
+     */
+    public static final int BACK_BUTTON_SIZE = 80;
     private Stage primaryStage;
-    BulletinBoard bulletinBoard = BulletinBoard.getInstance();
-    ArrayList<Quest> questList = bulletinBoard.getQuests();
+    private final BulletinBoard bulletinBoard = BulletinBoard.getInstance();
+    private final ArrayList<Quest> questList = bulletinBoard.getQuests();
     private int startIndex = 0;
 
+    /**
+     * Starts the stage.
+     *
+     * @param stage a Stage
+     */
     @Override
-    public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public void start(final Stage stage) {
+        this.primaryStage = stage;
         displayUI();
     }
 
+    /**
+     * Generates the bulletin board UI.
+     */
     public void displayUI() {
         StackPane questStack;
         if (!questList.isEmpty()) {
             questStack = generateQuestDetails(questList.get(0));
         } else {
-            questStack = generateQuestDetails(new Quest("No Quests Available", "No One", 0, new Fish("No Fish", "common", "none", 0, 0), 0, 0, "There are no quests available at this time. Please check back later."));
+            questStack = generateQuestDetails(new Quest("No Quests Available", "No One", 0,
+                    new Fish("No Fish", "common", "none", 0, 0),
+                    0, 0,
+                    "There are no quests available at this time. Please check back later."));
         }
 
         StackPane bulletinBoardStack = generateBoardUI(questStack);
@@ -48,31 +76,43 @@ public class BoardDisplay extends Application {
 
         HBox root = new HBox(left, questStack);
 
-        Scene scene = new Scene(root, 1200, 648);
+        Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         this.primaryStage.setTitle("Quest Display");
         this.primaryStage.setScene(scene);
         this.primaryStage.show();
     }
 
-    private VBox generateLeft(StackPane bulletinBoard) {
+    /**
+     * Generates the left side of the bulletin board UI.
+     *
+     * @param board a StackPane
+     * @return a VBox
+     */
+    private VBox generateLeft(final StackPane board) {
         Image backButton = new Image("file:../../resources/backButton.png");
         ImageView backButtonView = new ImageView(backButton);
-        backButtonView.setFitHeight(80);
-        backButtonView.setFitWidth(80);
-        backButtonView.setOnMouseClicked(event -> back(event));
+        backButtonView.setFitHeight(BACK_BUTTON_SIZE);
+        backButtonView.setFitWidth(BACK_BUTTON_SIZE);
+        backButtonView.setOnMouseClicked(this::back);
 
         Button viewQuests = ButtonMaker.createButton("View Quests", this::displayActiveQuests, 0, 0);
         HBox buttons = new HBox(backButtonView, viewQuests);
         buttons.setSpacing(418);
 
-        return new VBox(bulletinBoard, buttons);
+        return new VBox(board, buttons);
     }
 
-    private StackPane generateBoardUI(StackPane questStack) {
+    /**
+     * Generates the bulletin board UI.
+     *
+     * @param questStack a StackPane
+     * @return a StackPane
+     */
+    private StackPane generateBoardUI(final StackPane questStack) {
         int endIndex = Math.min(startIndex + 4, questList.size());
 
-        Image bulletinBoard = new Image("file:../../resources/BulletinBoard.png");
-        ImageView bulletinBoardView = new ImageView(bulletinBoard);
+        Image bulletinBoardImage = new Image("file:../../resources/BulletinBoard.png");
+        ImageView bulletinBoardView = new ImageView(bulletinBoardImage);
 
         Label requestTitle = new Label("Requests");
         Font font = Font.loadFont("file:resources/Fonts/CinzelDecorative-Bold.ttf", 30);
@@ -107,25 +147,19 @@ public class BoardDisplay extends Application {
         return bulletinBoardStack;
     }
 
-    private HBox boardHBox(Quest quest, StackPane questStack) {
+    /**
+     * Generates the HBox for the bulletin board UI.
+     *
+     * @param quest a Quest
+     * @param questStack a StackPane
+     * @return a HBox
+     */
+    private HBox boardHBox(final Quest quest, final StackPane questStack) {
         Image fishImage = new Image("file:../../resources/Fish/" + quest.getObjective().getName() + ".png");
-        ImageView fishImageView = new ImageView(fishImage);
-
-        Label questTitleView = new Label(quest.getTitle());
-        questTitleView.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center");
-        questTitleView.setMaxHeight(80);
-        Label questGiverView = new Label("Requester: " + quest.getGiver());
-        questGiverView.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center");
-        questGiverView.setMaxHeight(80);
-        Label questDifficultyView = new Label("Difficulty: " + String.valueOf(quest.getDifficulty()));
-        questDifficultyView.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center");
-        questDifficultyView.setMaxHeight(80);
-
-        HBox hbox = new HBox(fishImageView, questTitleView, questGiverView, questDifficultyView);
+        HBox hbox = getHbox(quest, fishImage);
         hbox.setSpacing(30);
         hbox.setMaxWidth(650);
         hbox.setMaxHeight(80);
-//        hbox.setStyle("-fx-border-width: 5px; -fx-border-color: brown; -fx-border-style: solid");
 
         hbox.setOnMouseClicked(event -> {
             StackPane updatedQuestStack = generateQuestDetails(quest);
@@ -138,35 +172,69 @@ public class BoardDisplay extends Application {
         return hbox;
     }
 
+    /**
+     * Generates the HBox for the bulletin board UI.
+     *
+     * @param quest a Quest
+     * @param fishImage an Image
+     * @return a HBox
+     */
+    private static HBox getHbox(final Quest quest, final Image fishImage) {
+        ImageView fishImageView = new ImageView(fishImage);
 
-    public Label generateLabel(String text, int height) {
+        Label questTitleView = new Label(quest.getTitle());
+        questTitleView.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center");
+        questTitleView.setMaxHeight(80);
+        Label questGiverView = new Label("Requester: " + quest.getGiver());
+        questGiverView.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center");
+        questGiverView.setMaxHeight(80);
+        Label questDifficultyView = new Label("Difficulty: " + quest.getDifficulty());
+        questDifficultyView.setStyle("-fx-font-weight: bold; -fx-font-size: 20px; -fx-alignment: center");
+        questDifficultyView.setMaxHeight(80);
+
+        return new HBox(fishImageView, questTitleView, questGiverView, questDifficultyView);
+    }
+
+    /**
+     * Generates the label for the bulletin board UI.
+     *
+     * @param text a String
+     * @param height an int
+     * @return a Label
+     */
+    public Label generateLabel(final String text, final int height) {
         Font font = Font.loadFont("file:resources/Fonts/CinzelDecorative-Regular.ttf", 20);
         Label label = new Label(text);
         label.setFont(font);
         label.setPrefHeight(height);
         label.setPrefWidth(430);
         label.setWrapText(true);
-//        label.setStyle("-fx-border-width: 2px; -fx-border-color: black; -fx-border-style: solid");
         return label;
     }
 
-    public StackPane generateQuestDetails(Quest quest) {
+    /**
+     * Generates the quest details for the right side of the UI.
+     *
+     * @param quest a Quest
+     * @return a StackPane
+     */
+    public StackPane generateQuestDetails(final Quest quest) {
         Label questTitle = generateLabel(quest.getTitle(), 80);
         Label questGiver = generateLabel("Requester: " + quest.getGiver(), 50);
-        Label questDifficulty = generateLabel("Difficulty: " + String.valueOf(quest.getDifficulty()), 50);
+        Label questDifficulty = generateLabel("Difficulty: " + quest.getDifficulty(), 50);
         Label questDescription = generateLabel("Description:\n" + quest.getDescription(), 200);
-        Label questReward = generateLabel("Reward: " + String.valueOf(quest.getReward()), 100);
+        Label questReward = generateLabel("Reward: " + quest.getReward(), 100);
 
         Button acceptButton = new Button("Accept");
         acceptButton.setPrefWidth(200);
         acceptButton.setPrefHeight(80);
-        acceptButton.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-background-color: #74b359; -fx-border-width: 5px; -fx-border-style: solid; -fx-border-color: black; -fx-border-radius: 10px");
+        acceptButton.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-background-color: #74b359;"
+                + " -fx-border-width: 5px; -fx-border-style: solid; -fx-border-color: black; -fx-border-radius: 10px");
 
-        acceptButton.setOnAction(event -> {
-            acceptQuest(quest);
-        });
+        acceptButton.setOnAction(event -> acceptQuest(quest));
 
-        VBox questDetails = new VBox(questTitle, questGiver, questDifficulty, questDescription, questReward, acceptButton);
+        VBox questDetails = new VBox(questTitle, questGiver, questDifficulty, questDescription, questReward,
+                acceptButton);
         questDetails.setSpacing(0);
         questDetails.setMaxWidth(430);
         questDetails.setMaxHeight(520);
@@ -178,8 +246,6 @@ public class BoardDisplay extends Application {
         StackPane questStack = new StackPane();
         StackPane.setAlignment(questDetails, Pos.TOP_CENTER);
         questStack.setMaxWidth(501);
-//        questStack.setStyle("-fx-border-style: solid; -fx-border-width: 5px; -fx-border-color: navy");
-//        questStack.setTranslateX(350);
         StackPane.setMargin(questDetails, new Insets(12, 0, 0, 0));
 
         questStack.getChildren().addAll(questBoxView, questDetails);
@@ -187,12 +253,17 @@ public class BoardDisplay extends Application {
         return questStack;
     }
 
-    public void acceptQuest(Quest quest) {
+    /**
+     * Accepts a quest.
+     *
+     * @param quest a Quest
+     */
+    public void acceptQuest(final Quest quest) {
         Player player = Player.getInstance("Charlie");
         try {
             player.addQuests(quest);
             bulletinBoard.removeQuest(quest);
-            updateDisplay();
+            displayUI();
             displayAlert("Quest Accepted", "Quest successfully accepted!");
         } catch (IllegalArgumentException e) {
             displayAlert("Error", e.getMessage());
@@ -202,11 +273,13 @@ public class BoardDisplay extends Application {
         }
     }
 
-    public void updateDisplay() {
-        displayUI();
-    }
-
-    private void displayAlert(String title, String content) {
+    /**
+     * Displays an alert.
+     *
+     * @param title the title of the alert as a String
+     * @param content the content of the alert as a String
+     */
+    private void displayAlert(final String title, final String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
@@ -214,11 +287,21 @@ public class BoardDisplay extends Application {
         alert.showAndWait();
     }
 
-    public void displayActiveQuests(ActionEvent event) {
+    /**
+     * Displays the active quests.
+     *
+     * @param event an ActionEvent
+     */
+    public void displayActiveQuests(final ActionEvent event) {
         ModalPopUp modalPopUp = new ActiveQuestModal();
         modalPopUp.openInGamePopup(primaryStage);
     }
 
+    /**
+     * Returns to the village.
+     *
+     * @param event a MouseEvent
+     */
     public void back(final MouseEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
@@ -238,17 +321,27 @@ public class BoardDisplay extends Application {
         fadeTransition.play();
     }
 
-    private void nextQuests(ActionEvent event) {
+    /**
+     * Shows the next quests.
+     *
+     * @param event an ActionEvent
+     */
+    private void nextQuests(final ActionEvent event) {
         if (startIndex + 4 < questList.size()) {
             startIndex = Math.min(startIndex + 4, questList.size());
-            updateDisplay();
+            displayUI();
         }
     }
 
-    private void previousQuests(ActionEvent event) {
+    /**
+     * Shows the previous quests.
+     *
+     * @param event an ActionEvent
+     */
+    private void previousQuests(final ActionEvent event) {
         if (startIndex - 4 >= 0) {
             startIndex = Math.max(startIndex - 4, 0);
-            updateDisplay();
+            displayUI();
         }
     }
 }

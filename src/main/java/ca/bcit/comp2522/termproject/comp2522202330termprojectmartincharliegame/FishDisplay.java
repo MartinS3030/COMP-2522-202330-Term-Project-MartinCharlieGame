@@ -21,20 +21,41 @@ import java.util.ArrayList;
 import java.util.Random;
 import javafx.animation.FadeTransition;
 
+/**
+ * Displays the fish catching screen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class FishDisplay extends Application {
-    private ArrayList<Fish> fishList = new ArrayList<>();
-    private FishingDiceDisplay diceDisplay;
-    private Random random = new Random();
+    /**
+     * The width of the stage.
+     */
+    public static final int STAGE_WIDTH = 1200;
+    /**
+     * The height of the stage.
+     */
+    public static final int FISH_IMAGE_SIZE = 100;
+    public static final int FISH_TO_CATCH = 5;
+    public static final int STAGE_HEIGHT = 648;
+    private final ArrayList<Fish> fishList = new ArrayList<>();
+    private DiceDisplay diceDisplay;
+    private final Random random = new Random();
 
+    /**
+     * Starts the fish display.
+     *
+     * @param primaryStage the stage
+     */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         Image oceanImage = new Image("file:../../resources/Ocean.png");
         ImageView oceanImageView = new ImageView(oceanImage);
 
         generateFish();
-        for (Fish fish : fishList) {
-            System.out.println(fish.getName());
-        }
+//        for (Fish fish : fishList) {
+//            System.out.println(fish.getName());
+//        }
 
         HBox fishContainer = new HBox();
         fishContainer.setSpacing(70);
@@ -45,7 +66,7 @@ public class FishDisplay extends Application {
             fishContainer.getChildren().add(fishVBox);
         }
 
-        diceDisplay = new FishingDiceDisplay(primaryStage);
+        diceDisplay = new DiceDisplay(primaryStage);
         HBox diceDisplayHBox = diceDisplay.getDiceDisplay();
         diceDisplayHBox.setAlignment(Pos.CENTER);
 
@@ -54,7 +75,7 @@ public class FishDisplay extends Application {
         StackPane.setMargin(fishContainer, new Insets(-300, 0, 0, 0));
         StackPane.setMargin(diceDisplayHBox, new Insets(520, 0, 200, 0));
 
-        Scene scene = new Scene(root, 1200, 648);
+        Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
 
         oceanImageView.setPreserveRatio(true);
         oceanImageView.fitHeightProperty().bind(scene.heightProperty());
@@ -69,11 +90,17 @@ public class FishDisplay extends Application {
         primaryStage.show();
     }
 
-    private VBox createFishVBox(Fish fish) {
+    /**
+     * Creates a Vbox for each fish.
+     *
+     * @param fish the fish
+     * @return the Vbox displaying the fish ad its requirements
+     */
+    private VBox createFishVBox(final Fish fish) {
         Image fishImage = new Image("file:../../resources/Fish/" + fish.getName() + ".png");
         ImageView fishImageView = new ImageView(fishImage);
-        fishImageView.setFitWidth(100);
-        fishImageView.setFitHeight(100);
+        fishImageView.setFitWidth(FISH_IMAGE_SIZE);
+        fishImageView.setFitHeight(FISH_IMAGE_SIZE);
         StackPane fishStackPane = new StackPane(fishImageView);
 
         Label nameLabel = new Label(fish.getName());
@@ -82,75 +109,76 @@ public class FishDisplay extends Application {
         Label requirementLabel = new Label(generateRequirement(fish.getRequirementType(), fish.getRequirementValue()));
 
         VBox fishVBox = new VBox(nameLabel, fishStackPane, requirementLabel);
-        fishImageView.setOnMouseClicked(event -> {
-            selectedFish(fish, fishStackPane);
-        });
+        fishImageView.setOnMouseClicked(event -> selectedFish(fish, fishStackPane));
         fishVBox.setSpacing(5);
         fishVBox.setAlignment(javafx.geometry.Pos.CENTER);
 
         return fishVBox;
     }
 
-    private void selectedFish(Fish fish, StackPane fishStackPane) {
+    /**
+     * Selects the fish.
+     *
+     * @param fish the fish
+     * @param fishStackPane the stackpane containing the fish
+     */
+    private void selectedFish(final Fish fish, final StackPane fishStackPane) {
         ArrayList<Dice> diceList = diceDisplay.getSelectedDice();
 
         if (CheckRequirements.checkAgainstFish(diceList, fish)) {
             System.out.println("You caught a " + fish.getName());
             Image fishImage = new Image("file:../../resources/Fish/" + fish.getName() + ".png");
             ImageView fishImageView = new ImageView(fishImage);
-            fishImageView.setFitWidth(100);
-            fishImageView.setFitHeight(100);
+            fishImageView.setFitWidth(FISH_IMAGE_SIZE);
+            fishImageView.setFitHeight(FISH_IMAGE_SIZE);
 
-            // Create the main text
             Text mainText = new Text("CAUGHT!");
             mainText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
             mainText.setFill(Color.rgb(231, 54, 70));
-            mainText.setEffect(new DropShadow(15, Color.BLACK));
 
-//            // Create a copy of the text with a different color and a shadow effect
-//            Text outlineText = new Text("CAUGHT!");
-//            outlineText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
-//            outlineText.setFill(Color.BLACK);
-//            outlineText.setEffect(new DropShadow(15, Color.BLACK));
+            Text outlineText = new Text("CAUGHT!");
+            outlineText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
+            outlineText.setFill(Color.BLACK);
+            outlineText.setEffect(new DropShadow(15, Color.BLACK));
 
             fishStackPane.getChildren().clear();
-            fishStackPane.getChildren().addAll(fishImageView, mainText);
+            fishStackPane.getChildren().addAll(fishImageView, outlineText, mainText);
 
             for (Dice dice : diceList) {
                 diceDisplay.addDiceToUsedDice(dice);
             }
             diceList.clear();
-
-
         } else {
             System.out.println("You did not catch a " + fish.getName());
-
-        }
-
-    }
-
-    public String generateRequirement(String requirement, int value) {
-        if (requirement.equals("greater")) {
-            return "Greater than " + value;
-        } else if (requirement.equals("less")) {
-            return "Less than " + value;
-        } else if (requirement.equals("equal")) {
-            return "Equal to " + value;
-        } else if (requirement.equals("ofakind")) {
-            return value + " of a kind";
-        } else if (requirement.equals("straight"))  {
-            return "Straight of " + value;
-        } else if (requirement.equals("fullHouse")) {
-            return "Full house";
-        } else {
-            return "Error";
         }
     }
 
+    /**
+     * Generates a label for the fish requirements.
+     *
+     * @param requirement the requirement as a string
+     * @param value the value of the requirement as an int
+     * @return the label for the fish requirements as a string
+     */
+    public String generateRequirement(final String requirement, final int value) {
+        return switch (requirement) {
+            case "greater" -> "Greater than " + value;
+            case "less" -> "Less than " + value;
+            case "equal" -> "Equal to " + value;
+            case "ofakind" -> value + " of a kind";
+            case "straight" -> "Straight of " + value;
+            case "fullHouse" -> "Full house";
+            default -> "Error";
+        };
+    }
+
+    /**
+     * Generates 5 fish.
+     */
     public void generateFish() {
         int fishKey;
         int count = 0;
-        while (count < 5) {
+        while (count < FISH_TO_CATCH) {
             int rarity = random.nextInt(100) + 1;
             if (rarity <= 50) {
                 fishKey = random.nextInt(13) + 1;
@@ -162,9 +190,5 @@ public class FishDisplay extends Application {
             Fish generatedFish = fishSpecies.getFish(fishKey);
             fishList.add(generatedFish);
         }
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

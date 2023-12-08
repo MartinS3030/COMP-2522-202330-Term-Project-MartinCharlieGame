@@ -1,6 +1,7 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,41 +16,58 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ActiveQuestModal implements ModalPopUp{
-
+    private Stage primaryStage;
     private static final int MAX_QUESTS = 5;
+    Player player = Player.getInstance("Charlie");
+    Popup popup = new Popup();
     public ActiveQuestModal() {
     }
 
     public void openInGamePopup(Stage primaryStage) {
-        Player player = Player.getInstance("Charlie");
-        ArrayList<Quest> activeQuests =  player.getQuests();
+        this.primaryStage = primaryStage;
+        displayUI();
+//        ArrayList<Quest> activeQuests =  player.getQuests();
+//
+//        Popup popup = new Popup();
+//
+//        VBox vbox = getMainVBox(activeQuests, popup);
+//
+//        StackPane stackPane = createStackPane();
+//        stackPane.getChildren().add(vbox);
+//
+//        popup.getContent().add(stackPane);
+//
+//        popup.setAutoFix(true);
+//
+//        primaryStage.getScene().widthProperty().addListener((obs, oldVal, newVal) -> centerPopup(primaryStage, popup));
+//        primaryStage.getScene().heightProperty().addListener((obs, oldVal, newVal) -> centerPopup(primaryStage, popup));
+//
+//        popup.show(primaryStage);
+    }
 
-        Popup popup = new Popup();
+    private void displayUI() {
+        ArrayList<Quest> activeQuests =  player.getQuests();
 
         VBox vbox = getMainVBox(activeQuests, popup);
 
         StackPane stackPane = createStackPane();
         stackPane.getChildren().add(vbox);
 
+        popup.getContent().clear();
         popup.getContent().add(stackPane);
 
-        // Set autoFix property to true
         popup.setAutoFix(true);
 
-        // Add a listener to recalculate the position when the scene is resized
         primaryStage.getScene().widthProperty().addListener((obs, oldVal, newVal) -> centerPopup(primaryStage, popup));
         primaryStage.getScene().heightProperty().addListener((obs, oldVal, newVal) -> centerPopup(primaryStage, popup));
 
-        // Show the popup
         popup.show(primaryStage);
     }
 
     private void centerPopup(Stage primaryStage, Popup popup) {
-        // Calculate the center position of the primary stage
         double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - popup.getWidth() / 2;
         double centerY = primaryStage.getY() + primaryStage.getHeight() / 2 - popup.getHeight() / 2;
 
-        // Set the position of the popup to the center of the primary stage
         popup.setX(centerX);
         popup.setY(centerY);
     }
@@ -84,7 +102,7 @@ public class ActiveQuestModal implements ModalPopUp{
 
     private HBox getButtonHBox(Popup popup) {
         Button closeButton = new Button("Close");
-        closeButton.setOnAction(e -> popup.hide());
+        closeButton.setOnMouseClicked(e -> popup.hide());
         closeButton.setStyle("-fx-background-color: rgb(28, 55, 201);" +
                              "-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700;" +
                              "-fx-padding: 5px;-fx-text-fill: rgb(29, 41, 41);-fx-border-width: 2px" +
@@ -180,6 +198,21 @@ public class ActiveQuestModal implements ModalPopUp{
         ImageView acceptImageView = getImageView("file:../../resources/Accept.png", 50, 50);
         ImageView cancelImageView = getImageView("file:../../resources/Cancel.png", 50, 50);
 
+        acceptImageView.setOnMouseClicked(event -> {
+            if (checkQuestRequirements(quest)) {
+                player.setMoney(quest.getReward());
+                player.removeQuest(quest);
+                displayUI();
+            }
+        });
+
+        cancelImageView.setOnMouseClicked(event -> {
+            BulletinBoard bulletinBoard = BulletinBoard.getInstance();
+            player.removeQuest(quest);
+            bulletinBoard.addQuest(quest);
+            displayUI();
+        });
+
         Label questNameLabel = new Label(quest.getTitle());
         questNameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700; -fx-text-transform: uppercase;");
 
@@ -205,7 +238,6 @@ public class ActiveQuestModal implements ModalPopUp{
     }
 
     public boolean checkQuestRequirements(Quest quest) {
-        Player player = Player.getInstance("Charlie");
         HashMap<Item, Integer> inventory = player.getInventory();
         if (inventory.get(quest.getObjective().getName()) >= quest.getObjectiveAmount()) {
             return true;

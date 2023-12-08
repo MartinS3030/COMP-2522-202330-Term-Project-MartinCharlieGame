@@ -93,20 +93,6 @@ public class IntroScreen extends Application {
     }
 
     private void nextScreen(ActionEvent event) {
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
-
-        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
-
-        fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0.0);
-
-        fadeTransition.setOnFinished(e -> {
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
-
-            initialFishingScreen.start(currentStage);
-        });
-
-        fadeTransition.play();
+        VillageDisplay.fade(event);
     }
 }
