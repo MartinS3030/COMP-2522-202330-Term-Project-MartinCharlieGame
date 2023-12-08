@@ -163,10 +163,12 @@ public class FishDisplay extends Application {
         return switch (requirement) {
             case "greater" -> "Greater than " + value;
             case "less" -> "Less than " + value;
-            case "equal" -> "Equal to " + value;
+            case "equalTo" -> "Equal to " + value;
             case "ofakind" -> value + " of a kind";
             case "straight" -> "Straight of " + value;
             case "fullHouse" -> "Full house";
+            case "even" -> value + "Even";
+            case "odd" -> value + "Odd";
             default -> "Error";
         };
     }
