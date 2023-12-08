@@ -16,6 +16,8 @@ import javafx.util.Duration;
 
 public class VillageDisplay extends Application {
     Player player = Player.getInstance("Charlie");
+    Shop shop = new Shop();
+
     @Override
     public void start(Stage primaryStage) {
         Image village = new Image("file:../../resources/village.png");
