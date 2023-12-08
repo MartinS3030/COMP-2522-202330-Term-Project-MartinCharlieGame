@@ -374,6 +374,7 @@ public class BoardDisplay extends Application {
                 } else {
 //                bulletinBoard.addQuest(bulletinBoard.generateLegendaryQuest());
                 }
+            }
         }
         daysPassed.add(player.getDate());
     }
