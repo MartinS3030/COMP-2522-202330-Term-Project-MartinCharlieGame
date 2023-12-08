@@ -23,7 +23,7 @@ import javafx.animation.FadeTransition;
 
 public class FishDisplay extends Application {
     private ArrayList<Fish> fishList = new ArrayList<>();
-    private DiceDisplay diceDisplay;
+    private FishingDiceDisplay diceDisplay;
     private Random random = new Random();
 
     @Override
@@ -45,7 +45,7 @@ public class FishDisplay extends Application {
             fishContainer.getChildren().add(fishVBox);
         }
 
-        diceDisplay = new DiceDisplay(primaryStage);
+        diceDisplay = new FishingDiceDisplay(primaryStage);
         HBox diceDisplayHBox = diceDisplay.getDiceDisplay();
         diceDisplayHBox.setAlignment(Pos.CENTER);
 
@@ -105,15 +105,16 @@ public class FishDisplay extends Application {
             Text mainText = new Text("CAUGHT!");
             mainText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
             mainText.setFill(Color.rgb(231, 54, 70));
+            mainText.setEffect(new DropShadow(15, Color.BLACK));
 
-            // Create a copy of the text with a different color and a shadow effect
-            Text outlineText = new Text("CAUGHT!");
-            outlineText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
-            outlineText.setFill(Color.BLACK);
-            outlineText.setEffect(new DropShadow(15, Color.BLACK));
+//            // Create a copy of the text with a different color and a shadow effect
+//            Text outlineText = new Text("CAUGHT!");
+//            outlineText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
+//            outlineText.setFill(Color.BLACK);
+//            outlineText.setEffect(new DropShadow(15, Color.BLACK));
 
             fishStackPane.getChildren().clear();
-            fishStackPane.getChildren().addAll(fishImageView, outlineText, mainText);
+            fishStackPane.getChildren().addAll(fishImageView, mainText);
 
             for (Dice dice : diceList) {
                 diceDisplay.addDiceToUsedDice(dice);
