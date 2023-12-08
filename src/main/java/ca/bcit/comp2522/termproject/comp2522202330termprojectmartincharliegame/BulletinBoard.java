@@ -111,6 +111,10 @@ public class BulletinBoard implements Board, Serializable {
         return difficulty;
     }
 
+    public void addQuest(Quest quest) {
+        quests.add(quest);
+    }
+
     public void removeQuest(Quest quest) {
         quests.remove(quest);
     }
