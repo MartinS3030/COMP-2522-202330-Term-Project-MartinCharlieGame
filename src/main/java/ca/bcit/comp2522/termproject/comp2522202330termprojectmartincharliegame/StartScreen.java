@@ -20,26 +20,48 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.util.Optional;
 
+/**
+ * Displays the start screen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class StartScreen extends Application {
+    /**
+     * The width of the stage.
+     */
+    public static final int STAGE_WIDTH = 1200;
+    /**
+     * The height of the stage.
+     */
+    public static final int STAGE_HEIGHT = 648;
+    /**
+     * The font size of the text.
+     */
+    public static final int FONT_SIZE = 30;
 
-
+    /**
+     * Starts the start screen.
+     *
+     * @param primaryStage the stage to display the start screen on
+     */
     @Override
     public void start(final Stage primaryStage) {
         Image image = new Image("file:../../resources/StartScreen.jpg");
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
-        imageView.setFitHeight(648);
-        imageView.setFitWidth(1200);
+        imageView.setFitHeight(STAGE_HEIGHT);
+        imageView.setFitWidth(STAGE_WIDTH);
 
-        Label startGame = generateLabel("Start Game", 30);
-        Label loadGame = generateLabel("Load Game", 30);
-        Label exitGame = generateLabel("Exit Game", 30);
+        Label startGame = generateLabel("Start Game", FONT_SIZE);
+        Label loadGame = generateLabel("Load Game", FONT_SIZE);
+        Label exitGame = generateLabel("Exit Game", FONT_SIZE);
 
         startGame.setOnMouseClicked(this::startGame);
         loadGame.setOnMouseClicked(this::loadGame);
         exitGame.setOnMouseClicked(event -> Platform.exit());
 
-        VBox menu = new VBox( startGame, loadGame, exitGame);
+        VBox menu = new VBox(startGame, loadGame, exitGame);
         menu.setSpacing(50);
         menu.setAlignment(Pos.CENTER);
         menu.setMaxHeight(600);
@@ -57,9 +79,14 @@ public class StartScreen extends Application {
         primaryStage.show();
     }
 
-    private void loadGame(MouseEvent mouseEvent) {
-        Player loadedPlayer = null;
-        BulletinBoard loadedBulletinBoard = null;
+    /**
+     * Loads the game.
+     *
+     * @param mouseEvent the mouse event
+     */
+    private void loadGame(final MouseEvent mouseEvent) {
+        Player loadedPlayer;
+        BulletinBoard loadedBulletinBoard;
 
         try {
             loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
@@ -90,7 +117,12 @@ public class StartScreen extends Application {
         }
     }
 
-    private void startGame(MouseEvent event) {
+    /**
+     * Starts the game.
+     *
+     * @param event the mouse event
+     */
+    private void startGame(final MouseEvent event) {
         String enteredName = "";
 
         while (enteredName.isEmpty()) {
@@ -109,7 +141,6 @@ public class StartScreen extends Application {
         }
 
         System.out.println("User entered: " + enteredName);
-        Player player = Player.getInstance(enteredName);
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
@@ -127,7 +158,14 @@ public class StartScreen extends Application {
         fadeTransition.play();
     }
 
-    public Label generateLabel(String text, int fontSize) {
+    /**
+     * Generates a label with the specified text and font size.
+     *
+     * @param text the text to display
+     * @param fontSize the font size
+     * @return the label
+     */
+    public Label generateLabel(final String text, final int fontSize) {
         Font font = Font.loadFont("file:resources/Fonts/PressStart2P-Regular.ttf", fontSize);
         Label label = new Label(text);
         label.setFont(font);
