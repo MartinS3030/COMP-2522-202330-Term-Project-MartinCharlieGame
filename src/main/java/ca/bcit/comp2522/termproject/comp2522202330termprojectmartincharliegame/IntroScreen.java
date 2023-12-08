@@ -140,14 +140,13 @@ public class IntroScreen extends Application {
     private List<String> getParagraphs() {
         List<String> paragraphs = new ArrayList<>();
 
-        paragraphs.add(String.format(
-                "Oh, %s! Another day in the thrilling metropolis of Aqua-Laughs, where the sun always shines, and the impending doom just adds that extra dash of excitement. So, you, our clairvoyant protagonist, had this gut feeling that a tidal wave is just itching to crash our little island paradise in a measly 30 days. No biggie, right?", name));
+        paragraphs.add("The wall of water towers over you. It hangs still, but you know it's barrelling towards you with its crushing weight. There is no escaping it as it engulfs the world, swallows the sky, and devours the sun.");
 
-        paragraphs.add("Rather than checking with the village's top-notch weather seagull or, you know, consulting literally anyone else, you've decided to embark on the quest of a lifetime: scraping together enough shiny sea-currency to buy a boat. Because, clearly, the solution to every problem is to sail away like a mariner with a one-way ticket to awkward island.");
+        paragraphs.add("You wake up wet and tangled, thinking you've ended up at the briny bottom amongst the seaweeds. You come to realize it was just the bed sheets and your cold sweat. It couldn't have been real, could it?! You are sure that with time, it will fade away like a bad dream.");
 
-        paragraphs.add("Get ready for the adventure of a lifetime, or at least the next 30 days of your life, as you become the go-to lackey for your fellow islanders' bizarre requests. From finding lost treasure (spoiler: it's probably a soggy sandwich) to organizing crab races, your days are now a delightful circus of aquatic absurdity. Just remember, not everyone's convinced about your so-called sixth sense, and some might think you're just riding the wave of delusion.");
+        paragraphs.add("No! It WAS real! The premonition does not fade, and your conviction has only steeled that it was a future yet to pass. There's no way to convince anyone else of the truth. They will think you have gone MAD! You must save yourself and get off of this island.");
 
-        paragraphs.add("Will you accumulate enough seaweed-covered moolah to buy your grand escape vessel, or will Aqua-Laughs be your forever watery home? Strap in for the sarcastic spectacle of \"Tide's Up, Funds Up!\" Where the laughs are as salty as the ocean, and the quests are as fishy as your plan to outrun a tidal wave. Good luck, oh chosen one of the tides!");
+        paragraphs.add("You have 30 days before The Wave comes and takes your small island village. You must sell enough fish to make enough money to buy a boat, to get off of this doom island.");
         return paragraphs;
     }
 
