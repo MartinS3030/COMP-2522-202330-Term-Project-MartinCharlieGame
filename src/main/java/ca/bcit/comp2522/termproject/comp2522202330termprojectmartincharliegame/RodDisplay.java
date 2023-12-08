@@ -1,10 +1,11 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -14,9 +15,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class RodDisplay {
+
+
     private final Stage primaryStage;
     public RodDisplay(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public HBox getRodDisplayHBox() {
@@ -26,39 +33,26 @@ public class RodDisplay {
         StackPane lineBox = createComponentBox("Line");
         StackPane hookBox = createComponentBox("Hook");
 
-        baseBox.setOnMouseClicked(event -> {
-            ModalPopUp baseModal = new DiceFaceModal(0);
-            baseModal.openInGamePopup(primaryStage);
-        });
-        rodBox.setOnMouseClicked(event -> {
-            ModalPopUp rodModal = new DiceFaceModal(1);
-            rodModal.openInGamePopup(primaryStage);
-        });
-        reelBox.setOnMouseClicked(event -> {
-            ModalPopUp reelModal = new DiceFaceModal(2);
-            reelModal.openInGamePopup(primaryStage);
-        });
-        lineBox.setOnMouseClicked(event -> {
-            ModalPopUp lineModal = new DiceFaceModal(3);
-            lineModal.openInGamePopup(primaryStage);
-        });
-        hookBox.setOnMouseClicked(event -> {
-            ModalPopUp hookModal = new DiceFaceModal(4);
-            hookModal.openInGamePopup(primaryStage);
-        });
+        StackPane[] componentBoxes = new StackPane[]{baseBox, rodBox, reelBox, lineBox, hookBox};
+        HBox mainBox = new HBox();
 
-        VBox baseVBox = createVBox(baseBox);
-        VBox rodVBox = createVBox(rodBox);
-        VBox reelVBox = createVBox(reelBox);
-        VBox lineVBox = createVBox(lineBox);
-        VBox hookVBox = createVBox(hookBox);
+        for (int i = 0; i < componentBoxes.length; i++) {
+            componentBoxes[i].setOnMouseClicked(openModal(i));
+            mainBox.getChildren().add(createVBox(componentBoxes[i]));
+        }
 
-        HBox mainBox = new HBox(baseVBox, rodVBox, reelVBox, lineVBox, hookVBox);
         mainBox.setAlignment(Pos.CENTER);
         mainBox.setSpacing(10);
         mainBox.setPadding(new Insets(10));
 
         return mainBox;
+    }
+
+    protected EventHandler<MouseEvent> openModal(int DiceIndex) {
+        return event -> {
+            ModalPopUp modal = new DiceFaceModal(DiceIndex);
+            modal.openInGamePopup(primaryStage);
+        };
     }
 
     private StackPane createComponentBox(String componentName) {
@@ -72,13 +66,13 @@ public class RodDisplay {
         return stackPane;
     }
 
-    private Label createParagraph(String description) {
-        Label paragraphLabel = new Label(description);
-        paragraphLabel.setWrapText(true);
-        paragraphLabel.setStyle("-fx-font-size: 20px");
-        paragraphLabel.setMaxWidth(170);
-        return paragraphLabel;
-    }
+//    private Label createParagraph(String description) {
+//        Label paragraphLabel = new Label(description);
+//        paragraphLabel.setWrapText(true);
+//        paragraphLabel.setStyle("-fx-font-size: 20px");
+//        paragraphLabel.setMaxWidth(170);
+//        return paragraphLabel;
+//    }
 
     private VBox createVBox(Pane component) {
         return new VBox(component);
