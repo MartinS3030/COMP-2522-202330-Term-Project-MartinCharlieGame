@@ -3,15 +3,12 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
 
 
 public class FishingDiceDisplay extends DiceDisplay{
@@ -21,7 +18,7 @@ public class FishingDiceDisplay extends DiceDisplay{
 //    private final Color USED_COLOR = Color.GREY;
 //    private final ImageView[] diceViews;
 //    private final Fishing_Rod fishingRod;
-    private final Dice_Roller diceRoller;
+    private final DiceRoller diceRoller;
 //    private final HBox hBox;
 //    private final VBox[] vBox;
     private Stage primaryStage;
@@ -41,7 +38,7 @@ public class FishingDiceDisplay extends DiceDisplay{
     public FishingDiceDisplay(Stage primaryStage) {
         super(primaryStage);
         this.primaryStage = primaryStage;
-        diceRoller = new Dice_Roller(getFishingRod().getComponents());
+        diceRoller = new DiceRoller(getFishingRod().getComponents());
         diceRoller.rollDice();
         rollCounter = 0;
         roundCounter = getPlayer().getCastOfTheDay();
