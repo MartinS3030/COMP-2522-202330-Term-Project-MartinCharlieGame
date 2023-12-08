@@ -6,20 +6,16 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ViewRod extends Application {
     Player player = Player.getInstance("Charlie");
-    Fishing_Rod rod = player.getRod();
 
     @Override
     public void start(Stage primaryStage) {
@@ -41,7 +37,7 @@ public class ViewRod extends Application {
         ImageView backButtonView = new ImageView(backButton);
         backButtonView.setFitWidth(75);
         backButtonView.setFitHeight(75);
-        backButtonView.setOnMouseClicked(event -> back(event));
+        backButtonView.setOnMouseClicked(this::back);
 
         StackPane.setAlignment(backButtonView, Pos.TOP_LEFT);
 

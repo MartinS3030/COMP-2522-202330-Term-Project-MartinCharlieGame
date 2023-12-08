@@ -14,8 +14,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class RodDisplay {
-    Player player = Player.getInstance("Charlie");
-    Fishing_Rod rod = player.getRod();
     private final Stage primaryStage;
     public RodDisplay(Stage primaryStage) {
         this.primaryStage = primaryStage;
