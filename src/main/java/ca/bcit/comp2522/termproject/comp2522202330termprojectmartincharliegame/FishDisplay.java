@@ -66,7 +66,7 @@ public class FishDisplay extends Application {
             fishContainer.getChildren().add(fishVBox);
         }
 
-        diceDisplay = new DiceDisplay(primaryStage);
+        diceDisplay = new FishingDiceDisplay(primaryStage);
         HBox diceDisplayHBox = diceDisplay.getDiceDisplay();
         diceDisplayHBox.setAlignment(Pos.CENTER);
 
@@ -135,14 +135,10 @@ public class FishDisplay extends Application {
             Text mainText = new Text("CAUGHT!");
             mainText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
             mainText.setFill(Color.rgb(231, 54, 70));
-
-            Text outlineText = new Text("CAUGHT!");
-            outlineText.setFont(Font.font("Oswald", FontWeight.BOLD, 24));
-            outlineText.setFill(Color.BLACK);
-            outlineText.setEffect(new DropShadow(15, Color.BLACK));
+            mainText.setEffect(new DropShadow(15, Color.BLACK));
 
             fishStackPane.getChildren().clear();
-            fishStackPane.getChildren().addAll(fishImageView, outlineText, mainText);
+            fishStackPane.getChildren().addAll(fishImageView, mainText);
 
             for (Dice dice : diceList) {
                 diceDisplay.addDiceToUsedDice(dice);
