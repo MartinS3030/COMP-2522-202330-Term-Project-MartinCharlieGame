@@ -13,12 +13,30 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the dice face modal.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class DiceFaceModal implements ModalPopUp{
     private static final ArrayList<DiceFaceModal> openedModal = new ArrayList<>();
     private final int diceIndex;
+
+    /**
+     * Constructs a DiceFaceModal.
+     *
+     * @param diceIndex the dice index
+     */
     public DiceFaceModal(int diceIndex) {
         this.diceIndex = diceIndex;
     }
+
+    /**
+     * Opens the dice face modal.
+     *
+     * @param primaryStage the primary stage
+     */
     public void openInGamePopup(Stage primaryStage) {
         if (openedModal.isEmpty()) {
             openedModal.add(this);
@@ -48,6 +66,11 @@ public class DiceFaceModal implements ModalPopUp{
         popup.show(primaryStage);
     }
 
+    /**
+     * Creates a StackPane.
+     *
+     * @return a StackPane
+     */
     private StackPane createStackPane() {
         VBox backgroundCard = new VBox();
         backgroundCard.setStyle(
@@ -62,6 +85,7 @@ public class DiceFaceModal implements ModalPopUp{
 
         return stackPane;
     }
+
     private void centerPopup(Stage primaryStage, Popup popup) {
         // Calculate the center position of the primary stage
         double centerX = primaryStage.getX() + primaryStage.getWidth() / 2 - popup.getWidth() / 2;
@@ -126,6 +150,13 @@ public class DiceFaceModal implements ModalPopUp{
         return labelHBox;
     }
 
+    /**
+     * Returns the dice face views.
+     *
+     * @param dice the dice
+     * @param popup the popup
+     * @return images of the dice faces as an ArrayList of ImageView
+     */
     protected ArrayList<ImageView> createDiceFaceViews(Dice dice, Popup popup) {
         ArrayList<ImageView> diceViews = new ArrayList<>();
         for (Integer face : dice.getFaceList()) {
@@ -145,6 +176,12 @@ public class DiceFaceModal implements ModalPopUp{
         return diceViews;
     }
 
+    /**
+     * Creates a VBox of the dice faces in a T configuration.
+     *
+     * @param diceViews the dice face views
+     * @return a VBox of the dice faces
+     */
     private VBox createTVbox(ArrayList<ImageView> diceViews) {
         VBox diceFaceVBox = new VBox();
         for (int i = 0; i < diceViews.size(); i++) {
@@ -164,6 +201,9 @@ public class DiceFaceModal implements ModalPopUp{
         return diceFaceVBox;
     }
 
+    /**
+     * Clears the opened modal.
+     */
     public static void clearOpenedModal() {
         openedModal.clear();
     }

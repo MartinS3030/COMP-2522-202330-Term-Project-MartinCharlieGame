@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * A class that displays the dice.
  *
- * @author Charlie Zhang & Martin Siu
+ * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
 public class DiceDisplay {

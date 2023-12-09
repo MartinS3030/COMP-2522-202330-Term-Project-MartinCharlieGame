@@ -11,9 +11,24 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+/**
+ * Represents the endgame screen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class EndScreen extends Application {
+    /**
+     * Constructs an EndScreen.
+     */
     public EndScreen() {
     }
+
+    /**
+     * Starts the EndScreen.
+     *
+     * @param primaryStage the Stage
+     */
     public void start(Stage primaryStage) {
         ImageView imageView = getImageView();
 
@@ -38,6 +53,11 @@ public class EndScreen extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Returns the end message.
+     *
+     * @return the end message as a Label
+     */
     protected Label getEndMessage() {
         Label endMessage = new Label("You waited for the end but it never came. Guess it was just a dream.");
         endMessage.setStyle("-fx-font-size: 50px; -fx-text-fill: white;");
@@ -47,6 +67,11 @@ public class EndScreen extends Application {
         return endMessage;
     }
 
+    /**
+     * Returns the background ImageView.
+     *
+     * @return the ImageView of the background
+     */
     protected ImageView getImageView() {
         Image image = new Image("file:../../resources/LoseScreen.png");
         ImageView imageView = new ImageView(image);
@@ -54,6 +79,11 @@ public class EndScreen extends Application {
         return imageView;
     }
 
+    /**
+     * Launches the EndScreen.
+     *
+     * @param args the command line arguments
+     */
     public static void main(final String[] args) {
         launch(args);
     }

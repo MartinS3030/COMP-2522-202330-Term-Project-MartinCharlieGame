@@ -6,7 +6,7 @@ import java.util.Scanner;
 /**
  * Represents a class that rolls dice.
  *
- * @author Martin Siu
+ * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
 public class DiceRoller {
@@ -92,42 +92,5 @@ public class DiceRoller {
             result.add(dice.getFaceUpValue());
         }
         return result;
-    }
-
-    public static void main(String[] args) {
-
-        int gameMode = 0;
-        Scanner scanner = new Scanner(System.in);
-
-        ArrayList<Dice> diceList = new ArrayList<Dice>();
-        for (int i = 0; i < 5; i++) {
-            diceList.add(new Rod_Components());
-        }
-
-        DiceRoller diceRoller = new DiceRoller(diceList);
-
-        for (Dice dice : diceList) {
-            System.out.println(dice.getFaceUpValue());
-        }
-
-        while (gameMode != 1) {
-            System.out.println("1 to lock, 0 to unlock");
-            for (int i = 0; i < diceList.size(); i++) {
-                System.out.println("Dice " + i + ": ");
-                if (scanner.hasNextInt()) {
-                    if (scanner.nextInt() == 1) {
-                        diceRoller.lockDice(diceList.get(i));
-                    } else {
-                        diceRoller.unlockDice(diceList.get(i));
-                    }
-                } else {
-                    diceRoller.unlockDice(diceList.get(i));
-                }
-            }
-            diceRoller.rollDice();
-            for (Dice dice : diceList) {
-                System.out.println(dice.getFaceUpValue());
-            }
-        }
     }
 }

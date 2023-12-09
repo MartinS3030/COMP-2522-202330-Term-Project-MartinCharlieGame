@@ -53,9 +53,6 @@ public class FishDisplay extends Application {
         ImageView oceanImageView = new ImageView(oceanImage);
 
         generateFish();
-//        for (Fish fish : fishList) {
-//            System.out.println(fish.getName());
-//        }
 
         HBox fishContainer = new HBox();
         fishContainer.setSpacing(70);

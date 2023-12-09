@@ -6,13 +6,33 @@ import javafx.stage.Popup;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the dice face modal for the shop display.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class DiceFaceShopModal extends DiceFaceModal{
     private final DiceDisplay diceDisplay;
+
+    /**
+     * Constructs a DiceFaceShopModal.
+     *
+     * @param diceFace the dice face
+     * @param diceDisplay the dice display
+     */
     public DiceFaceShopModal(int diceFace, DiceDisplay diceDisplay) {
         super(diceFace);
         this.diceDisplay = diceDisplay;
     }
 
+    /**
+     * Returns the dice face views.
+     *
+     * @param dice the dice
+     * @param popup the popup
+     * @return images of the dice faces as an ArrayList of ImageView
+     */
     @Override
     protected ArrayList<ImageView> createDiceFaceViews(Dice dice, Popup popup) {
         ArrayList<ImageView> diceViews = new ArrayList<>();
