@@ -60,7 +60,7 @@ public class ShopDisplay extends Application {
         MoneyView.setFitWidth(60);
         MoneyView.setFitHeight(60);
         gold = new Label(Integer.toString(Player.getInstance("cah").getMoney()));
-        gold.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 15px;-fx-font-weight: 700;");
+        gold.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 30px;-fx-font-weight: 700; -fx-text-fill: black;");
         HBox hBox = new HBox();
         hBox.getChildren().addAll(MoneyView, gold);
         hBox.setPrefSize(100, 100);
