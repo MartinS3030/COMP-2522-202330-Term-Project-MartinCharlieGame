@@ -17,7 +17,7 @@ public class Rod_Components implements Dice, Serializable {
     }
     public Rod_Components() {
         this.name = "Generic Rod Component";
-        this.values = new ArrayList<Integer>();
+        this.values = new ArrayList<>();
         int[] intArray = new int[] {1, 2, 3, 4, 5, 6};
         for (int value : intArray) {
             values.add(value);
