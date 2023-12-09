@@ -12,7 +12,7 @@ import java.io.ObjectInputStream;
 /**
  * A class that represents a player.
  *
- * @author Charlie Martin
+ * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
 public class Player implements Serializable {

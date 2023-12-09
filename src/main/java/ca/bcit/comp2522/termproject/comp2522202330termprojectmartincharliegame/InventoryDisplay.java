@@ -16,15 +16,30 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.HashMap;
 
+/**
+ * Represents the inventory page display.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class InventoryDisplay extends Application {
 
+    /**
+     * Launches the application.
+     *
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * Starts the application.
+     *
+     * @param primaryStage the stage
+     */
     @Override
     public void start(Stage primaryStage) {
         // Create a GridPane to display the Fish grid
@@ -91,6 +106,11 @@ public class InventoryDisplay extends Application {
         return hBox;
     }
 
+    /**
+     * Returns to the initial fishing screen.
+     *
+     * @param event the mouse event
+     */
     public void back(final MouseEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
