@@ -68,14 +68,6 @@ public final class BulletinBoard implements Board, Serializable {
         for (int i = 0; i < STARTING_QUESTS; i++) {
             quests.add(generateCommonQuest());
         }
-        for (Quest quest : quests) {
-            System.out.println(quest.getTitle());
-            System.out.println(quest.getDescription());
-            System.out.println(quest.getReward());
-            System.out.println(quest.getObjective().getName());
-            System.out.println(quest.getObjectiveAmount());
-            System.out.println();
-        }
     }
 
     /**

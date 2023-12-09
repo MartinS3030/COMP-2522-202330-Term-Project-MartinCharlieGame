@@ -34,11 +34,11 @@ public class VillageDisplay extends Application {
     /**
      * Launches the stage.
      *
-     * @param primaryStage the stage
+     * @param stage the stage
      */
     @Override
-    public void start(final Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public void start(final Stage stage) {
+        this.primaryStage = stage;
         Image village = new Image("file:../../resources/village.png");
         ImageView villageView = new ImageView(village);
         villageView.setFitHeight(STAGE_HEIGHT);
@@ -47,23 +47,22 @@ public class VillageDisplay extends Application {
         Button bulletinBoard = ButtonMaker.createButton("Bulletin Board", this::showBulletinBoard, 0, 0);
         Button shop = ButtonMaker.createButton("Shop", this::showShop, 0, 0);
         Button viewQuests = ButtonMaker.createButton("View Quests", this::showActiveQuests, 0, 0);
-        Button viewInventory = ButtonMaker.createButton("View Inventory", this::showInventory, 0, 0);
         Button sleep = ButtonMaker.createButton("Sleep", this::sleep, 0, 0);
         Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBoat, 0, 0);
         Button save = ButtonMaker.createButton("Save", this::save, 0, 0);
 
-        VBox buttonBox = new VBox(bulletinBoard, shop, viewQuests, viewInventory, sleep, buyBoat, save);
+        VBox buttonBox = new VBox(bulletinBoard, shop, viewQuests, sleep, buyBoat, save);
         buttonBox.setAlignment(javafx.geometry.Pos.CENTER);
         buttonBox.setSpacing(10);
 
         StackPane root = new StackPane(villageView, buttonBox);
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        primaryStage.setTitle("Village");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setTitle("Village");
+        stage.setScene(scene);
+        stage.show();
     }
 
-    private void showBoat(ActionEvent actionEvent) {
+    private void showBoat(final ActionEvent actionEvent) {
 //        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 //
 //        fadeTransition.setNode(((Node) actionEvent.getSource()).getScene().getRoot());
@@ -84,24 +83,6 @@ public class VillageDisplay extends Application {
     private void showActiveQuests(final ActionEvent actionEvent) {
         ModalPopUp modalPopUp = new ActiveQuestModal();
         modalPopUp.openInGamePopup(primaryStage);
-    }
-
-    private void showInventory(ActionEvent event) {
-        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
-
-        fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());
-
-        fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0.0);
-
-        fadeTransition.setOnFinished(e -> {
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            InventoryDisplay inventoryDisplay = new InventoryDisplay();
-            inventoryDisplay.start(currentStage);
-        });
-
-        fadeTransition.play();
     }
 
     /**
@@ -203,6 +184,9 @@ public class VillageDisplay extends Application {
     public void save(final ActionEvent event) {
         BulletinBoard bulletinBoard = BulletinBoard.getInstance();
 
+        System.out.println(player.getMoney());
+        System.out.println(player.getDate());
+        System.out.println(bulletinBoard.getQuests().size());
         player.serialize("file:../../resources/playerSave.txt");
         bulletinBoard.serialize("file:../../resources/bulletinBoardSave.txt");
     }

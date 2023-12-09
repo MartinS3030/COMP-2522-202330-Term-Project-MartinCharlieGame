@@ -36,8 +36,6 @@ public class GameDriver extends Application {
      * @param primaryStage contains the Scene
      */
     public void start(final Stage primaryStage) {
-        serializePlayer();
-        serializeBoard();
         StartScreen startScreen = new StartScreen();
         startScreen.start(primaryStage);
     }
@@ -92,10 +90,6 @@ public class GameDriver extends Application {
         player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
 
         player.serialize("file:../../resources/playerSave.txt");
-        //        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
-//        for (Quest quest : loadedPlayer.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
     }
 
     public void serializeBoard() {

@@ -89,8 +89,24 @@ public class StartScreen extends Application {
         BulletinBoard loadedBulletinBoard;
 
         try {
-            loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
-            loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
+            loadedPlayer = Player.getInstance("Charlie");
+            loadedBulletinBoard = BulletinBoard.getInstance();
+            Player tempPlayer = Player.deserialize("file:../../resources/playerSave.txt");
+            BulletinBoard tempBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
+
+            if (tempPlayer != null) {
+                loadedPlayer.setMoney(tempPlayer.getMoney());
+                loadedPlayer.setDate(tempPlayer.getDate());
+                loadedPlayer.setCastOfTheDay(tempPlayer.getCastOfTheDay());
+                loadedPlayer.getInventory().putAll(tempPlayer.getInventory());
+                loadedPlayer.getQuests().clear();
+                loadedPlayer.getQuests().addAll(tempPlayer.getQuests());
+            }
+
+            if (tempBulletinBoard != null) {
+                loadedBulletinBoard.getQuests().clear();
+                loadedBulletinBoard.getQuests().addAll(tempBulletinBoard.getQuests());
+            }
         } catch (Exception e) {
             Platform.runLater(() -> {
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -101,21 +117,20 @@ public class StartScreen extends Application {
             return;
         }
 
-        if (loadedPlayer != null && loadedBulletinBoard != null) {
-            FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
-            fadeTransition.setNode(((Node) mouseEvent.getSource()).getScene().getRoot());
-            fadeTransition.setFromValue(1.0);
-            fadeTransition.setToValue(0.0);
+        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+        fadeTransition.setNode(((Node) mouseEvent.getSource()).getScene().getRoot());
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
 
-            fadeTransition.setOnFinished(e -> {
-                Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-                VillageDisplay villageDisplay = new VillageDisplay();
-                villageDisplay.start(currentStage);
-            });
+        fadeTransition.setOnFinished(e -> {
+            Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+            VillageDisplay villageDisplay = new VillageDisplay();
+            villageDisplay.start(currentStage);
+        });
 
-            fadeTransition.play();
-        }
+        fadeTransition.play();
     }
+
 
     /**
      * Starts the game.
