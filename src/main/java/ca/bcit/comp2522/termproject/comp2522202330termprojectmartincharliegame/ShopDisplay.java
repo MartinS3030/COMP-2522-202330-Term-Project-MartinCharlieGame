@@ -17,10 +17,20 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Represents the shop display screen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class ShopDisplay extends Application {
-
     private static Label gold;
 
+    /**
+     * Starts the shop display screen.
+     *
+     * @param primaryStage the stage
+     */
     @Override
     public void start(Stage primaryStage) {
         Shop shop = Shop.getInstance();
@@ -85,10 +95,18 @@ public class ShopDisplay extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Refreshes the money label.
+     */
     public static void refreshMoney() {
         gold.setText(Integer.toString(Player.getInstance("cah").getMoney()));
     }
 
+    /**
+     * Returns to the village display screen.
+     *
+     * @param event the mouse event
+     */
     public void back(final MouseEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 

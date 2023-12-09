@@ -14,6 +14,12 @@ import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
+/**
+ * Represents the view rod screen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class ViewRod extends Application {
     /**
      * Starts the application.
@@ -60,6 +66,11 @@ public class ViewRod extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Returns to the initial fishing screen.
+     *
+     * @param event the mouse event
+     */
     public void back(final MouseEvent event) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
