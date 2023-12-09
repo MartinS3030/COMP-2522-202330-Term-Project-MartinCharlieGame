@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CheckRequirements {
 
@@ -51,8 +50,8 @@ public class CheckRequirements {
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
         }
-        for (int i = 0; i < faceUpValues.length; i++) {
-            if (faceUpValues[i] == value) {
+        for (int faceUpValue : faceUpValues) {
+            if (faceUpValue == value) {
                 return true;
             }
         }
@@ -91,11 +90,11 @@ public class CheckRequirements {
         }
         boolean threeOfAKind = false;
         boolean twoOfAKind = false;
-        for (int i = 0; i < faceUpValues.length; i++) {
-            if (faceUpValues[i] == 3) {
+        for (int faceUpValue : faceUpValues) {
+            if (faceUpValue == 3) {
                 threeOfAKind = true;
             }
-            if (faceUpValues[i] == 2) {
+            if (faceUpValue == 2) {
                 twoOfAKind = true;
             }
         }
@@ -132,8 +131,8 @@ public class CheckRequirements {
             faceUpValues[dice.getFaceUpValue() - 1]++;
         }
         int pairs = 0;
-        for (int i = 0; i < faceUpValues.length; i++) {
-            if (faceUpValues[i] == 2) {
+        for (int faceUpValue : faceUpValues) {
+            if (faceUpValue == 2) {
                 pairs++;
             }
         }
@@ -141,7 +140,7 @@ public class CheckRequirements {
     }
 
     public static void main(String[] args) {
-        ArrayList<Dice> diceList = new ArrayList<Dice>();
+        ArrayList<Dice> diceList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             diceList.add(new Rod_Components());
         }
