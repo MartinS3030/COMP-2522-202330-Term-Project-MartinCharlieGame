@@ -67,11 +67,11 @@ public class Player implements Serializable {
     }
 
     public void setDate(int date) {
-        this.date = date + 1;
+        Player.date = date + 1;
     }
 
     public int getDate() {
-        return date;
+        return Player.date;
     }
 
     public void setCastOfTheDay(int castOfTheDay) {
