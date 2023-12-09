@@ -65,8 +65,10 @@ public final class BulletinBoard implements Board, Serializable {
      */
     @Override
     public void generateQuests() {
-        for (int i = 0; i < STARTING_QUESTS; i++) {
-            quests.add(generateCommonQuest());
+        if (quests.isEmpty()) {
+            for (int i = 0; i < STARTING_QUESTS; i++) {
+                quests.add(generateCommonQuest());
+            }
         }
     }
 
