@@ -107,6 +107,7 @@ public class FishDisplay extends Application {
         nameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px");
 
         Label requirementLabel = new Label(generateRequirement(fish.getRequirementType(), fish.getRequirementValue()));
+        requirementLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 20px");
 
         VBox fishVBox = new VBox(nameLabel, fishStackPane, requirementLabel);
         fishImageView.setOnMouseClicked(event -> selectedFish(fish, fishStackPane));
@@ -167,8 +168,8 @@ public class FishDisplay extends Application {
             case "ofakind" -> value + " of a kind";
             case "straight" -> "Straight of " + value;
             case "fullHouse" -> "Full house";
-            case "even" -> value + "Even";
-            case "odd" -> value + "Odd";
+            case "evens" -> value + " Evens";
+            case "odds" -> value + " Odds";
             default -> "Error";
         };
     }
