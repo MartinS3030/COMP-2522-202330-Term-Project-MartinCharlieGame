@@ -104,7 +104,8 @@ public class InitialFishingScreen extends Application {
                 + "-fx-text-fill: rgb(231, 54, 70);");
         castsLeftLabel.setEffect(new DropShadow(15, Color.BLACK));
 
-        Label moneyLabel = new Label(String.format("Current Gold: %d / %d", player.getMoney(), GameDriver.getMoneyGoal()));
+        Label moneyLabel = new Label(String.format("Current Gold: %d / %d", player.getMoney(),
+                GameDriver.getMoneyGoal()));
         moneyLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;"
                 + "-fx-font-weight: 900;-fx-font-style: italic;"
                 + "-fx-text-fill: rgb(231, 54, 70);");
