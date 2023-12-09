@@ -134,7 +134,7 @@ public class Player implements Serializable {
     }
 
     public void setMoney(int money) {
-        this.money = money;
+        Player.money = money;
     }
 
     public int getMoney() {
