@@ -30,8 +30,8 @@ public class FishSpecies {
         fishSpecies.put(17, new Fish("Marlin", "Rare", "ofakind", 4, 1190));
         fishSpecies.put(18, new Fish("Saw Shark", "Rare", "straight", 3, 650));
         fishSpecies.put(19, new Fish("Shark", "Rare", "straight", 4, 1250));
-        fishSpecies.put(20, new Fish("Sturgeon", "Rare", "even", 3, 910));
-        fishSpecies.put(21, new Fish("Tuna", "Rare", "odd", 3, 900));
+        fishSpecies.put(20, new Fish("Sturgeon", "Rare", "evensOnly", 3, 910));
+        fishSpecies.put(21, new Fish("Tuna", "Rare", "oddsOnly", 3, 900));
 
         fishSpecies.put(22, new Fish("Bruce", "Legendary", "ofakind", 5, 2620));
         fishSpecies.put(23, new Fish("Dory", "Legendary", "straight", 5, 2780));

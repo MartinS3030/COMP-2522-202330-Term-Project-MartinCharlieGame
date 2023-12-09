@@ -103,6 +103,9 @@ public class CheckRequirements {
     }
 
     public static boolean oddsOnly(ArrayList<Dice> diceList) {
+        if (diceList.size() != 5) {
+            return false;
+        }
         for (Dice dice : diceList) {
             if (dice.getFaceUpValue() % 2 == 0) {
                 return false;
@@ -112,6 +115,9 @@ public class CheckRequirements {
     }
 
     public static boolean evensOnly(ArrayList<Dice> diceList) {
+        if (diceList.size() != 5) {
+            return false;
+        }
         for (Dice dice : diceList) {
             if (dice.getFaceUpValue() % 2 != 0) {
                 return false;
