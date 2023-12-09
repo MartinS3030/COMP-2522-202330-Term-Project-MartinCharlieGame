@@ -43,16 +43,6 @@ public class Rod_Components implements Dice, Serializable {
     }
 
     @Override
-    public void removeFace(Integer face) {
-        values.remove(face);
-    }
-
-    @Override
-    public void addFace(Integer face) {
-        values.add(face);
-    }
-
-    @Override
     public void replaceFace(Integer face, Integer replacementFace) {
         values.set(values.indexOf(face), replacementFace);
     }
