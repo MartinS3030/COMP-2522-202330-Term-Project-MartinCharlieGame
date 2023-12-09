@@ -18,13 +18,14 @@ import java.io.ObjectInputStream;
 public class Player implements Serializable {
     private static Player instance;
     private final String name;
-    private final HashMap<Item, Integer> inventory = new HashMap<>();
-    private ArrayList<Quest> activeQuests = new ArrayList<>();
-    private Fishing_Rod rod;
+    private final HashMap<String, Item> inventory = new HashMap<>();
+    private final ArrayList<Quest> activeQuests = new ArrayList<>();
+    private final Fishing_Rod rod;
     private static int money;
     private static int date;
     private int castOfTheDay = 0;
     private final int MAX_CAST = 5;
+    private final int SIDES_OF_DICE = 6;
 
     private Player(String name) {
         this.name = name;
@@ -86,13 +87,10 @@ public class Player implements Serializable {
     }
 
     public ArrayList<Integer> basicDie() {
-        ArrayList basicDie = new ArrayList<Integer>();
-        basicDie.add(1);
-        basicDie.add(2);
-        basicDie.add(3);
-        basicDie.add(4);
-        basicDie.add(5);
-        basicDie.add(6);
+        ArrayList<Integer> basicDie = new ArrayList<>();
+        for (int i = 1; i <= SIDES_OF_DICE; i++) {
+            basicDie.add(i);
+        }
         return basicDie;
     }
 
@@ -123,14 +121,15 @@ public class Player implements Serializable {
     }
 
     public void addInventory(Item item) {
-        if (inventory.containsKey(item)) {
-            inventory.put(item, inventory.get(item) + 1);
+        if (inventory.containsKey(item.getName())) {
+            Item itemInInventory = inventory.get(item.getName());
+            itemInInventory.setAmount(itemInInventory.getAmount() + item.getAmount());
         } else {
-            inventory.put(item, 1);
+            inventory.put(item.getName(), item);
         }
     }
 
-    public HashMap<Item, Integer> getInventory() {
+    public HashMap<String, Item> getInventory() {
         return inventory;
     }
 

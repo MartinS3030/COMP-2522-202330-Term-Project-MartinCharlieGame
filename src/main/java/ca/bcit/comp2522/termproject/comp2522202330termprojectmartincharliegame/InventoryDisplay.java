@@ -33,34 +33,27 @@ public class InventoryDisplay extends Application {
         gridPane.setVgap(10); // Vertical gap between rows
         gridPane.setPadding(new Insets(10)); // Padding around the grid
 
-        HashMap<Item, Integer> playerInventory = Player.getInstance("Charlie").getInventory();
+        HashMap<String, Item> playerInventory = Player.getInstance("Charlie").getInventory();
 
-        int colCounter = 0;
-        int rowCounter = 0;
-        for (Item fish : playerInventory.keySet()) {
-            if (colCounter > 7) {
-                colCounter = 0;
-                rowCounter++;
-            }
-            // Create a label for the Fish name
-            Label nameLabel = new Label(fish.getName());
-            nameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
+        final int[] colCounter = {0};
+        final int[] rowCounter = {0};
+        playerInventory.values()
+                .forEach(fish -> {
+                    if (colCounter[0] > 7) {
+                        colCounter[0] = 0;
+                        rowCounter[0]++;
+                    }
 
-            // Create a small ImageView for the fish image (replace with your own images)
-            ImageView imageView = new ImageView(new Image("file:../../resources/Fish/" + fish.getName() + ".png"));
-            imageView.setFitWidth(75); // Set the width of the image
-            imageView.setFitHeight(75); // Set the height of the image
-            Label amount = new Label(playerInventory.get(fish).toString());
-            amount.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
-            HBox hBox = new HBox(imageView, amount);
-            hBox.setAlignment(javafx.geometry.Pos.CENTER);
+                    Label nameLabel = new Label(fish.getName());
+                    nameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
 
-            VBox vBox = new VBox(nameLabel, hBox);
-            vBox.setAlignment(javafx.geometry.Pos.CENTER);
+                    HBox hBox = getFishHBox(fish);
 
-            // Add the ImageView and Label to the GridPane
-            gridPane.add(vBox, colCounter++, rowCounter);
-        }
+                    VBox vBox = new VBox(nameLabel, hBox);
+                    vBox.setAlignment(javafx.geometry.Pos.CENTER);
+
+                    gridPane.add(vBox, colCounter[0]++, rowCounter[0]);
+                });
 
         ImageView backgroundView = new ImageView(new Image("file:../../resources/Inventory.jpg"));
 
@@ -83,6 +76,19 @@ public class InventoryDisplay extends Application {
 
         // Show the primaryStage
         primaryStage.show();
+    }
+
+    private HBox getFishHBox(Item fish) {
+        ImageView imageView = new ImageView(new Image("file:../../resources/Fish/" + fish.getName() + ".png"));
+        imageView.setFitWidth(75);
+        imageView.setFitHeight(75);
+
+        Label amount = new Label(String.valueOf(fish.getAmount()));
+        amount.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
+
+        HBox hBox = new HBox(imageView, amount);
+        hBox.setAlignment(Pos.CENTER);
+        return hBox;
     }
 
     public void back(final MouseEvent event) {

@@ -258,7 +258,7 @@ public class ActiveQuestModal implements ModalPopUp {
         questNameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700;"
                 + " -fx-text-transform: uppercase;");
 
-        Fish fish = quest.getObjective();
+        Item fish = quest.getObjective();
         ImageView fishImageView = getImageView("file:../../resources/Fish/" + fish.getName() + ".png", 50, 50);
 
         Label outOf = new Label(" /" + quest.getObjectiveAmount());
@@ -294,7 +294,7 @@ public class ActiveQuestModal implements ModalPopUp {
      * @return true if the quest requirements are met, false otherwise
      */
     public boolean checkQuestRequirements(final Quest quest) {
-        HashMap<Item, Integer> inventory = player.getInventory();
-        return inventory.get(quest.getObjective().getName()) >= quest.getObjectiveAmount();
+        HashMap<String, Item> inventory = player.getInventory();
+        return inventory.get(quest.getObjective().getName()).getAmount() >= quest.getObjectiveAmount();
     }
 }

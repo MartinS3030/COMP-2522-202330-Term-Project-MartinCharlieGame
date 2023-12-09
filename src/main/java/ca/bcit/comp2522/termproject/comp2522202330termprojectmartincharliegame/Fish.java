@@ -14,6 +14,7 @@ public class Fish implements Serializable, Item {
     private final String requirementType;
     private final int requirementValue;
     private final int value;
+    private int amount;
 
     /**
      * Constructs a Fish.
@@ -31,6 +32,7 @@ public class Fish implements Serializable, Item {
         this.requirementType = requirementType;
         this.requirementValue = requirementValue;
         this.value = value;
+        amount = 1;
     }
 
     /**
@@ -77,5 +79,25 @@ public class Fish implements Serializable, Item {
     @Override
     public int getValue() {
         return value;
+    }
+
+    /**
+     * Returns the amount of the Fish.
+     *
+     * @return the amount of the Fish as an int
+     */
+    @Override
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * Sets the amount of the Fish.
+     *
+     * @param amount the amount of the Fish as an int
+     */
+    @Override
+    public void setAmount(final int amount) {
+        this.amount = amount;
     }
 }

@@ -77,7 +77,7 @@ public class Quest implements Serializable {
      *
      * @return the objective of the quest as a Fish
      */
-    public Fish getObjective() {
+    public Item getObjective() {
         return objective;
     }
 
