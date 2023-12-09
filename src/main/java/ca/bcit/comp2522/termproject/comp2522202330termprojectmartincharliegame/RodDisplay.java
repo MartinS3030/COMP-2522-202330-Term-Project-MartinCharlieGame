@@ -14,18 +14,38 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Represents the rod display.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class RodDisplay {
-
-
     private final Stage primaryStage;
+
+    /**
+     * Constructs a new rod display.
+     *
+     * @param primaryStage the primary stage
+     */
     public RodDisplay(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
+    /**
+     * Gets the primary stage.
+     *
+     * @return the primary stage
+     */
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    /**
+     * Gets the rod display HBox.
+     *
+     * @return the rod display HBox
+     */
     public HBox getRodDisplayHBox() {
         StackPane baseBox = createComponentBox("Base");
         StackPane rodBox = createComponentBox("Rod");
@@ -48,6 +68,12 @@ public class RodDisplay {
         return mainBox;
     }
 
+    /**
+     * Returns an event handler for handling mouse events to open a modal popup.
+     *
+     * @param DiceIndex The index of the dice associated with the event.
+     * @return The event handler for handling mouse events.
+     */
     protected EventHandler<MouseEvent> openModal(int DiceIndex) {
         return event -> {
             ModalPopUp modal = new DiceFaceModal(DiceIndex);
@@ -65,14 +91,6 @@ public class RodDisplay {
         StackPane.setAlignment(text, Pos.CENTER);
         return stackPane;
     }
-
-//    private Label createParagraph(String description) {
-//        Label paragraphLabel = new Label(description);
-//        paragraphLabel.setWrapText(true);
-//        paragraphLabel.setStyle("-fx-font-size: 20px");
-//        paragraphLabel.setMaxWidth(170);
-//        return paragraphLabel;
-//    }
 
     private VBox createVBox(Pane component) {
         return new VBox(component);

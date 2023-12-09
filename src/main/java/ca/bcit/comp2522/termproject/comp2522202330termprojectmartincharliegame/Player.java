@@ -63,34 +63,72 @@ public class Player implements Serializable {
         return name;
     }
 
+    /**
+     * Returns whether the player has a boat or not.
+     *
+     * @return boolean value of whether the player has a boat or not
+     */
     public boolean getHasBoat() {
         return hasBoat;
     }
 
+    /**
+     * The fishing rod of the player.
+     *
+     * @return the fishing rod of the player
+     */
     public FishingRod getRod() {
         return rod;
     }
 
+    /**
+     * Sets the date of the game.
+     *
+     * @param date the date of the game
+     */
     public void setDate(int date) {
         Player.date = date + 1;
     }
 
+    /**
+     * Returns the date of the game.
+     *
+     * @return the date of the game
+     */
     public int getDate() {
         return Player.date;
     }
 
+    /**
+     * Sets the cast of the day.
+     *
+     * @param castOfTheDay the cast of the day
+     */
     public void setCastOfTheDay(int castOfTheDay) {
         this.castOfTheDay = castOfTheDay;
     }
 
+    /**
+     * Returns the cast of the day.
+     *
+     * @return the cast of the day
+     */
     public int getCastOfTheDay() {
         return castOfTheDay;
     }
 
+    /**
+     * Returns the max cast of the day.
+     *
+     * @return the max cast of the day
+     */
     public int getCastLeft() {
         return MAX_CAST - castOfTheDay;
     }
 
+    /**
+     * Creates a ArrayList that represents a basic die.
+     */
     public ArrayList<Integer> basicDie() {
         ArrayList<Integer> basicDie = new ArrayList<>();
         for (int i = 1; i <= SIDES_OF_DICE; i++) {
@@ -99,6 +137,11 @@ public class Player implements Serializable {
         return basicDie;
     }
 
+    /**
+     * Adds a quest to the player.
+     *
+     * @param quest the quest to be added
+     */
     public void addQuests (Quest quest) {
         for (Quest activeQuest : activeQuests) {
             if (activeQuest.getID() == (quest.getID())) {
@@ -112,6 +155,11 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * Removes a quest from the player.
+     *
+     * @param quest the quest to be removed
+     */
     public void removeQuest(Quest quest) {
         for (int i = 0; i < activeQuests.size(); i++) {
             if (activeQuests.get(i).getID() == quest.getID()) {
@@ -121,10 +169,20 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * Returns the active quests of the player.
+     *
+     * @return the active quests of the player
+     */
     public ArrayList<Quest> getQuests() {
         return activeQuests;
     }
 
+    /**
+     * Adds an item to the inventory.
+     *
+     * @param item the item to be added
+     */
     public void addInventory(Item item) {
         if (inventory.containsKey(item.getName())) {
             Item itemInInventory = inventory.get(item.getName());
@@ -134,18 +192,36 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * Returns the inventory of the player.
+     *
+     * @return the inventory of the player
+     */
     public HashMap<String, Item> getInventory() {
         return inventory;
     }
 
+    /**
+     * Sets the money of the player.
+     *
+     * @param money the new money amount of the player
+     */
     public void setMoney(int money) {
         Player.money = money;
     }
 
+    /**
+     * Returns money of the player.
+     *
+     * @return the money of the player
+     */
     public int getMoney() {
         return money;
     }
 
+    /**
+     * Buys the boat if the player has enough money.
+     */
     public void buyBoat() {
         if (money >= GameDriver.getMoneyGoal()) {
             money -= GameDriver.getMoneyGoal();
@@ -153,6 +229,11 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * Serializes the player.
+     *
+     * @param filename the name of the file to be serialized
+     */
     public void serialize(String filename) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(this);
@@ -162,6 +243,12 @@ public class Player implements Serializable {
         }
     }
 
+    /**
+     * Deserializes the player.
+     *
+     * @param filename the name of the file to be deserialized
+     * @return the deserialized player
+     */
     public static Player deserialize(String filename) {
         Player player = null;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
