@@ -9,8 +9,8 @@ public class CheckRequirements {
             case "ofakind" -> ofAKind(diceList, fish.getRequirementValue());
             case "straight" -> straight(diceList, fish.getRequirementValue());
             case "fullHouse" -> fullHouse(diceList);
-            case "oddsOnly" -> oddsOnly(diceList);
-            case "evensOnly" -> evensOnly(diceList);
+            case "odds" -> oddsOnly(diceList);
+            case "evens" -> evensOnly(diceList);
             case "greater" -> greaterThan(diceList, fish.getRequirementValue());
             case "less" -> lessThan(diceList, fish.getRequirementValue());
             case "equalTo" -> equalTo(diceList, fish.getRequirementValue());
