@@ -6,7 +6,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
+/**
+ * Represents a WinScreen.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class WinScreen extends EndScreen {
+    /**
+     * Creates a WinScreen.
+     */
     @Override
     protected ImageView getImageView() {
         Image image = new Image("file:../../resources/WinScreen.png");
@@ -15,6 +24,10 @@ public class WinScreen extends EndScreen {
         return imageView;
     }
 
+    /**
+     * Creates a Label with the end message.
+     * @return Label
+     */
     @Override
     protected Label getEndMessage() {
         Label endMessage = new Label("You've made it! You waited for new of the wave but it never came." +

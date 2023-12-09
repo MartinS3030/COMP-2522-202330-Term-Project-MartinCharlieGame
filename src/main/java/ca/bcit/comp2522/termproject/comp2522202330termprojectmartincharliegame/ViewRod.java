@@ -15,6 +15,11 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ViewRod extends Application {
+    /**
+     * Starts the application.
+     *
+     * @param primaryStage the stage
+     */
     @Override
     public void start(Stage primaryStage) {
 
