@@ -146,6 +146,7 @@ public class ActiveQuestModal implements ModalPopUp {
         labelHBox.setStyle(
                 "-fx-background-color: rgb(28, 55, 201); -fx-padding: 20px;"
         );
+        labelHBox.setAlignment(Pos.CENTER);
         return labelHBox;
     }
 

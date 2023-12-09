@@ -63,21 +63,8 @@ public class VillageDisplay extends Application {
     }
 
     private void showBoat(final ActionEvent actionEvent) {
-//        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
-//
-//        fadeTransition.setNode(((Node) actionEvent.getSource()).getScene().getRoot());
-//
-//        fadeTransition.setFromValue(1.0);
-//        fadeTransition.setToValue(0.0);
-//
-//        fadeTransition.setOnFinished(e -> {
-//            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-//
-//            BoatDisplay boatDisplay = new BoatDisplay();
-//            boatDisplay.start(currentStage);
-//        });
-//
-//        fadeTransition.play();
+        ModalPopUp modalPopUp = new BoatModal();
+        modalPopUp.openInGamePopup(primaryStage);
     }
 
     private void showActiveQuests(final ActionEvent actionEvent) {

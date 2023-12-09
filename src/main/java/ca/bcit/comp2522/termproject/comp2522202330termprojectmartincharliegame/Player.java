@@ -26,6 +26,7 @@ public class Player implements Serializable {
     private int castOfTheDay = 0;
     private final int MAX_CAST = 5;
     private final int SIDES_OF_DICE = 6;
+    private boolean hasBoat = false;
 
     private Player(String name) {
         this.name = name;
@@ -60,6 +61,10 @@ public class Player implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    public boolean getHasBoat() {
+        return hasBoat;
     }
 
     public Fishing_Rod getRod() {
@@ -139,6 +144,13 @@ public class Player implements Serializable {
 
     public int getMoney() {
         return money;
+    }
+
+    public void buyBoat() {
+        if (money >= GameDriver.getMoneyGoal()) {
+            money -= GameDriver.getMoneyGoal();
+            hasBoat = true;
+        }
     }
 
     public void serialize(String filename) {

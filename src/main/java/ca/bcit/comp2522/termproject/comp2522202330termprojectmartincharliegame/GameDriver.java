@@ -41,15 +41,14 @@ public class GameDriver extends Application {
     }
 
     public void endGame(final Stage primaryStage) {
+        EndScreen endScreen;
         Player player = Player.getInstance("Charlie");
-        if (player.getMoney() >= MONEY_GOAL) {
-            EndScreen winScreen = new WinScreen();
-            winScreen.start(primaryStage);
+        if (player.getHasBoat()) {
+            endScreen = new WinScreen();
         } else {
-            EndScreen loseScreen = new EndScreen();
-            loseScreen.start(primaryStage);
+            endScreen = new EndScreen();
         }
-
+        endScreen.start(primaryStage);
     }
 
     /**
