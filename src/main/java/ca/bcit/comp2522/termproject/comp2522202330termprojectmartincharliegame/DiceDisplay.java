@@ -23,7 +23,7 @@ public class DiceDisplay {
     private final Color SELECTED_COLOR = Color.FORESTGREEN;
     private final Color USED_COLOR = Color.GREY;
     private final ImageView[] diceViews;
-    private final Fishing_Rod fishingRod;
+    private final FishingRod fishingRod;
     private final HBox hBox;
     private final VBox[] vBox;
     private final Player player;
@@ -79,7 +79,7 @@ public class DiceDisplay {
      *
      * @return the fishing rod
      */
-    public Fishing_Rod getFishingRod() {
+    public FishingRod getFishingRod() {
         return fishingRod;
     }
 
@@ -133,8 +133,8 @@ public class DiceDisplay {
      *
      * @return the dice display
      */
-    protected Fishing_Rod generateRod() {
-        return new Fishing_Rod();
+    protected FishingRod generateRod() {
+        return new FishingRod();
     }
 
     /**

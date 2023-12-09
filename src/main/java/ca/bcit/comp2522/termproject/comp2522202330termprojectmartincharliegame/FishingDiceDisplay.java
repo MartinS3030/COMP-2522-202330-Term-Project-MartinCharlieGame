@@ -45,11 +45,11 @@ public class FishingDiceDisplay extends DiceDisplay{
     }
 
     @Override
-    protected Fishing_Rod generateRod() {
+    protected FishingRod generateRod() {
         return getPlayer().getRod();
     }
 
-    public void lockDice(ImageView clickedDiceView, Fishing_Rod fishingRod) {
+    public void lockDice(ImageView clickedDiceView, FishingRod fishingRod) {
         if (gameState != GameState.WAITING_FOR_USE_DICE) {
             return;
         }

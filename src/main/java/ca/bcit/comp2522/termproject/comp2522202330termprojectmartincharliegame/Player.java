@@ -20,7 +20,7 @@ public class Player implements Serializable {
     private final String name;
     private final HashMap<String, Item> inventory = new HashMap<>();
     private final ArrayList<Quest> activeQuests = new ArrayList<>();
-    private final Fishing_Rod rod;
+    private final FishingRod rod;
     private static int money;
     private static int date;
     private int castOfTheDay = 0;
@@ -36,7 +36,7 @@ public class Player implements Serializable {
         Rod_Components line = new Rod_Components("Basic Line", basicDie());
         Rod_Components hook = new Rod_Components("Basic Hook", basicDie());
 
-        this.rod = new Fishing_Rod(base, rodComponent, reel, line, hook);
+        this.rod = new FishingRod(base, rodComponent, reel, line, hook);
     }
 
     /**
@@ -67,7 +67,7 @@ public class Player implements Serializable {
         return hasBoat;
     }
 
-    public Fishing_Rod getRod() {
+    public FishingRod getRod() {
         return rod;
     }
 

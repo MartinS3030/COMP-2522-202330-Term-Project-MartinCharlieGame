@@ -26,7 +26,7 @@ public class DiceFaceModal implements ModalPopUp{
             return;
         }
         Player player = Player.getInstance("Charlie");
-        Fishing_Rod fishingRod = player.getRod();
+        FishingRod fishingRod = player.getRod();
 
         Popup popup = new Popup();
 
@@ -72,7 +72,7 @@ public class DiceFaceModal implements ModalPopUp{
         popup.setY(centerY);
     }
 
-    private VBox getMainVBox(Fishing_Rod fishingRod, Popup popup) {
+    private VBox getMainVBox(FishingRod fishingRod, Popup popup) {
         // Create VBox
         VBox vbox = new VBox(10); // Set spacing between children
         vbox.setStyle("-fx-padding: 8px;");
