@@ -364,7 +364,9 @@ public class BoardDisplay extends Application {
                     bulletinBoard.addQuest(bulletinBoard.generateRareQuest());
                 }
             }
-        } else if (player.getDate() > 5 && !daysPassed.contains(player.getDate())) {
+        } else if (player.getDate() > 5 && player.getDate() <= 7 && !daysPassed.contains(player.getDate())) {
+            bulletinBoard.addQuest(bulletinBoard.generateLegendaryQuest());
+        } else if (player.getDate() > 7  && !daysPassed.contains(player.getDate())) {
             for (int i = 0; i < 2; i++) {
                 int questRarity = random.nextInt(3);
                 if (questRarity == 0) {
@@ -372,7 +374,7 @@ public class BoardDisplay extends Application {
                 } else if (questRarity == 1) {
                     bulletinBoard.addQuest(bulletinBoard.generateRareQuest());
                 } else {
-//                bulletinBoard.addQuest(bulletinBoard.generateLegendaryQuest());
+                    bulletinBoard.addQuest(bulletinBoard.generateLegendaryQuest());
                 }
             }
         }
