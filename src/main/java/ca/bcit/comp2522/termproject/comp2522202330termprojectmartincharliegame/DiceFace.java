@@ -3,8 +3,22 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class DiceFace {
-    public static ImageView getDiceFaceImage(Integer diceFace) {
+/**
+ * Represents a dice face.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
+public final class DiceFace {
+    private DiceFace() { }
+
+    /**
+     * Returns an ImageView of the dice face.
+     *
+     * @param diceFace the dice face
+     * @return an ImageView of the dice face
+     */
+    public static ImageView getDiceFaceImage(final Integer diceFace) {
         Image pipOne = new Image("file:../../resources//Dice/dice-six-faces-one.png");
         Image pipTwo = new Image("file:../../resources//Dice/dice-six-faces-two.png");
         Image pipThree = new Image("file:../../resources//Dice/dice-six-faces-three.png");
