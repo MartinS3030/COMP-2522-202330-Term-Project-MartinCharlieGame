@@ -154,7 +154,7 @@ public final class BulletinBoard implements Board, Serializable {
                 new Quest("Driving Dilemma", "SpongeBob",
                         generateReward(fishSpecies.getFish(25).getValue(), 1),
                         fishSpecies.getFish(25), 3, 1,
-                        "SpongeBob has come asking us to help him locate his drving school instructor,"
+                        "SpongeBob has come asking us to help him locate his driving school instructor,"
                                 + " Mrs. Puff. He was supposed to have a driving exam with her, but he can't find her."
                                 + " Help him locate his teacher so that he can pass his exam."),
                 new Quest("Finding Nemo", "Marlin",
@@ -175,12 +175,16 @@ public final class BulletinBoard implements Board, Serializable {
     public Fish getRequirement(final String rarity) {
         int fishKey;
         FishSpecies fishSpecies = new FishSpecies();
+        final int commonMaxIndex = 13;
+        final int rareStartingIndex = 14;
+        final int rareMaxIndex = 5;
+        final int legendaryStartingIndex = 19;
+        final int legendaryMaxIndex = 3;
 
         fishKey = switch (rarity) {
-            case "common" -> random.nextInt(13) + 1;
-            case "rare" -> random.nextInt(5) + 14;
-            case "legendary" -> random.nextInt(3) + 19;
-            default -> random.nextInt(13) + 1;
+            case "rare" -> random.nextInt(rareMaxIndex) + rareStartingIndex;
+            case "legendary" -> random.nextInt(legendaryMaxIndex) + legendaryStartingIndex;
+            default -> random.nextInt(commonMaxIndex) + 1;
         };
 
         return fishSpecies.getFish(fishKey);
@@ -214,7 +218,8 @@ public final class BulletinBoard implements Board, Serializable {
      * @return a giver for the quest as a string
      */
     public String generateGiver() {
-        String[] givers = {"Victor", "Jake", "Grace", "Nicole", "Cam", "Alex", "Lulu", "Derek", "Corey", "Aaron", "Marco", "Brian", "Kate", "Mika"};
+        String[] givers = {"Victor", "Jake", "Grace", "Nicole", "Cam", "Alex", "Lulu", "Derek", "Corey", "Aaron",
+                "Marco", "Brian", "Kate", "Mika"};
         return givers[(int) (Math.random() * givers.length)];
     }
 
