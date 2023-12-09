@@ -28,6 +28,20 @@ public interface Dice {
     Integer getFaceUpValue();
 
     /**
+     * Removes a dice face.
+     *
+     * @param face the face value
+     */
+    void removeFace(Integer face);
+
+    /**
+     * Adds a dice face.
+     *
+     * @param face the face value
+     */
+    void addFace(Integer face);
+
+    /**
      * Replaces a face.
      *
      * @param face the face to replace
