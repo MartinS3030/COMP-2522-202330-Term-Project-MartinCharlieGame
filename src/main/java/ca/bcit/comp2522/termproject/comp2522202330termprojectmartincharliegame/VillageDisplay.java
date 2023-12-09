@@ -134,8 +134,8 @@ public class VillageDisplay extends Application {
                 Shop.resetShop();
                 InitialFishingScreen initialFishingScreen = new InitialFishingScreen();
                 initialFishingScreen.start(primaryStage);
+                fade(event, primaryStage);
             }
-        fade(event, primaryStage);
     }
 
     /**
