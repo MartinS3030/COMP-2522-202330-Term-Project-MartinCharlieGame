@@ -2,9 +2,23 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import java.util.ArrayList;
 
-public class CheckRequirements {
+/**
+ * A class that checks if the dice values meet the requirements of a fish.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
+public final class CheckRequirements {
+    private CheckRequirements() { }
 
-    public static boolean checkAgainstFish(ArrayList<Dice> diceList, Fish fish) {
+    /**
+     * Checks if the dice values meet the requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @param fish the fish
+     * @return true if the dice values meet the requirements of a fish
+     */
+    public static boolean checkAgainstFish(final ArrayList<Dice> diceList, final Fish fish) {
         return switch (fish.getRequirementType()) {
             case "ofakind" -> ofAKind(diceList, fish.getRequirementValue());
             case "straight" -> straight(diceList, fish.getRequirementValue());
@@ -18,7 +32,15 @@ public class CheckRequirements {
             default -> false;
         };
     }
-    public static boolean greaterThan(ArrayList<Dice> diceList, int value) {
+
+    /**
+     * Checks if the dice values meet the greater than requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @param value the value to check against as an int
+     * @return true if the dice values meet the greater than requirements of a fish
+     */
+    public static boolean greaterThan(final ArrayList<Dice> diceList, final int value) {
         int sum = 0;
         for (Dice dice : diceList) {
             sum += dice.getFaceUpValue();
@@ -26,7 +48,14 @@ public class CheckRequirements {
         return sum > value;
     }
 
-    public static boolean lessThan(ArrayList<Dice> diceList, int value) {
+    /**
+     * Checks if the dice values meet the less than requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @param value the value to check against as an int
+     * @return true if the dice values meet the less than requirements of a fish
+     */
+    public static boolean lessThan(final ArrayList<Dice> diceList, final int value) {
         int sum = 0;
         if (diceList.size() != 5) {
             return false;
@@ -37,7 +66,14 @@ public class CheckRequirements {
         return sum < value;
     }
 
-    public static boolean equalTo(ArrayList<Dice> diceList, int value) {
+    /**
+     * Checks if the dice values meet the equal to requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @param value the value to check against as an int
+     * @return true if the dice values meet the equal to requirements of a fish
+     */
+    public static boolean equalTo(final ArrayList<Dice> diceList, final int value) {
         int sum = 0;
         for (Dice dice : diceList) {
             sum += dice.getFaceUpValue();
@@ -45,7 +81,14 @@ public class CheckRequirements {
         return sum == value;
     }
 
-    public static boolean ofAKind(ArrayList<Dice> diceList, int value) {
+    /**
+     * Checks if the dice values meet the of a kind requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @param value the number of dice that need to be of a kind as an int
+     * @return true if the dice values meet the of a kind requirements of a fish
+     */
+    public static boolean ofAKind(final ArrayList<Dice> diceList, final int value) {
         int[] faceUpValues = new int[6];
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
@@ -58,7 +101,14 @@ public class CheckRequirements {
         return false;
     }
 
-    public static boolean straight(ArrayList<Dice> diceList, int value) {
+    /**
+     * Checks if the dice values meet the straight requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @param value the number of dice required for the straight as an int
+     * @return true if the dice values meet the straight requirements of a fish
+     */
+    public static boolean straight(final ArrayList<Dice> diceList, final int value) {
         int[] faceUpValues = new int[6];
 
         for (Dice dice : diceList) {
@@ -81,9 +131,13 @@ public class CheckRequirements {
         return false;
     }
 
-
-
-    public static boolean fullHouse(ArrayList<Dice> diceList) {
+    /**
+     * Checks if the dice values meet the full house requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @return true if the dice values meet the full house requirements of a fish
+     */
+    public static boolean fullHouse(final ArrayList<Dice> diceList) {
         int[] faceUpValues = new int[6];
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
@@ -101,7 +155,13 @@ public class CheckRequirements {
         return threeOfAKind && twoOfAKind;
     }
 
-    public static boolean oddsOnly(ArrayList<Dice> diceList) {
+    /**
+     * Checks if the dice values meet the odds only requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @return true if the dice values meet the odds only requirements of a fish
+     */
+    public static boolean oddsOnly(final ArrayList<Dice> diceList) {
         if (diceList.size() != 5) {
             return false;
         }
@@ -113,7 +173,13 @@ public class CheckRequirements {
         return true;
     }
 
-    public static boolean evensOnly(ArrayList<Dice> diceList) {
+    /**
+     * Checks if the dice values meet the evens only requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @return true if the dice values meet the evens only requirements of a fish
+     */
+    public static boolean evensOnly(final ArrayList<Dice> diceList) {
         if (diceList.size() != 5) {
             return false;
         }
@@ -125,7 +191,13 @@ public class CheckRequirements {
         return true;
     }
 
-    public static boolean twoPair(ArrayList<Dice> diceList) {
+    /**
+     * Checks if the dice values meet the two pair requirements of a fish.
+     *
+     * @param diceList the list of dice
+     * @return true if the dice values meet the two pair requirements of a fish
+     */
+    public static boolean twoPair(final ArrayList<Dice> diceList) {
         int[] faceUpValues = new int[6];
         for (Dice dice : diceList) {
             faceUpValues[dice.getFaceUpValue() - 1]++;
@@ -137,26 +209,5 @@ public class CheckRequirements {
             }
         }
         return pairs == 2;
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Dice> diceList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            diceList.add(new Rod_Components());
-        }
-//        print dice values
-        for (Dice dice : diceList) {
-            System.out.println(dice.getFaceUpValue());
-        }
-        CheckRequirements checkRequirements = new CheckRequirements();
-        System.out.println("ofAKind: " + checkRequirements.ofAKind(diceList, 3));
-        System.out.println("straight: " + checkRequirements.straight(diceList, 3));
-        System.out.println("full house: " + checkRequirements.fullHouse(diceList));
-        System.out.println("odds only: " + checkRequirements.oddsOnly(diceList));
-        System.out.println("evens only: " + checkRequirements.evensOnly(diceList));
-        System.out.println("greater than: " + checkRequirements.greaterThan(diceList, 10));
-        System.out.println("less than: " + checkRequirements.lessThan(diceList, 10));
-        System.out.println("equal to: " + checkRequirements.equalTo(diceList, 15));
-        System.out.println("two pair: " + checkRequirements.twoPair(diceList));
     }
 }
