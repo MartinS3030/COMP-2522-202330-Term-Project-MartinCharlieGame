@@ -261,8 +261,11 @@ public class ActiveQuestModal implements ModalPopUp {
         Item fish = quest.getObjective();
         ImageView fishImageView = getImageView("file:../../resources/Fish/" + fish.getName() + ".png", 50, 50);
 
-        Label outOf = new Label(" " + player.getInventory().get(fish.getName()).getAmount()
-                                + "/" + quest.getObjectiveAmount());
+        int fishAmount = 0;
+        if (player.getInventory().containsKey(fish.getName())) {
+            fishAmount = player.getInventory().get(fish.getName()).getAmount();
+        }
+        Label outOf = new Label(" " + fishAmount + "/" + quest.getObjectiveAmount());
         outOf.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
 
         HBox requirementHBox = new HBox(fishImageView, outOf, acceptImageView, cancelImageView);
