@@ -22,13 +22,15 @@ public class DiceFaceShopModal extends DiceFaceModal{
             diceView.setFitHeight(50);
             Dice replacementDice = diceDisplay.getSelectedDice().get(0);
             diceView.setOnMouseClicked(mouseEvent -> {
-                dice.replaceFace(face, replacementDice.getFaceUpValue());
-                diceDisplay.getSelectedDice().clear();
-                diceDisplay.addDiceToUsedDice(replacementDice);
-                Shop.getInstance().purchaseItem();
-                ShopDisplay.refreshMoney();
-                popup.hide();
-                DiceFaceModal.clearOpenedModal();
+                if (Player.getInstance("").getMoney() >= Shop.getInstance().getItemCost()) {
+                    dice.replaceFace(face, replacementDice.getFaceUpValue());
+                    diceDisplay.getSelectedDice().clear();
+                    diceDisplay.addDiceToUsedDice(replacementDice);
+                    Shop.getInstance().purchaseItem();
+                    ShopDisplay.refreshMoney();
+                    popup.hide();
+                    DiceFaceModal.clearOpenedModal();
+                }
             });
 
             Rectangle clip = new Rectangle(diceView.getFitWidth(), diceView.getFitHeight());
