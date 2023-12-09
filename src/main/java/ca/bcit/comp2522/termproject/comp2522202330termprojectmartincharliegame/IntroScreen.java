@@ -34,7 +34,9 @@ public class IntroScreen extends Application {
         List<String> paragraphs = getParagraphs();
         List<Label> labelList = createLabels(paragraphs);
 
-        Button next = ButtonMaker.createButton("Begin!", this::nextScreen, 0, 0);
+        Button next = ButtonMaker.createButton("Begin!", event -> {
+            nextScreen(event, primaryStage);
+        }, 0, 0);
         VBox text = setupTextPane(labelList, next);
 
         StackPane root = new StackPane();
@@ -154,8 +156,9 @@ public class IntroScreen extends Application {
      * Goes to the next screen.
      *
      * @param event the event
+     * @param primaryStage the stage
      */
-    private void nextScreen(final ActionEvent event) {
-        VillageDisplay.fade(event);
+    private void nextScreen(final ActionEvent event, final Stage primaryStage) {
+        VillageDisplay.fade(event, primaryStage);
     }
 }
