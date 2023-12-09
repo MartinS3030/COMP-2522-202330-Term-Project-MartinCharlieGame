@@ -116,9 +116,16 @@ public final class BulletinBoard implements Board, Serializable {
                 generateDifficulty(fish), objectiveAmount, giver + questDescription);
     }
 
-//    public Quest generateLegendaryQuest() {
-//        System.out.println("Legendary Quest");
-//    }
+    public Quest generateLegendaryQuest() {
+        FishSpecies fishSpecies = new FishSpecies();
+        Quest[] legendaryQuestList = {new Quest("Peaceful Shark", "Chris", generateReward(fishSpecies.getFish(22).getValue(), 1), fishSpecies.getFish(22), 3, 1, "The fish conservatory have noticed an increase in sharks attacking fish. Having heard of a shark named Bruce, that refuses to attack fish, they want you to catch it and bring it back for study."),
+                new Quest("Lost", "Charlie", generateReward(fishSpecies.getFish(23).getValue(), 1), fishSpecies.getFish(23), 3, 1, "A fish has come to the village asking us to help him locate his daughter, Dory. She has been lost in the ocean for years. Please help reunite this family."),
+                new Quest("The Mermaid's Rescue Mission", "Ariel", generateReward(fishSpecies.getFish(24).getValue(), 1), fishSpecies.getFish(24), 3, 1, "Ariel's friend Flounder got lost during an excursion to the surface world. Help her find her missing friend and bring him back to the Coral Kingdom."),
+                new Quest("Driving Dilemma", "SpongeBob", generateReward(fishSpecies.getFish(25).getValue(), 1), fishSpecies.getFish(25), 3, 1, "SpongeBob has come asking us to help him locate his drving school instructor, Mrs. Puff. He was supposed to have a driving exam with her, but he can't find her. Help him locate his teacher so that he can pass his exam."),
+                new Quest("Finding Nemo", "Marlin", generateReward(fishSpecies.getFish(26).getValue(), 1), fishSpecies.getFish(26), 3, 1, "A frantic fish has come to the village asking for help to capture a unique specimen - his adventurous son, Nemo. Help catch his son and bring him to his father.")};
+        int questPicker = random.nextInt(5);
+        return legendaryQuestList[questPicker];
+    }
 
     /**
      * Generates a fish requirement for the quest.

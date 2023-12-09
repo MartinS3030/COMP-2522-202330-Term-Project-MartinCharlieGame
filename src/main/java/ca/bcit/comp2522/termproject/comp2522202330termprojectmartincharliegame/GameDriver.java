@@ -20,7 +20,7 @@ import javafx.stage.Stage;
  */
 public class GameDriver extends Application {
     private static final int TIME_LIMIT = 10;
-    private static final int MONEY_GOAL = 10000;
+    private static final int MONEY_GOAL = 7000;
 
     /**
      * Creates and displays two Text objects in a JavFX Window.
