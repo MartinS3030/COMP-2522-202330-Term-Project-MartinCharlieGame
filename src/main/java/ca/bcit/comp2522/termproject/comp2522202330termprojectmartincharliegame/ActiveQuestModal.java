@@ -241,7 +241,7 @@ public class ActiveQuestModal implements ModalPopUp {
 
         acceptImageView.setOnMouseClicked(event -> {
             if (checkQuestRequirements(quest)) {
-                player.setMoney(quest.getReward());
+                player.setMoney(player.getMoney() + quest.getReward());
                 player.removeQuest(quest);
                 displayUI();
             }

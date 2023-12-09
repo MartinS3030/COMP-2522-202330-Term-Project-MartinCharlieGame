@@ -19,7 +19,6 @@ import javafx.stage.Stage;
  * @version 2022
  */
 public class GameDriver extends Application {
-
     private static final int TIME_LIMIT = 10;
     private static final int MONEY_GOAL = 10000;
 
@@ -37,6 +36,8 @@ public class GameDriver extends Application {
      * @param primaryStage contains the Scene
      */
     public void start(final Stage primaryStage) {
+        serializePlayer();
+        serializeBoard();
         StartScreen startScreen = new StartScreen();
         startScreen.start(primaryStage);
     }
@@ -79,11 +80,17 @@ public class GameDriver extends Application {
         for (Quest quest : player.getQuests()) {
             System.out.println(quest.getTitle());
         }
-        player.addQuests(new Quest("Catch 5 Common Fish", "Charlie", 5, new Fish("Common Fish", "common", "none", 0, 0), 0, 0, "Catch 5 Common Fish"));
+        player.addQuests(new Quest("Catch 5 Bass", "Charlie", 5, new Fish("Bass", "Common", "greater", 14, 150), 0, 2, "Catch 5 Common Fish"));
         player.addQuests(new Quest("Catch 5 Rare Fish", "Charlie", 5, new Fish("Rare Fish", "rare", "none", 0, 0), 0, 0, "Catch 5 Rare Fish"));
         for (Quest quest : player.getQuests()) {
             System.out.println(quest.getTitle());
         }
+        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
+        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
+        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
+        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
+        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
+
         player.serialize("file:../../resources/playerSave.txt");
         //        Player loadedPlayer = Player.deserialize("file:../../resources/playerSave.txt");
 //        for (Quest quest : loadedPlayer.getQuests()) {

@@ -46,7 +46,7 @@ public class VillageDisplay extends Application {
 
         Button bulletinBoard = ButtonMaker.createButton("Bulletin Board", this::showBulletinBoard, 0, 0);
         Button shop = ButtonMaker.createButton("Shop", this::showShop, 0, 0);
-        Button viewQuests = ButtonMaker.createButton("View Quests", this::showBulletinBoard, 0, 0);
+        Button viewQuests = ButtonMaker.createButton("View Quests", this::showActiveQuests, 0, 0);
         Button viewInventory = ButtonMaker.createButton("View Inventory", this::showInventory, 0, 0);
         Button sleep = ButtonMaker.createButton("Sleep", this::sleep, 0, 0);
         Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBulletinBoard, 0, 0);
@@ -61,6 +61,11 @@ public class VillageDisplay extends Application {
         primaryStage.setTitle("Village");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void showActiveQuests(final ActionEvent actionEvent) {
+        ModalPopUp modalPopUp = new ActiveQuestModal();
+        modalPopUp.openInGamePopup(primaryStage);
     }
 
     private void showInventory(ActionEvent event) {
