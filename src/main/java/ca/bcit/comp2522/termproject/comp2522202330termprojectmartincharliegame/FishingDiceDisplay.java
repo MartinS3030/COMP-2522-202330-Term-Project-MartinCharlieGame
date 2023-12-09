@@ -10,20 +10,22 @@ import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
+/**
+ * Represents the dice display for the fishing game.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class FishingDiceDisplay extends DiceDisplay{
-//    private final Color BORDER_COLOR = Color.BLACK;
     private final Color LOCKED_COLOR = Color.RED;
-//    private final Color SELECTED_COLOR = Color.FORESTGREEN;
-//    private final Color USED_COLOR = Color.GREY;
-//    private final ImageView[] diceViews;
-//    private final Fishing_Rod fishingRod;
     private final DiceRoller diceRoller;
-//    private final HBox hBox;
-//    private final VBox[] vBox;
-    private Stage primaryStage;
+    private final Stage primaryStage;
     private int rollCounter;
     private int roundCounter;
+
+    /**
+     * Represents the game state.
+     */
     public enum GameState {
         WAITING_FOR_USE_DICE,
         WAITING_FOR_DICE_SELECTION,
@@ -32,9 +34,11 @@ public class FishingDiceDisplay extends DiceDisplay{
 
     private GameState gameState = GameState.WAITING_FOR_USE_DICE;
 
-//    private final ArrayList<Dice> selectedDice;
-//    private final ArrayList<Dice> usedDice;
-
+    /**
+     * Constructs a fishing dice display.
+     *
+     * @param primaryStage the stage
+     */
     public FishingDiceDisplay(Stage primaryStage) {
         super();
         this.primaryStage = primaryStage;
@@ -44,11 +48,20 @@ public class FishingDiceDisplay extends DiceDisplay{
         roundCounter = getPlayer().getCastOfTheDay();
     }
 
+    /**
+     * Gets rod from player.
+     */
     @Override
     protected FishingRod generateRod() {
         return getPlayer().getRod();
     }
 
+    /**
+     * Locks the dice from rolling if it is unlocked, and vice versa.
+     *
+     * @param clickedDiceView the dice view that was clicked
+     * @param fishingRod the fishing rod
+     */
     public void lockDice(ImageView clickedDiceView, FishingRod fishingRod) {
         if (gameState != GameState.WAITING_FOR_USE_DICE) {
             return;
@@ -65,6 +78,11 @@ public class FishingDiceDisplay extends DiceDisplay{
         }
     }
 
+    /**
+     * Rolls the dice with animation.
+     *
+     * @param event the mouse event
+     */
     public void rollDice(final ActionEvent event) {
         if (gameState != GameState.WAITING_FOR_USE_DICE || rollCounter >= 3) {
             return;
@@ -79,7 +97,7 @@ public class FishingDiceDisplay extends DiceDisplay{
         // Create a Timeline for each roll
         Timeline timeline = new Timeline();
 
-        // Define the duration for each keyframe (adjust as needed)
+        // Define the duration for each keyframe
         Duration keyFrameDuration = Duration.millis(20);
 
         // Add keyframes for each number the dice can show
@@ -105,7 +123,6 @@ public class FishingDiceDisplay extends DiceDisplay{
 
         // Add the timeline to the sequential transition
         sequentialTransition.getChildren().add(timeline);
-
 
         // Play the sequential transition
         sequentialTransition.play();
@@ -144,6 +161,11 @@ public class FishingDiceDisplay extends DiceDisplay{
         }
     }
 
+    /**
+     * Readies the dice to use for fish.
+     *
+     * @param event the mouse event
+     */
     public void useDice(final ActionEvent event) {
         if (rollCounter != 0 && gameState == GameState.WAITING_FOR_USE_DICE) {
             readyDiceForSelection();
@@ -151,6 +173,11 @@ public class FishingDiceDisplay extends DiceDisplay{
         }
     }
 
+    /**
+     * Selects the dice.
+     *
+     * @param diceIndex the index of the dice
+     */
     @Override
     protected void selectDice(int diceIndex) {
         System.out.printf("Selecting dice %d\n", diceIndex);
@@ -169,6 +196,11 @@ public class FishingDiceDisplay extends DiceDisplay{
         }
     }
 
+    /**
+     * Finishes the round of dice rolling.
+     *
+     * @param event the mouse event
+     */
     private void finishDice(final ActionEvent event) {
         if (gameState != GameState.DICE_IN_USE) {
             System.out.println("Finishing dice...\n");
@@ -185,6 +217,12 @@ public class FishingDiceDisplay extends DiceDisplay{
             new InitialFishingScreen().start(primaryStage);
         }
     }
+
+    /**
+     * Gets the dice display.
+     *
+     * @return the dice display
+     */
     @Override
     public HBox getDiceDisplay() {
         for (int i = 0; i < getDiceViews().length; i++) {
@@ -212,13 +250,13 @@ public class FishingDiceDisplay extends DiceDisplay{
         return gethBox();
     }
 
+    /**
+     * Opens the active quests modal.
+     *
+     * @param actionEvent the action event
+     */
     public void activeQuests(ActionEvent actionEvent) {
         ModalPopUp modalPopUp = new ActiveQuestModal();
         modalPopUp.openInGamePopup(primaryStage);
     }
-
-//    public void addDiceToUsedDice(Dice dice) {
-//        usedDice.add(dice);
-//        setBorderColor(diceViews[fishingRod.getComponents().indexOf(dice)], USED_COLOR);
-//    }
 }

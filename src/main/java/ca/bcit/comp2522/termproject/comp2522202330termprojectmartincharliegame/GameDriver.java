@@ -4,19 +4,10 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * HelloJavaFX, an introduction to JavaFX.
+ * Driver for the game.
  *
- * Note that this class extends javafx.application.Application.
- *
- * Every JavaFX application is a subclass of the Application class. The
- * Application class is an abstract class.  It contains an abstract method
- * called start(Stage primaryStage).  This abstract method must be
- * implemented.  This is where we assemble our interface.
- *
- *
- * @author Lewis & Loftus 9e
- * @author BCIT
- * @version 2022
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
  */
 public class GameDriver extends Application {
     private static final int TIME_LIMIT = 10;
@@ -40,6 +31,11 @@ public class GameDriver extends Application {
         startScreen.start(primaryStage);
     }
 
+    /**
+     * Ends the game.
+     *
+     * @param primaryStage the stage
+     */
     public void endGame(final Stage primaryStage) {
         EndScreen endScreen;
         Player player = Player.getInstance("Charlie");
@@ -63,14 +59,27 @@ public class GameDriver extends Application {
         launch(args);
     }
 
+    /**
+     * Gets the time limit.
+     *
+     * @return the time limit
+     */
     public static int getTimeLimit() {
         return TIME_LIMIT;
     }
 
+    /**
+     * Gets the money goal.
+     *
+     * @return the money goal
+     */
     public static int getMoneyGoal() {
         return MONEY_GOAL;
     }
 
+    /**
+     * Serializes the player.
+     */
     public void serializePlayer() {
         Player player = Player.getInstance("Charlie");
 
@@ -91,6 +100,9 @@ public class GameDriver extends Application {
         player.serialize("file:../../resources/playerSave.txt");
     }
 
+    /**
+     * Serializes the bulletin board.
+     */
     public void serializeBoard() {
         BulletinBoard bulletinBoard = BulletinBoard.getInstance();
 

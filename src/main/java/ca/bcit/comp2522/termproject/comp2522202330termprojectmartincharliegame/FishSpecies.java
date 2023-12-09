@@ -2,13 +2,25 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import java.util.HashMap;
 
+/**
+ * Represents the fish species.
+ *
+ * @author Martin Siu, Charlie Zhang
+ * @version 2023
+ */
 public class FishSpecies {
     private final HashMap<Integer, Fish> fishSpecies = new java.util.HashMap<>();
 
+    /**
+     * Constructs a FishSpecies object.
+     */
     public FishSpecies() {
         populateFishSpecies();
     }
 
+    /**
+     * Populates the fish species.
+     */
     public void populateFishSpecies() {
         fishSpecies.put(1, new Fish("Bass", "Common", "greater", 14, 150));
         fishSpecies.put(2, new Fish("Catfish", "Common", "greater", 10, 100));
@@ -40,6 +52,11 @@ public class FishSpecies {
         fishSpecies.put(26, new Fish("Nemo", "Legendary", "less", 7, 2800));
     }
 
+    /**
+     * Gets the fish species.
+     *
+     * @return the fish species
+     */
     public Fish getFish(int key) {
         return fishSpecies.get(key);
     }
