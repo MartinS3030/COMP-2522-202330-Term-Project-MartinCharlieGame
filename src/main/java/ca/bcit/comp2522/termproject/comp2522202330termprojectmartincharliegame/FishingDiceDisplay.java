@@ -189,17 +189,17 @@ public class FishingDiceDisplay extends DiceDisplay{
     public HBox getDiceDisplay() {
         for (int i = 0; i < getDiceViews().length; i++) {
             int diceIndex = i;
-            Button lockUnlock = ButtonMaker.createButton("lockUnlock", event -> lockDice(getDiceViews()[diceIndex], getFishingRod()), 0, 0);
+            Button lockUnlock = ButtonMaker.createButton("Lock", event -> lockDice(getDiceViews()[diceIndex], getFishingRod()), 0, 0);
             lockUnlock.setMaxWidth(130);
             StackPane diceBox = createRoundedBorderedImageView(getDiceViews()[i], getBORDER_COLOR());
             diceBox.setOnMouseClicked(event -> selectDice(diceIndex));
             getvBox()[i].getChildren().addAll(diceBox, lockUnlock);
             gethBox().getChildren().add(getvBox()[i]);
         }
-        Button activeQuests = ButtonMaker.createButton("activeQuests", this::activeQuests, 0, 0);
-        Button rollDice = ButtonMaker.createButton("rollDice", this::rollDice, 0, 0);
-        Button useDice = ButtonMaker.createButton("useDice", this::useDice, 0, 0);
-        Button finishDice = ButtonMaker.createButton("finishCast", this::finishDice, 0, 0);
+        Button activeQuests = ButtonMaker.createButton("Quests", this::activeQuests, 0, 0);
+        Button rollDice = ButtonMaker.createButton("Roll Dice", this::rollDice, 0, 0);
+        Button useDice = ButtonMaker.createButton("Use Dice", this::useDice, 0, 0);
+        Button finishDice = ButtonMaker.createButton("Finish", this::finishDice, 0, 0);
         rollDice.setMaxWidth(130);
         useDice.setMaxWidth(130);
         finishDice.setMaxWidth(130);
