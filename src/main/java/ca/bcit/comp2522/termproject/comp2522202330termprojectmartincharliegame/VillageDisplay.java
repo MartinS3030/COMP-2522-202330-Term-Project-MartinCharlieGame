@@ -49,7 +49,7 @@ public class VillageDisplay extends Application {
         Button viewQuests = ButtonMaker.createButton("View Quests", this::showActiveQuests, 0, 0);
         Button viewInventory = ButtonMaker.createButton("View Inventory", this::showInventory, 0, 0);
         Button sleep = ButtonMaker.createButton("Sleep", this::sleep, 0, 0);
-        Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBulletinBoard, 0, 0);
+        Button buyBoat = ButtonMaker.createButton("Buy Boat", this::showBoat, 0, 0);
         Button save = ButtonMaker.createButton("Save", this::save, 0, 0);
 
         VBox buttonBox = new VBox(bulletinBoard, shop, viewQuests, viewInventory, sleep, buyBoat, save);
@@ -61,6 +61,24 @@ public class VillageDisplay extends Application {
         primaryStage.setTitle("Village");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void showBoat(ActionEvent actionEvent) {
+//        FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
+//
+//        fadeTransition.setNode(((Node) actionEvent.getSource()).getScene().getRoot());
+//
+//        fadeTransition.setFromValue(1.0);
+//        fadeTransition.setToValue(0.0);
+//
+//        fadeTransition.setOnFinished(e -> {
+//            Stage currentStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+//
+//            BoatDisplay boatDisplay = new BoatDisplay();
+//            boatDisplay.start(currentStage);
+//        });
+//
+//        fadeTransition.play();
     }
 
     private void showActiveQuests(final ActionEvent actionEvent) {
