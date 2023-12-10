@@ -22,8 +22,6 @@ import java.util.List;
  * @version 2023
  */
 public class IntroScreen extends Application {
-    private final String name = Player.getInstance("Charlie").getName();
-
     /**
      * Starts the intro screen.
      *
@@ -34,9 +32,7 @@ public class IntroScreen extends Application {
         List<String> paragraphs = getParagraphs();
         List<Label> labelList = createLabels(paragraphs);
 
-        Button next = ButtonMaker.createButton("Begin!", event -> {
-            nextScreen(event, primaryStage);
-        }, 0, 0);
+        Button next = ButtonMaker.createButton("Begin!", event -> nextScreen(event, primaryStage), 0, 0);
         VBox text = setupTextPane(labelList, next);
 
         StackPane root = new StackPane();
@@ -142,13 +138,20 @@ public class IntroScreen extends Application {
     private List<String> getParagraphs() {
         List<String> paragraphs = new ArrayList<>();
 
-        paragraphs.add("The wall of water towers over you. It hangs still, but you know it's barrelling towards you with its crushing weight. There is no escaping it as it engulfs the world, swallows the sky, and devours the sun.");
+        paragraphs.add("The wall of water towers over you. It hangs still, but you know it's barrelling towards you"
+                + " with its crushing weight. There is no escaping it as it engulfs the world, swallows the sky, and"
+                + " devours the sun.");
 
-        paragraphs.add("You wake up wet and tangled, thinking you've ended up at the briny bottom amongst the seaweeds. You come to realize it was just the bed sheets and your cold sweat. It couldn't have been real, could it?! You are sure that with time, it will fade away like a bad dream.");
+        paragraphs.add("You wake up wet and tangled, thinking you've ended up at the briny bottom amongst the seaweeds."
+                + " You come to realize it was just the bed sheets and your cold sweat. It couldn't have been real,"
+                + " could it?! You are sure that with time, it will fade away like a bad dream.");
 
-        paragraphs.add("No! It WAS real! The premonition does not fade, and your conviction has only steeled that it was a future yet to pass. There's no way to convince anyone else of the truth. They will think you have gone MAD! You must save yourself and get off of this island.");
+        paragraphs.add("No! It WAS real! The premonition does not fade, and your conviction has only steeled that it"
+                + " was a future yet to pass. There's no way to convince anyone else of the truth. They will think you"
+                + " have gone MAD! You must save yourself and get off of this island.");
 
-        paragraphs.add("You have 10 days before The Wave comes and takes your small island village. You must sell enough fish to make enough money to buy a boat, to get off of this doom island.");
+        paragraphs.add("You have 10 days before The Wave comes and takes your small island village. You must sell"
+                + " enough fish to make enough money to buy a boat, to get off of this doom island.");
         return paragraphs;
     }
 

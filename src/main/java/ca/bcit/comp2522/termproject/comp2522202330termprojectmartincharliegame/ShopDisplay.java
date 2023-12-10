@@ -32,7 +32,7 @@ public class ShopDisplay extends Application {
      * @param primaryStage the stage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         Shop shop = Shop.getInstance();
         Image shopImage = new Image("file:../../resources/Shop.png");
         ImageView shopView = new ImageView(shopImage);
@@ -46,7 +46,7 @@ public class ShopDisplay extends Application {
         diceDisplayHBox.setTranslateY(50);
         diceDisplayHBox.setAlignment(Pos.TOP_CENTER);
 
-        RodShopDisplay rodDisplay = new RodShopDisplay(primaryStage,diceDisplay);
+        RodShopDisplay rodDisplay = new RodShopDisplay(primaryStage, diceDisplay);
         HBox rodDisplayHBox = rodDisplay.getRodDisplayHBox();
         rodDisplayHBox.setTranslateY(300);
         rodDisplayHBox.setAlignment(Pos.BOTTOM_CENTER);
@@ -59,20 +59,21 @@ public class ShopDisplay extends Application {
         backButtonView.setFitHeight(75);
         backButtonView.setOnMouseClicked(this::back);
 
-        Label costLabel = new Label(String.format("Buy a dice face above to replace your own for %d gold", shop.getItemCost()));
+        Label costLabel = new Label(String.format("Buy a dice face above to replace your own for %d gold",
+                shop.getItemCost()));
         costLabel.setStyle("-fx-font-family: 'Oswald';-fx-font-size: 40px;"
                 + "-fx-font-weight: 900;-fx-font-style: italic;"
                 + "-fx-text-fill: black;");
         costLabel.setEffect(new DropShadow(15, Color.WHITE));
 
         Image image = new Image("file:../../resources/Items/Money.png");
-        ImageView MoneyView = new ImageView(image);
-        MoneyView.setFitWidth(60);
-        MoneyView.setFitHeight(60);
+        ImageView moneyView = new ImageView(image);
+        moneyView.setFitWidth(60);
+        moneyView.setFitHeight(60);
         gold = new Label(Integer.toString(Player.getInstance("cah").getMoney()));
         gold.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 30px;-fx-font-weight: 700; -fx-text-fill: black;");
         HBox hBox = new HBox();
-        hBox.getChildren().addAll(MoneyView, gold);
+        hBox.getChildren().addAll(moneyView, gold);
         hBox.setPrefSize(100, 100);
         hBox.setTranslateX(-50);
         hBox.setAlignment(Pos.TOP_RIGHT);

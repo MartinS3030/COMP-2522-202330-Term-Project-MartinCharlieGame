@@ -1,7 +1,6 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * Represents a class that rolls dice.
@@ -52,15 +51,6 @@ public class DiceRoller {
     }
 
     /**
-     * Uses a dice.
-     *
-     * @param dice the dice to use
-     */
-    public void useDice(final Dice dice) {
-        usedDiceList.add(dice);
-    }
-
-    /**
      * Checks if a dice is locked.
      *
      * @param dice the dice to check
@@ -79,18 +69,5 @@ public class DiceRoller {
                 dice.roll();
             }
         }
-    }
-
-    /**
-     * Gets the result of the dice roll.
-     *
-     * @return the result of the dice roll
-     */
-    public ArrayList<Integer> getResult() {
-        ArrayList<Integer> result = new ArrayList<>();
-        for (Dice dice : diceList) {
-            result.add(dice.getFaceUpValue());
-        }
-        return result;
     }
 }

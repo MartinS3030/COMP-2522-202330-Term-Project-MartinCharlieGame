@@ -144,7 +144,7 @@ public class VillageDisplay extends Application {
      * @param event the event
      * @param stage the stage
      */
-    static void fade(final ActionEvent event, Stage stage) {
+    static void fade(final ActionEvent event, final Stage stage) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
 
         fadeTransition.setNode(((Node) event.getSource()).getScene().getRoot());

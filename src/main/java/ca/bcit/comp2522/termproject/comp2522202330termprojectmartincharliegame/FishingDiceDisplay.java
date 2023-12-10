@@ -1,14 +1,16 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
-import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.animation.SequentialTransition;
+import javafx.animation.KeyFrame;
 
 /**
  * Represents the dice display for the fishing game.
@@ -16,12 +18,12 @@ import javafx.util.Duration;
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class FishingDiceDisplay extends DiceDisplay{
-    private final Color LOCKED_COLOR = Color.RED;
+public class FishingDiceDisplay extends DiceDisplay {
+    private static final Color LOCKED_COLOR = Color.RED;
     private final DiceRoller diceRoller;
     private final Stage primaryStage;
     private int rollCounter;
-    private int roundCounter;
+    private final int roundCounter;
 
     /**
      * Represents the game state.
@@ -39,7 +41,7 @@ public class FishingDiceDisplay extends DiceDisplay{
      *
      * @param primaryStage the stage
      */
-    public FishingDiceDisplay(Stage primaryStage) {
+    public FishingDiceDisplay(final Stage primaryStage) {
         super();
         this.primaryStage = primaryStage;
         diceRoller = new DiceRoller(getFishingRod().getComponents());
@@ -62,7 +64,7 @@ public class FishingDiceDisplay extends DiceDisplay{
      * @param clickedDiceView the dice view that was clicked
      * @param fishingRod the fishing rod
      */
-    public void lockDice(ImageView clickedDiceView, FishingRod fishingRod) {
+    public void lockDice(final ImageView clickedDiceView, final FishingRod fishingRod) {
         if (gameState != GameState.WAITING_FOR_USE_DICE) {
             return;
         }
@@ -131,7 +133,7 @@ public class FishingDiceDisplay extends DiceDisplay{
     private void readyDiceForSelection() {
         gameState = GameState.WAITING_FOR_DICE_SELECTION;
         for (ImageView diceView : getDiceViews()) {
-            setBorderColor(diceView, getBORDER_COLOR());
+            setBorderColor(diceView, getBORDERCOLOR());
         }
 
     }
@@ -147,7 +149,7 @@ public class FishingDiceDisplay extends DiceDisplay{
             if (diceRoller.isLocked(getFishingRod().getComponents().get(i))) {
                 stackPane = createRoundedBorderedImageView(newImageView, LOCKED_COLOR);
             } else {
-                stackPane = createRoundedBorderedImageView(newImageView, getBORDER_COLOR());
+                stackPane = createRoundedBorderedImageView(newImageView, getBORDERCOLOR());
             }
             int finalI = i;
             stackPane.setOnMouseClicked(event -> selectDice(finalI));
@@ -179,16 +181,16 @@ public class FishingDiceDisplay extends DiceDisplay{
      * @param diceIndex the index of the dice
      */
     @Override
-    protected void selectDice(int diceIndex) {
+    protected void selectDice(final int diceIndex) {
         System.out.printf("Selecting dice %d\n", diceIndex);
         if (gameState == GameState.WAITING_FOR_DICE_SELECTION) {
             Dice dice = getFishingRod().getComponents().get(diceIndex);
             if (getSelectedDice().contains(dice)) {
                 resetBorderColor(getDiceViews()[diceIndex]);
                 getSelectedDice().remove(dice);
-            } else if (!getUsedDice().contains(dice)){
+            } else if (!getUsedDice().contains(dice)) {
                 getSelectedDice().add(dice);
-                setBorderColor(getDiceViews()[diceIndex], getSELECTED_COLOR());
+                setBorderColor(getDiceViews()[diceIndex], getSELECTEDCOLOR());
             }
         } else if (gameState == GameState.WAITING_FOR_USE_DICE) {
             DiceFaceModal diceFaceModal = new DiceFaceModal(diceIndex);
@@ -209,7 +211,7 @@ public class FishingDiceDisplay extends DiceDisplay{
             getSelectedDice().clear();
             getUsedDice().clear();
             for (ImageView diceView : getDiceViews()) {
-                setBorderColor(diceView, getBORDER_COLOR());
+                setBorderColor(diceView, getBORDERCOLOR());
             }
             rollCounter = 0;
             getPlayer().setCastOfTheDay(roundCounter + 1);
@@ -227,9 +229,10 @@ public class FishingDiceDisplay extends DiceDisplay{
     public HBox getDiceDisplay() {
         for (int i = 0; i < getDiceViews().length; i++) {
             int diceIndex = i;
-            Button lockUnlock = ButtonMaker.createButton("Lock", event -> lockDice(getDiceViews()[diceIndex], getFishingRod()), 0, 0);
+            Button lockUnlock = ButtonMaker.createButton("Lock", event -> lockDice(getDiceViews()[diceIndex],
+                    getFishingRod()), 0, 0);
             lockUnlock.setMaxWidth(130);
-            StackPane diceBox = createRoundedBorderedImageView(getDiceViews()[i], getBORDER_COLOR());
+            StackPane diceBox = createRoundedBorderedImageView(getDiceViews()[i], getBORDERCOLOR());
             diceBox.setOnMouseClicked(event -> selectDice(diceIndex));
             getvBox()[i].getChildren().addAll(diceBox, lockUnlock);
             gethBox().getChildren().add(getvBox()[i]);
@@ -255,7 +258,7 @@ public class FishingDiceDisplay extends DiceDisplay{
      *
      * @param actionEvent the action event
      */
-    public void activeQuests(ActionEvent actionEvent) {
+    public void activeQuests(final ActionEvent actionEvent) {
         ModalPopUp modalPopUp = new ActiveQuestModal();
         modalPopUp.openInGamePopup(primaryStage);
     }

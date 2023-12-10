@@ -30,8 +30,8 @@ public class WinScreen extends EndScreen {
      */
     @Override
     protected Label getEndMessage() {
-        Label endMessage = new Label("You've made it! You waited for new of the wave but it never came." +
-                                        "Oh well, at least you're off the island.");
+        Label endMessage = new Label("You've made it! You waited for new of the wave but it never came."
+                                       + "Oh well, at least you're off the island.");
         endMessage.setStyle("-fx-font-size: 50px; -fx-text-fill: white;");
         endMessage.setEffect(new javafx.scene.effect.DropShadow(10, Color.BLACK));
         endMessage.setWrapText(true);

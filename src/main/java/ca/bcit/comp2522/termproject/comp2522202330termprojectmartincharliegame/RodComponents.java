@@ -10,7 +10,7 @@ import java.util.Random;
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class Rod_Components implements Dice, Serializable {
+public class RodComponents implements Dice, Serializable {
     private static final Random RANDOM_NUMBER_GENERATOR = new Random();
     private final String name;
     private final ArrayList<Integer> values;
@@ -22,7 +22,7 @@ public class Rod_Components implements Dice, Serializable {
      * @param name the name of the rod component
      * @param values the face values of the rod component
      */
-    public Rod_Components(String name, ArrayList<Integer> values) {
+    public RodComponents(final String name, final ArrayList<Integer> values) {
         this.name = name;
         this.values = values;
         this.faceUpValue = values.get(RANDOM_NUMBER_GENERATOR.nextInt(values.size()));
@@ -31,7 +31,7 @@ public class Rod_Components implements Dice, Serializable {
     /**
      * Constructs an object of type Rod_Components with default values.
      */
-    public Rod_Components() {
+    public RodComponents() {
         this.name = "Generic Rod Component";
         this.values = new ArrayList<>();
         int[] intArray = new int[] {1, 2, 3, 4, 5, 6};
@@ -39,15 +39,6 @@ public class Rod_Components implements Dice, Serializable {
             values.add(value);
         }
         this.faceUpValue = values.get(RANDOM_NUMBER_GENERATOR.nextInt(values.size()));
-    }
-
-    /**
-     * Returns the name of the rod component.
-     *
-     * @return the name of the rod component
-     */
-    public String readName() {
-        return name;
     }
 
     /**
@@ -72,7 +63,7 @@ public class Rod_Components implements Dice, Serializable {
      * Replaces a face value of the rod component.
      */
     @Override
-    public void replaceFace(Integer face, Integer replacementFace) {
+    public void replaceFace(final Integer face, final Integer replacementFace) {
         values.set(values.indexOf(face), replacementFace);
     }
 

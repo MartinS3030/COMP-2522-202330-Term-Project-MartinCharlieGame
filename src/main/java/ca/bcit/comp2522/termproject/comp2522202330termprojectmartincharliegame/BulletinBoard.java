@@ -156,8 +156,7 @@ public final class BulletinBoard implements Board, Serializable {
                         fishSpecies.getFish(26), 3, 1,
                         "A frantic fish has come to the village asking for help to capture a unique specimen"
                                 + " - his adventurous son, Nemo. Help catch his son and bring him to his father.")};
-        int questPicker = random.nextInt(5);
-        return legendaryQuestList[questPicker];
+        return legendaryQuestList[random.nextInt(5)];
     }
 
     /**

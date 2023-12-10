@@ -8,11 +8,16 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 /**
  * Represents the view rod screen.
@@ -27,7 +32,7 @@ public class ViewRod extends Application {
      * @param primaryStage the stage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
 
         RodDisplay rodDisplay = new RodDisplay(primaryStage);
         HBox mainBox = rodDisplay.getRodDisplayHBox();

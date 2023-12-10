@@ -55,9 +55,10 @@ public class FishSpecies {
     /**
      * Gets the fish species.
      *
+     * @param key the key
      * @return the fish species
      */
-    public Fish getFish(int key) {
+    public Fish getFish(final int key) {
         return fishSpecies.get(key);
     }
 }

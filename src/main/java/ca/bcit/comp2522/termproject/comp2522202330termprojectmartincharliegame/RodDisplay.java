@@ -28,7 +28,7 @@ public class RodDisplay {
      *
      * @param primaryStage the primary stage
      */
-    public RodDisplay(Stage primaryStage) {
+    public RodDisplay(final Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
@@ -71,17 +71,17 @@ public class RodDisplay {
     /**
      * Returns an event handler for handling mouse events to open a modal popup.
      *
-     * @param DiceIndex The index of the dice associated with the event.
+     * @param diceIndex The index of the dice associated with the event.
      * @return The event handler for handling mouse events.
      */
-    protected EventHandler<MouseEvent> openModal(int DiceIndex) {
+    protected EventHandler<MouseEvent> openModal(final int diceIndex) {
         return event -> {
-            ModalPopUp modal = new DiceFaceModal(DiceIndex);
+            ModalPopUp modal = new DiceFaceModal(diceIndex);
             modal.openInGamePopup(primaryStage);
         };
     }
 
-    private StackPane createComponentBox(String componentName) {
+    private StackPane createComponentBox(final String componentName) {
         Image image = new Image("file:../../resources/Box.png");
         ImageView imageView = new ImageView(image);
         Text text = new Text(componentName);
@@ -92,7 +92,7 @@ public class RodDisplay {
         return stackPane;
     }
 
-    private VBox createVBox(Pane component) {
+    private VBox createVBox(final Pane component) {
         return new VBox(component);
     }
 }

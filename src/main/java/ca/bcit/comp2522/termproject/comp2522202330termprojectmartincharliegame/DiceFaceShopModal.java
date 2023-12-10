@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class DiceFaceShopModal extends DiceFaceModal{
+public class DiceFaceShopModal extends DiceFaceModal {
     private final DiceDisplay diceDisplay;
 
     /**
@@ -21,7 +21,7 @@ public class DiceFaceShopModal extends DiceFaceModal{
      * @param diceFace the dice face
      * @param diceDisplay the dice display
      */
-    public DiceFaceShopModal(int diceFace, DiceDisplay diceDisplay) {
+    public DiceFaceShopModal(final int diceFace, final DiceDisplay diceDisplay) {
         super(diceFace);
         this.diceDisplay = diceDisplay;
     }
@@ -34,10 +34,10 @@ public class DiceFaceShopModal extends DiceFaceModal{
      * @return images of the dice faces as an ArrayList of ImageView
      */
     @Override
-    protected ArrayList<ImageView> createDiceFaceViews(Dice dice, Popup popup) {
+    protected ArrayList<ImageView> createDiceFaceViews(final Dice dice, final Popup popup) {
         ArrayList<ImageView> diceViews = new ArrayList<>();
         for (Integer face : dice.getFaceList()) {
-            ImageView diceView= DiceFace.getDiceFaceImage(face);
+            ImageView diceView = DiceFace.getDiceFaceImage(face);
             diceView.setFitWidth(50);
             diceView.setFitHeight(50);
             Dice replacementDice = diceDisplay.getSelectedDice().get(0);

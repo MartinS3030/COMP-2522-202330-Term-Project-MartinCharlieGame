@@ -44,11 +44,11 @@ public final class Player implements Serializable {
 
     private Player(final String name) {
         this.name = name;
-        Rod_Components base = new Rod_Components("Basic Base", basicDie());
-        Rod_Components rodComponent = new Rod_Components("Basic Rod", basicDie());
-        Rod_Components reel = new Rod_Components("Basic Reel", basicDie());
-        Rod_Components line = new Rod_Components("Basic Line", basicDie());
-        Rod_Components hook = new Rod_Components("Basic Hook", basicDie());
+        RodComponents base = new RodComponents("Basic Base", basicDie());
+        RodComponents rodComponent = new RodComponents("Basic Rod", basicDie());
+        RodComponents reel = new RodComponents("Basic Reel", basicDie());
+        RodComponents line = new RodComponents("Basic Line", basicDie());
+        RodComponents hook = new RodComponents("Basic Hook", basicDie());
 
         this.rod = new FishingRod(base, rodComponent, reel, line, hook);
     }

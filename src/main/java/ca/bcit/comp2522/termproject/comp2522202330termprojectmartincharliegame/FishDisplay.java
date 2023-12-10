@@ -36,7 +36,13 @@ public class FishDisplay extends Application {
      * The height of the stage.
      */
     public static final int FISH_IMAGE_SIZE = 100;
+    /**
+     * The number of fish to catch.
+     */
     public static final int FISH_TO_CATCH = 5;
+    /**
+     * The height of the stage.
+     */
     public static final int STAGE_HEIGHT = 648;
     private final ArrayList<Fish> fishList = new ArrayList<>();
     private DiceDisplay diceDisplay;

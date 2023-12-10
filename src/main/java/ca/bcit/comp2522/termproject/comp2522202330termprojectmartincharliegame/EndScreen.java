@@ -29,7 +29,7 @@ public class EndScreen extends Application {
      *
      * @param primaryStage the Stage
      */
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         ImageView imageView = getImageView();
 
         // Create the root layout and add the ImageView

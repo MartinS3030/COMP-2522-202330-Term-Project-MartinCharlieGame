@@ -21,9 +21,9 @@ public class FishingRod implements Serializable {
      * @param rodComponent4 the fourth component
      * @param rodComponent5 the fifth component
      */
-    public FishingRod(final Rod_Components rodComponent1, final Rod_Components rodComponent2,
-                      final Rod_Components rodComponent3, final Rod_Components rodComponent4,
-                      final Rod_Components rodComponent5) {
+    public FishingRod(final RodComponents rodComponent1, final RodComponents rodComponent2,
+                      final RodComponents rodComponent3, final RodComponents rodComponent4,
+                      final RodComponents rodComponent5) {
         components.add(rodComponent1);
         components.add(rodComponent2);
         components.add(rodComponent3);
@@ -35,11 +35,11 @@ public class FishingRod implements Serializable {
      * Constructs a fishing rod with the given components.
      */
     public FishingRod() {
-        components.add(new Rod_Components());
-        components.add(new Rod_Components());
-        components.add(new Rod_Components());
-        components.add(new Rod_Components());
-        components.add(new Rod_Components());
+        components.add(new RodComponents());
+        components.add(new RodComponents());
+        components.add(new RodComponents());
+        components.add(new RodComponents());
+        components.add(new RodComponents());
     }
 
     /**

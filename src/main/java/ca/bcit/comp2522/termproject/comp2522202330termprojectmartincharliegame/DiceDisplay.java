@@ -19,9 +19,9 @@ import java.util.ArrayList;
  * @version 2023
  */
 public class DiceDisplay {
-    private final Color BORDER_COLOR = Color.BLACK;
-    private final Color SELECTED_COLOR = Color.FORESTGREEN;
-    private final Color USED_COLOR = Color.GREY;
+    private static final Color BORDER_COLOR = Color.BLACK;
+    private static final Color SELECTED_COLOR = Color.FORESTGREEN;
+    private static final Color USED_COLOR = Color.GREY;
     private final ImageView[] diceViews;
     private final FishingRod fishingRod;
     private final HBox hBox;
@@ -43,8 +43,8 @@ public class DiceDisplay {
         hBox = new HBox();
         vBox = new VBox[]{new VBox(), new VBox(), new VBox(), new VBox(), new VBox(), new VBox()};
 
-        selectedDice = new ArrayList<Dice>();
-        usedDice = new ArrayList<Dice>();
+        selectedDice = new ArrayList<>();
+        usedDice = new ArrayList<>();
     }
 
     /**
@@ -52,7 +52,7 @@ public class DiceDisplay {
      *
      * @return the border color
      */
-    public Color getBORDER_COLOR() {
+    public Color getBORDERCOLOR() {
         return BORDER_COLOR;
     }
 
@@ -61,7 +61,7 @@ public class DiceDisplay {
      *
      * @return the selected color
      */
-    public Color getSELECTED_COLOR() {
+    public Color getSELECTEDCOLOR() {
         return SELECTED_COLOR;
     }
 
