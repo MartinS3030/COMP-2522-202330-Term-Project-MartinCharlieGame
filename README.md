@@ -1,4 +1,4 @@
-# COMP-2522-202330-Lab-09
+# COMP-2522-Term-Project-MartinCharlieGame
 
 Every program needs a README.md
 
