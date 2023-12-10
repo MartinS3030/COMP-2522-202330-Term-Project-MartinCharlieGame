@@ -76,44 +76,4 @@ public class GameDriver extends Application {
     public static int getMoneyGoal() {
         return MONEY_GOAL;
     }
-
-    /**
-     * Serializes the player.
-     */
-    public void serializePlayer() {
-        Player player = Player.getInstance("Charlie");
-
-        for (Quest quest : player.getQuests()) {
-            System.out.println(quest.getTitle());
-        }
-        player.addQuests(new Quest("Catch 5 Bass", "Charlie", 5, new Fish("Bass", "Common", "greater", 14, 150), 0, 2, "Catch 5 Common Fish"));
-        player.addQuests(new Quest("Catch 5 Rare Fish", "Charlie", 5, new Fish("Rare Fish", "rare", "none", 0, 0), 0, 0, "Catch 5 Rare Fish"));
-        for (Quest quest : player.getQuests()) {
-            System.out.println(quest.getTitle());
-        }
-        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
-        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
-        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
-        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
-        player.addInventory(new Fish("Bass", "Common", "greater", 14, 150));
-
-        player.serialize("file:../../resources/playerSave.txt");
-    }
-
-    /**
-     * Serializes the bulletin board.
-     */
-    public void serializeBoard() {
-        BulletinBoard bulletinBoard = BulletinBoard.getInstance();
-
-        for (Quest quest : bulletinBoard.getQuests()) {
-            System.out.println(quest.getTitle());
-        }
-
-        bulletinBoard.serialize("file:../../resources/bulletinBoardSave.txt");
-        //        BulletinBoard loadedBulletinBoard = BulletinBoard.deserialize("file:../../resources/bulletinBoardSave.txt");
-//        for (Quest quest : loadedBulletinBoard.getQuests()) {
-//            System.out.println(quest.getTitle());
-//        }
-    }
 }

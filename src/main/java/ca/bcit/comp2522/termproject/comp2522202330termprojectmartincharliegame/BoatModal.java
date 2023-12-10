@@ -1,11 +1,8 @@
 package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -18,7 +15,7 @@ import javafx.stage.Stage;
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class BoatModal implements ModalPopUp{
+public class BoatModal implements ModalPopUp {
     private Stage primaryStage;
     private final Player player = Player.getInstance("Charlie");
     private final Popup popup = new Popup();
@@ -119,14 +116,13 @@ public class BoatModal implements ModalPopUp{
     /**
      * Gets the button HBox.
      *
+     * @param buttonText the button text
      * @param action the action to be executed
      * @return the button HBox
      */
     private HBox getButtonHBox(final Runnable action, final String buttonText) {
         Button button = new Button(buttonText);
-        button.setOnMouseClicked(e -> {
-            action.run();
-        });
+        button.setOnMouseClicked(e -> action.run());
         button.setStyle("-fx-background-color: rgb(28, 55, 201);"
                 + "-fx-font-family: 'Montserrat';-fx-font-size: 20px;-fx-font-weight: 700;"
                 + "-fx-padding: 10px;-fx-text-fill: rgb(29, 41, 41);-fx-border-width: 2px"
@@ -175,21 +171,5 @@ public class BoatModal implements ModalPopUp{
         stackPane.setPrefWidth(400);
 
         return stackPane;
-    }
-
-    /**
-     * Gets an ImageView.
-     *
-     * @param filepath the filepath as a String
-     * @param height   the height as an int
-     * @param width    the width as an int
-     * @return the ImageView
-     */
-    private ImageView getImageView(final String filepath, final int height, final int width) {
-        Image image = new Image(filepath);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        return imageView;
     }
 }

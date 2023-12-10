@@ -15,20 +15,34 @@ import java.io.ObjectInputStream;
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class Player implements Serializable {
+public final class Player implements Serializable {
+    /**
+     * The starting money of the player.
+     */
+    public static final int STARTING_MONEY = 1000;
+    /**
+     * The max casts of the player.
+     */
+    public static final int MAX_CASTS = 5;
+    /**
+     * The max quests of the player.
+     */
+    public static final int MAX_QUESTS = 5;
+    /**
+     * The sides of the dice.
+     */
+    public static final int SIDES_OF_DICE = 6;
     private static Player instance;
+    private static int money;
+    private static int date;
     private final String name;
     private final HashMap<String, Item> inventory = new HashMap<>();
     private final ArrayList<Quest> activeQuests = new ArrayList<>();
     private final FishingRod rod;
-    private static int money;
-    private static int date;
     private int castOfTheDay = 0;
-    private final int MAX_CAST = 5;
-    private final int SIDES_OF_DICE = 6;
     private boolean hasBoat = false;
 
-    private Player(String name) {
+    private Player(final String name) {
         this.name = name;
         Rod_Components base = new Rod_Components("Basic Base", basicDie());
         Rod_Components rodComponent = new Rod_Components("Basic Rod", basicDie());
@@ -45,10 +59,10 @@ public class Player implements Serializable {
      * @param name the name of the player
      * @return the instance of the player
      */
-    public static Player getInstance(String name) {
+    public static Player getInstance(final String name) {
         if (instance == null) {
             instance = new Player(name);
-            money = 1000;
+            money = STARTING_MONEY;
             date = 1;
         }
         return instance;
@@ -86,7 +100,7 @@ public class Player implements Serializable {
      *
      * @param date the date of the game
      */
-    public void setDate(int date) {
+    public void setDate(final int date) {
         Player.date = date + 1;
     }
 
@@ -104,7 +118,7 @@ public class Player implements Serializable {
      *
      * @param castOfTheDay the cast of the day
      */
-    public void setCastOfTheDay(int castOfTheDay) {
+    public void setCastOfTheDay(final int castOfTheDay) {
         this.castOfTheDay = castOfTheDay;
     }
 
@@ -123,11 +137,13 @@ public class Player implements Serializable {
      * @return the max cast of the day
      */
     public int getCastLeft() {
-        return MAX_CAST - castOfTheDay;
+        return MAX_CASTS - castOfTheDay;
     }
 
     /**
      * Creates a ArrayList that represents a basic die.
+     *
+     * @return the ArrayList that represents a basic die
      */
     public ArrayList<Integer> basicDie() {
         ArrayList<Integer> basicDie = new ArrayList<>();
@@ -141,14 +157,15 @@ public class Player implements Serializable {
      * Adds a quest to the player.
      *
      * @param quest the quest to be added
+     * @throws IllegalArgumentException if the quest is already accepted or the quest limit is reached
      */
-    public void addQuests (Quest quest) {
+    public void addQuests(final Quest quest) {
         for (Quest activeQuest : activeQuests) {
             if (activeQuest.getID() == (quest.getID())) {
                 throw new IllegalArgumentException("Quest already accepted");
             }
         }
-        if (activeQuests.size() < 5) {
+        if (activeQuests.size() < MAX_QUESTS) {
             activeQuests.add(quest);
         } else {
             throw new IllegalArgumentException("Quest limit reached");
@@ -160,7 +177,7 @@ public class Player implements Serializable {
      *
      * @param quest the quest to be removed
      */
-    public void removeQuest(Quest quest) {
+    public void removeQuest(final Quest quest) {
         for (int i = 0; i < activeQuests.size(); i++) {
             if (activeQuests.get(i).getID() == quest.getID()) {
                 activeQuests.remove(i);
@@ -183,7 +200,7 @@ public class Player implements Serializable {
      *
      * @param item the item to be added
      */
-    public void addInventory(Item item) {
+    public void addInventory(final Item item) {
         if (inventory.containsKey(item.getName())) {
             Item itemInInventory = inventory.get(item.getName());
             itemInInventory.setAmount(itemInInventory.getAmount() + item.getAmount());
@@ -206,7 +223,7 @@ public class Player implements Serializable {
      *
      * @param money the new money amount of the player
      */
-    public void setMoney(int money) {
+    public void setMoney(final int money) {
         Player.money = money;
     }
 
@@ -234,12 +251,12 @@ public class Player implements Serializable {
      *
      * @param filename the name of the file to be serialized
      */
-    public void serialize(String filename) {
+    public void serialize(final String filename) {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
             out.writeObject(this);
             System.out.println("Serialization completed. Player data saved to " + filename);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Serialization failed. Player data not saved to " + filename);
         }
     }
 
@@ -249,13 +266,13 @@ public class Player implements Serializable {
      * @param filename the name of the file to be deserialized
      * @return the deserialized player
      */
-    public static Player deserialize(String filename) {
+    public static Player deserialize(final String filename) {
         Player player = null;
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
             player = (Player) in.readObject();
             System.out.println("Deserialization completed. Player data loaded from " + filename);
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Deserialization failed. Player data not loaded from " + filename);
         }
         return player;
     }
