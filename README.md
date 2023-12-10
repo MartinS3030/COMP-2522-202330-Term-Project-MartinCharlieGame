@@ -10,9 +10,11 @@ Charlie Zhang
 
 ## Your student number:
 A01352270  
+A01339212
 
 ## Your GitHub name:
 MartinS3030  
+cz1501
 
 ## Instruction to run the program:
 Please run the program from the GameDriver class.  
@@ -28,8 +30,17 @@ https://nookipedia.com/wiki/Fish/New_Horizons
 https://www.google.com/imgres?imgurl=https%3A%2F%2Fp7.hiclipart.com%2Fpreview%2F270%2F623%2F800%2Fdory-nemo-palette-surgeonfish-disney-infinity-3-dory.jpg&tbnid=UYSL3-Di4K3bFM&vet=12ahUKEwjSjsG969qCAxUNwOYEHXAoARgQMygFegQIARBr..i&imgrefurl=https%3A%2F%2Fwww.hiclipart.com%2Ffree-transparent-background-png-clipart-dxmxp&docid=UZce4GrHsk6W_M&w=588&h=608&q=dory%20transparent%20background&ved=2ahUKEwjSjsG969qCAxUNwOYEHXAoARgQMygFegQIARBr  
 https://www.google.com/imgres?imgurl=https%3A%2F%2Fbanner2.cleanpng.com%2F20190202%2Fch%2Fkisspng-clip-art-flounder-the-little-mermaid-image-portabl-flounder-clip-art-disney-clip-art-galore-5c566a28b42126.0421665315491671447378.jpg&tbnid=i8AnGaofISAm5M&vet=12ahUKEwiYwsPS69qCAxUyIDQIHfANBlwQMygBegQIARBb..i&imgrefurl=https%3A%2F%2Fwww.cleanpng.com%2Fpng-clip-art-flounder-the-little-mermaid-image-portabl-7014061%2F&docid=EfYTy0Y7Lv5r-M&w=900&h=560&q=flounder%20little%20mermaid%20transparent%20background&ved=2ahUKEwiYwsPS69qCAxUyIDQIHfANBlwQMygBegQIARBb  
 https://www.google.com/imgres?imgurl=https%3A%2F%2Fp7.hiclipart.com%2Fpreview%2F798%2F182%2F569%2Fmr-krabs-plankton-and-karen-bikini-bottom-character-krabby-patty-mr.jpg&tbnid=k7MGoXcetkJVTM&vet=12ahUKEwiyx72W7NqCAxU1JDQIHZWsBJMQMygTegUIARCOAQ..i&imgrefurl=https%3A%2F%2Fwww.hiclipart.com%2Ffree-transparent-background-png-clipart-mfuti&docid=M6oFvDf5zurOBM&w=800&h=925&q=mr%20krabs%20transparent%20background&ved=2ahUKEwiyx72W7NqCAxU1JDQIHZWsBJMQMygTegUIARCOAQ  
-Game Logo  
+Game Logo:
 https://www.zilliondesigns.com/drafts/display/contest/37717/draft/d783cb3f1447c5307597f437304f54d6305091  
 Background Images:  
 https://img.freepik.com/premium-photo/pixel-art-medieval-village-middle-age-houses-village-with-castle-background-8-bit-game-ai_985124-952.jpg  
 https://pbs.twimg.com/media/DUxpFNZXcAYPEdV.jpg  
+https://www.retronator.com/post/190443874068/im-a-sucker-for-pixel-art-environments-and-khaled
+https://www.reddit.com/r/PixelArt/comments/kag8e9/oc_cozy_blacksmith/
+https://www.reddit.com/r/Art/comments/d4laal/pixel_art_stormy_coast_me_digital_2019/
+https://www.vecteezy.com/vector-art/12043561-under-the-sea-background-marine-life-landscape-ocean-underwater-world-ocean-nature-inhabitants-silhouette-ocean-bottom-marine-underwater-life-sea-seascape-seafloor-undersea-background-vector
+https://markkorneev.cgsociety.org/wp60/pixel-art-wooden-pla
+Coin Icon:
+https://www.vecteezy.com/vector-art/21660037-coin-pile-in-pixel-art-style
+Dice Images:
+https://iconduck.com/icons/23295/dice-six-faces-five
