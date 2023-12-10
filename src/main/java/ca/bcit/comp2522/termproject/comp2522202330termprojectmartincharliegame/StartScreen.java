@@ -108,15 +108,20 @@ public class StartScreen extends Application {
                 loadedBulletinBoard.getQuests().addAll(tempBulletinBoard.getQuests());
             }
         } catch (Exception e) {
-            Platform.runLater(() -> {
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                errorAlert.setHeaderText(null);
-                errorAlert.setContentText("No save data found.");
-                errorAlert.showAndWait();
-            });
+            fadeTransition(mouseEvent, "No save data found.");
             return;
         }
 
+        fadeTransition(mouseEvent, null);
+    }
+
+    /**
+     * Handles the fade transition.
+     *
+     * @param mouseEvent the mouse event
+     * @param errorMessage the error message
+     */
+    private void fadeTransition(final MouseEvent mouseEvent, final String errorMessage) {
         FadeTransition fadeTransition = new FadeTransition(Duration.millis(500));
         fadeTransition.setNode(((Node) mouseEvent.getSource()).getScene().getRoot());
         fadeTransition.setFromValue(1.0);
@@ -124,13 +129,22 @@ public class StartScreen extends Application {
 
         fadeTransition.setOnFinished(e -> {
             Stage currentStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-            VillageDisplay villageDisplay = new VillageDisplay();
-            villageDisplay.start(currentStage);
+
+            if (errorMessage != null) {
+                Platform.runLater(() -> {
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                    errorAlert.setHeaderText(null);
+                    errorAlert.setContentText(errorMessage);
+                    errorAlert.showAndWait();
+                });
+            } else {
+                VillageDisplay villageDisplay = new VillageDisplay();
+                villageDisplay.start(currentStage);
+            }
         });
 
         fadeTransition.play();
     }
-
 
     /**
      * Starts the game.

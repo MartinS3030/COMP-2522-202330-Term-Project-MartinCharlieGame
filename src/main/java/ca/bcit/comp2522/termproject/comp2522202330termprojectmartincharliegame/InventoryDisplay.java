@@ -42,33 +42,31 @@ public class InventoryDisplay extends Application {
      */
     @Override
     public void start(final Stage primaryStage) {
-        // Create a GridPane to display the Fish grid
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10); // Horizontal gap between columns
-        gridPane.setVgap(10); // Vertical gap between rows
-        gridPane.setPadding(new Insets(10)); // Padding around the grid
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+        gridPane.setPadding(new Insets(10));
 
         HashMap<String, Item> playerInventory = Player.getInstance("Charlie").getInventory();
 
         final int[] colCounter = {0};
         final int[] rowCounter = {0};
-        playerInventory.values()
-                .forEach(fish -> {
-                    if (colCounter[0] > 7) {
-                        colCounter[0] = 0;
-                        rowCounter[0]++;
-                    }
+        playerInventory.values().forEach(fish -> {
+            if (colCounter[0] > 7) {
+                colCounter[0] = 0;
+                rowCounter[0]++;
+            }
 
-                    Label nameLabel = new Label(fish.getName());
-                    nameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
+            Label nameLabel = new Label(fish.getName());
+            nameLabel.setStyle("-fx-font-family: 'Montserrat';-fx-font-size: 25px;-fx-font-weight: 700;");
 
-                    HBox hBox = getFishHBox(fish);
+            HBox hBox = getFishHBox(fish);
 
-                    VBox vBox = new VBox(nameLabel, hBox);
-                    vBox.setAlignment(javafx.geometry.Pos.CENTER);
+            VBox vBox = new VBox(nameLabel, hBox);
+            vBox.setAlignment(javafx.geometry.Pos.CENTER);
 
-                    gridPane.add(vBox, colCounter[0]++, rowCounter[0]);
-                });
+            gridPane.add(vBox, colCounter[0]++, rowCounter[0]);
+        });
 
         ImageView backgroundView = new ImageView(new Image("file:../../resources/Inventory.jpg"));
 

@@ -6,7 +6,7 @@ package ca.bcit.comp2522.termproject.comp2522202330termprojectmartincharliegame;
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class Shop {
+public final class Shop {
     private static Shop shopInstance = null;
     private static final int ITEM_COST = 400;
 

@@ -4,15 +4,13 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 /**
  * Represents the rod display for the shop.
  *
  * @author Martin Siu, Charlie Zhang
  * @version 2023
  */
-public class RodShopDisplay extends RodDisplay{
+public class RodShopDisplay extends RodDisplay {
 
     private final DiceDisplay diceDisplay;
 
@@ -22,7 +20,7 @@ public class RodShopDisplay extends RodDisplay{
      * @param primaryStage the primary stage
      * @param diceDisplay  the dice display
      */
-    public RodShopDisplay(Stage primaryStage, DiceDisplay diceDisplay) {
+    public RodShopDisplay(final Stage primaryStage, final DiceDisplay diceDisplay) {
         super(primaryStage);
         this.diceDisplay = diceDisplay;
     }
@@ -30,17 +28,17 @@ public class RodShopDisplay extends RodDisplay{
     /**
      * Returns an event handler for handling mouse events to open a modal popup.
      *
-     * @param DiceIndex The index of the dice associated with the event.
+     * @param diceIndex The index of the dice associated with the event.
      * @return The event handler for handling mouse events.
      */
     @Override
-    protected EventHandler<MouseEvent> openModal(int DiceIndex) {
+    protected EventHandler<MouseEvent> openModal(final int diceIndex) {
         return event -> {
             ModalPopUp modal;
             if (diceDisplay.getSelectedDice().isEmpty()) {
-                modal = new DiceFaceModal(DiceIndex);
+                modal = new DiceFaceModal(diceIndex);
             } else  {
-                modal = new DiceFaceShopModal(DiceIndex, diceDisplay);
+                modal = new DiceFaceShopModal(diceIndex, diceDisplay);
             }
             modal.openInGamePopup(getPrimaryStage());
         };
