@@ -31,7 +31,7 @@ public class InventoryDisplay extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 
@@ -41,7 +41,7 @@ public class InventoryDisplay extends Application {
      * @param primaryStage the stage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(final Stage primaryStage) {
         // Create a GridPane to display the Fish grid
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10); // Horizontal gap between columns
@@ -80,20 +80,20 @@ public class InventoryDisplay extends Application {
 
         StackPane.setAlignment(backButtonView, Pos.TOP_RIGHT);
 
-        // Create a StackPane to hold the GridPane
         StackPane stackPane = new StackPane(backgroundView, gridPane, backButtonView);
-        // Create a Scene and set it on the primaryStage
         Scene scene = new Scene(stackPane, 1200, 600);
         primaryStage.setScene(scene);
-
-        // Set the title of the window
         primaryStage.setTitle("Fish Grid Example");
-
-        // Show the primaryStage
         primaryStage.show();
     }
 
-    private HBox getFishHBox(Item fish) {
+    /**
+     * Gets the fish HBox.
+     *
+     * @param fish the fish
+     * @return the fish HBox
+     */
+    private HBox getFishHBox(final Item fish) {
         ImageView imageView = new ImageView(new Image("file:../../resources/Fish/" + fish.getName() + ".png"));
         imageView.setFitWidth(75);
         imageView.setFitHeight(75);
